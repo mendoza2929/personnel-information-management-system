@@ -57,6 +57,7 @@ adminLogin();
                   <li> <a href="rank.php"> <i class="bi bi-circle"></i><span>Rank</span> </a></li>
                   <li> <a href="unit.php"> <i class="bi bi-circle"></i><span>Unit</span> </a></li>
                   <li> <a href=""> <i class="bi bi-circle"></i><span>Courses</span> </a></li>
+                  <li> <a href="batch.php"> <i class="bi bi-circle"></i><span>Batch</span> </a></li>
                   <li> <a href="address.php"> <i class="bi bi-circle"></i><span>Address</span> </a></li>
                </ul>
          </li>

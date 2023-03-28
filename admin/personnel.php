@@ -58,6 +58,7 @@ adminLogin();
             <li> <a href="rank.php"> <i class="bi bi-circle"></i><span>Rank</span> </a></li>
                   <li> <a href="unit.php"> <i class="bi bi-circle"></i><span>Unit</span> </a></li>
                   <li> <a href=""> <i class="bi bi-circle"></i><span>Courses</span> </a></li>
+                  <li> <a href="batch.php"> <i class="bi bi-circle"></i><span>Batch</span> </a></li>
                   <li> <a href="address.php"> <i class="bi bi-circle"></i><span>Address</span> </a></li>
                </ul>
          </li>
@@ -104,16 +105,17 @@ adminLogin();
                             <thead>
                                 <tr class="text-white" style="background-color:#1d3557;">
                                 <th scope="col">No.</th>
+                                <th scope="col">Rank</th> 
                                 <th scope="col">Name</th>
                                 <th scope="col">Gender</th>
-                                <th scope="col">Rank</th> 
-                                <th scope="col">Course</th>
+                                <th scope="col">Address</th>
                                 <th scope="col">Unit</th> 
                                 <th scope="col">Batch</th> 
+                                <th scope="col">Status</th> 
                                 <th scope="col">Action</th> 
                                 </tr>
                             </thead>
-                            <tbody id="room_data">
+                            <tbody id="personnel_data">
                           
                              
                            
@@ -124,11 +126,13 @@ adminLogin();
                         </div>
                     </div>
 
-
+    
+    
+    <!--add personnel-->
                           
       <div class="modal fade" id="add-personnel" data-bs-backdrop="static" data-bs-keyboard= "true" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg">
-                <form id="room_form" autocomplete="off">
+                <form id="personnel_form" autocomplete="off">
                     <div class="modal-content">
                         <div class="modal-header">
                             <div class="modal-title fw-bold"><i class="bi bi-plus-square"></i> Add Personnel</div>
@@ -137,7 +141,7 @@ adminLogin();
                             <div class="row">
                             <div class="col-md-6 mb-3">
                                 <label class="form-label fw-bold">Rank</label>
-                                <select class='form-select shadow-none' aria-label='Default select example' name='teacher' required>
+                                <select class='form-select shadow-none' aria-label='Default select example' name='rank' required>
                                 <option disabled selected value="">Select a Rank...</option> <!-- placeholder option -->
                                 <?php
                                 $res = selectAll('rank');
@@ -149,7 +153,7 @@ adminLogin();
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label class="form-label fw-bold">Unit</label>
-                                <select class='form-select shadow-none' aria-label='Default select example' name='teacher' required>
+                                <select class='form-select shadow-none' aria-label='Default select example' name='unit' required>
                                 <option disabled selected value="">Select a Unit...</option> <!-- placeholder option -->
                                 <?php
                                 $res = selectAll('unit');
@@ -161,22 +165,22 @@ adminLogin();
                             </div>
                             <div class="col-md-3  mb-3">
                                 <label class="form-label fw-bold">Last Name</label>
-                                <input type="text" min="1" name="area" class="form-control shadow-none">
+                                <input type="text" min="1" name="last" class="form-control shadow-none">
                             </div>
                             <div class="col-md-3  mb-3">
                                 <label class="form-label fw-bold">First Name</label>
-                                <input type="text" min="1" name="area" class="form-control shadow-none">
+                                <input type="text" min="1" name="first" class="form-control shadow-none">
                             </div>
                             <div class="col-md-3  mb-3">
                                 <label class="form-label fw-bold">Middle Name</label>
-                                <input type="text" name="area" class="form-control shadow-none" placeholder="Optional ">
+                                <input type="text" name="middle" class="form-control shadow-none" placeholder="Optional ">
                             </div>
                             <div class="col-md-3  mb-3">
                                 <label class="form-label fw-bold">Suffix</label>
-                                <select class='form-select shadow-none' aria-label='Default select example' name='year' required>
+                                <select class='form-select shadow-none' aria-label='Default select example' name='suffix' >
                                 <option disabled selected value="">Select Suffix</option> <!-- placeholder option -->
                                 <option value="jr">Jr.</option>
-                                <option value="2nd">Sr.</option>
+                                <option value="sr">Sr.</option>
                                 </select>
                             </div>
                             <div class="col-md-5 mb-3">
@@ -185,7 +189,7 @@ adminLogin();
                             </div>
                             <div class="col-md-4 mb-3">
                                 <label class="form-label fw-bold">Address</label>
-                                <select class='form-select shadow-none' aria-label='Default select example' name='teacher' required>
+                                <select class='form-select shadow-none' aria-label='Default select example' name='address' required>
                                 <option disabled selected value="">Select a Barangay</option> <!-- placeholder option -->
                                 <?php
                                 $res = selectAll('address');
@@ -197,7 +201,7 @@ adminLogin();
                             </div>
                             <div class="col-md-3 mb-3">
                                 <label class="form-label fw-bold">Province</label>
-                                <select class='form-select shadow-none' aria-label='Default select example' name='teacher' required>
+                                <select class='form-select shadow-none' aria-label='Default select example' name='province' required>
                                 <option disabled selected value="">Select a Province</option> <!-- placeholder option -->
                                 <?php
                                 $res = selectAll('province');
@@ -233,10 +237,14 @@ adminLogin();
                             <div class="col-md-3  mb-3">
                                 <label class="form-label fw-bold">Batch</label>
                                 <select class='form-select shadow-none' aria-label='Default select example' name='batch' required>
-                                <option disabled selected value="">Select Batch</option> <!-- placeholder option -->
-                                <option value="jr">1999</option>
-                                <option value="2nd">2000</option>
-                                </select>
+                                <option disabled selected value="">Select a Batch</option> <!-- placeholder option -->
+                                <?php
+                                $res = selectAll('batch');
+                                while($opt = mysqli_fetch_assoc($res)){
+                                    echo "<option value='$opt[name]'>$opt[name]</option>";
+                                }
+                                ?>
+                            </select>
                             </div>
 
                      
@@ -251,6 +259,9 @@ adminLogin();
                 </form>
             </div>
         </div>
+
+
+
                     
 
  
@@ -273,7 +284,317 @@ adminLogin();
         <script src="assets/js/tinymce.min.js"></script>
         <script src="assets/js/validate.js"></script>
         <script src="assets/js/main.js"></script> 
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
         
+
+
+        <!---edit personnel-->
+
+        
+                          
+        <div class="modal fade" id="edit-personnel" data-bs-backdrop="static" data-bs-keyboard= "true" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <form id="edit_personnel" autocomplete="off">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <div class="modal-title fw-bold"><i class="bi bi-plus-square"></i> Edit Personnel</div>
+                        </div>
+                        <div class="modal-body"> 
+                            <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">Rank</label>
+                                <select class='form-select shadow-none' aria-label='Default select example' name='rank' required>
+                                <option disabled selected value="">Select a Rank...</option> <!-- placeholder option -->
+                                <?php
+                                $res = selectAll('rank');
+                                while($opt = mysqli_fetch_assoc($res)){
+                                    echo "<option value='$opt[name]'>$opt[name]</option>";
+                                }
+                                ?>
+                            </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">Unit</label>
+                                <select class='form-select shadow-none' aria-label='Default select example' name='unit' required>
+                                <option disabled selected value="">Select a Unit...</option> <!-- placeholder option -->
+                                <?php
+                                $res = selectAll('unit');
+                                while($opt = mysqli_fetch_assoc($res)){
+                                    echo "<option value='$opt[name]'>$opt[name] ($opt[description])</option>";
+                                }
+                                ?>
+                            </select>
+                            </div>
+                            <div class="col-md-3  mb-3">
+                                <label class="form-label fw-bold">Last Name</label>
+                                <input type="text" min="1" name="last" class="form-control shadow-none">
+                            </div>
+                            <div class="col-md-3  mb-3">
+                                <label class="form-label fw-bold">First Name</label>
+                                <input type="text" min="1" name="first" class="form-control shadow-none">
+                            </div>
+                            <div class="col-md-3  mb-3">
+                                <label class="form-label fw-bold">Middle Name</label>
+                                <input type="text" name="middle" class="form-control shadow-none" placeholder="Optional ">
+                            </div>
+                            <div class="col-md-3  mb-3">
+                                <label class="form-label fw-bold">Suffix</label>
+                                <select class='form-select shadow-none' aria-label='Default select example' name='suffix' >
+                                <option disabled selected value="">Select Suffix</option> <!-- placeholder option -->
+                                <option value="jr">Jr.</option>
+                                <option value="sr">Sr.</option>
+                                </select>
+                            </div>
+                            <div class="col-md-5 mb-3">
+                                <label class="form-label fw-bold">Street</label>
+                                <input type="text" name="street" class="form-control shadow-none">
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label fw-bold">Address</label>
+                                <select class='form-select shadow-none' aria-label='Default select example' name='address' required>
+                                <option disabled selected value="">Select a Barangay</option> <!-- placeholder option -->
+                                <?php
+                                $res = selectAll('address');
+                                while($opt = mysqli_fetch_assoc($res)){
+                                    echo "<option value='$opt[name]'>$opt[name]</option>";
+                                }
+                                ?>
+                            </select>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label class="form-label fw-bold">Province</label>
+                                <select class='form-select shadow-none' aria-label='Default select example' name='province' required>
+                                <option disabled selected value="">Select a Province</option> <!-- placeholder option -->
+                                <?php
+                                $res = selectAll('province');
+                                while($opt = mysqli_fetch_assoc($res)){
+                                    echo "<option value='$opt[name]'>$opt[name]</option>";
+                                }
+                                ?>
+                            </select>
+                            </div>
+                        
+                            <div class="col-md-3 mb-3">
+                            <label class="form-label fw-bold">Gender</label>
+                            <br>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input shadow-none" type="radio" name="gender" id="male" value="male">
+                                <label class="form-check-label" for="female">
+                                Male
+                                </label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input  shadow-none" type="radio" name="gender" id="female" value="female">
+                                <label class="form-check-label" for="female">
+                                    Female
+                                </label>
+                            </div>
+                        </div>
+
+                            <div class="col-md-3 mb-3">
+                            <label class="form-label fw-bold">Date of birth</label>
+                            <input type="date"class="form-control shadow-none" name="birthday">
+                            </div>
+
+                            <div class="col-md-3  mb-3">
+                                <label class="form-label fw-bold">Batch</label>
+                                <select class='form-select shadow-none' aria-label='Default select example' name='batch' required>
+                                <option disabled selected value="">Select a Batch</option> <!-- placeholder option -->
+                                <?php
+                                $res = selectAll('batch');
+                                while($opt = mysqli_fetch_assoc($res)){
+                                    echo "<option value='$opt[name]'>$opt[name]</option>";
+                                }
+                                ?>
+                            </select>
+                            </div>
+
+                     
+                          
+                            <input type="hidden" name="personnel_id">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="reset" class="btn btn-secondary shadow-none" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-success shadow-none">Submit</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+                    
+        
+   <script>
+
+
+    let personnel_form = document.getElementById('personnel_form')
+
+    personnel_form.addEventListener('submit', function(e){
+        e.preventDefault();
+        add_personnel();
+    });
+
+    
+    function add_personnel(){
+        let data = new FormData();
+        data.append('add_personnel','');
+        data.append('rank',personnel_form.elements['rank'].value);
+        data.append('unit',personnel_form.elements['unit'].value);
+        data.append('last',personnel_form.elements['last'].value);
+        data.append('first',personnel_form.elements['first'].value);
+        data.append('middle',personnel_form.elements['middle'].value);
+        data.append('suffix',personnel_form.elements['suffix'].value);
+        data.append('street',personnel_form.elements['street'].value);
+        data.append('address',personnel_form.elements['address'].value);
+        data.append('province',personnel_form.elements['province'].value);
+        data.append('gender',personnel_form.elements['gender'].value);
+        data.append('birthday',personnel_form.elements['birthday'].value);
+        data.append('batch',personnel_form.elements['batch'].value);
+
+
+        let xhr  = new XMLHttpRequest();
+        xhr.open("POST","./ajax/personnel.php",true);
+        
+        
+        xhr.onload = function(){
+            var myModalEl = document.getElementById('add-personnel')
+            var modal = bootstrap.Modal.getInstance(myModalEl) // Returns a Bootstrap modal instanceof
+            modal.hide();
+
+            if(this.responseText==1){
+                swal("Good job!", "You Successfully Create Personnel!", "success");
+                personnel_form.reset();
+                get_personnel();
+                
+            }else{
+                swal("Error!", "Server Down!", "error");
+            }
+
+        }
+        xhr.send(data);
+    }
+
+    function get_personnel(){
+        let xhr = new XMLHttpRequest();
+        xhr.open("POST","./ajax/personnel.php",true);
+        xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+
+        xhr.onload = function(){
+         document.getElementById('personnel_data').innerHTML = this.responseText;
+        }
+        xhr.send('get_personnel');
+    }
+
+
+
+
+    
+function toggleStatus(id,val){
+        
+        let xhr = new XMLHttpRequest();
+            xhr.open("POST","./ajax/personnel.php",true);
+            xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+        
+            xhr.onload = function(){
+                if(this.responseText==1){
+                    // alert('success','Status Active');
+                    get_personnel();
+                }
+                else{
+                    alert('error','Status Not Active');
+                }
+            }
+            xhr.send('toggleStatus='+id+'&value='+val);
+    
+    }
+
+
+
+
+    let edit_personnel = document.getElementById('edit_personnel');
+
+    function personnel_details(id){
+
+        let xhr = new XMLHttpRequest();
+        xhr.open("POST","./ajax/personnel.php",true);
+        xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+
+
+        xhr.onload = function(){
+            let data = JSON.parse(this.responseText);
+            edit_personnel.elements['rank'].value = data.personneldata.rank;
+            edit_personnel.elements['unit'].value = data.personneldata.unit;
+            edit_personnel.elements['last'].value = data.personneldata.last;
+            edit_personnel.elements['first'].value = data.personneldata.first;
+            edit_personnel.elements['middle'].value = data.personneldata.middle;
+            edit_personnel.elements['suffix'].value = data.personneldata.suffix;
+            edit_personnel.elements['street'].value = data.personneldata.street;
+            edit_personnel.elements['address'].value = data.personneldata.address;
+            edit_personnel.elements['province'].value = data.personneldata.province;
+            edit_personnel.elements['gender'].value = data.personneldata.gender;
+            edit_personnel.elements['birthday'].value = data.personneldata.birthday;
+            edit_personnel.elements['batch'].value = data.personneldata.batch;
+            edit_personnel.elements['personnel_id'].value = data.personneldata.id;
+       }
+
+       xhr.send('edit_personnel='+id);
+    }
+
+
+    edit_personnel.addEventListener('submit',function(e){
+        e.preventDefault();
+        submit_edit_personnel();
+    });
+
+
+    function submit_edit_personnel(){
+        let data = new FormData();
+        data.append('submit_edit_personnel','');
+        data.append('personnel_id',edit_personnel.elements['personnel_id'].value);
+        data.append('rank',edit_personnel.elements['rank'].value);
+        data.append('unit',edit_personnel.elements['unit'].value);
+        data.append('last',edit_personnel.elements['last'].value);
+        data.append('first',edit_personnel.elements['first'].value);
+        data.append('middle',edit_personnel.elements['middle'].value);
+        data.append('suffix',edit_personnel.elements['suffix'].value);
+        data.append('street',edit_personnel.elements['street'].value);
+        data.append('address',edit_personnel.elements['address'].value);
+        data.append('province',edit_personnel.elements['province'].value);
+        data.append('gender',edit_personnel.elements['gender'].value);
+        data.append('birthday',edit_personnel.elements['birthday'].value);
+        data.append('batch',edit_personnel.elements['batch'].value);
+
+        let xhr = new XMLHttpRequest();
+        xhr.open("POST","./ajax/personnel.php",true);
+
+        xhr.onload = function(){
+            var myModalEl = document.getElementById('edit-personnel')
+            var modal = bootstrap.Modal.getInstance(myModalEl) // Returns a Bootstrap modal instanceof
+            modal.hide();
+
+            if(this.responseText==1){
+                swal("Good job!", "You Successfully Edit Personnel!", "success");
+                edit_personnel.reset();
+                get_personnel();
+                
+            }else{
+                swal("Error!", "Server Down!", "success");
+            }
+
+        }
+        xhr.send(data);
+
+
+    }
+    
+
+    window.onload = function(){
+        get_personnel();
+    }
+    
+
+
+    </script>
              
+
    </body>
 </html>

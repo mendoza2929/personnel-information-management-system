@@ -10,7 +10,7 @@ adminLogin();
    <head>
       <meta charset="utf-8">
       <meta content="width=device-width, initial-scale=1.0" name="viewport">
-      <title>Unit - Personnel Information Managment System</title>
+      <title>Batch - Personnel Information Managment System</title>
       <meta name="robots" content="noindex, nofollow">
       <meta content="" name="description">
       <meta content="" name="keywords">
@@ -56,7 +56,7 @@ adminLogin();
             <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                   <li> <a href="rank.php"> <i class="bi bi-circle"></i><span>Rank</span> </a></li>
                   <li> <a href="unit.php"> <i class="bi bi-circle"></i><span>Unit</span> </a></li>
-                  <li> <a href="#"> <i class="bi bi-circle"></i><span>Courses</span> </a></li>
+                  <li> <a href=""> <i class="bi bi-circle"></i><span>Courses</span> </a></li>
                   <li> <a href="batch.php"> <i class="bi bi-circle"></i><span>Batch</span> </a></li>
                   <li> <a href="address.php"> <i class="bi bi-circle"></i><span>Address</span> </a></li>
                </ul>
@@ -66,11 +66,11 @@ adminLogin();
       </aside>
       <main id="main" class="main">
          <div class="pagetitle">
-            <h1>Units</h1>
+            <h1>Batch</h1>
             <nav>
                <ol class="breadcrumb">
                   <li class="breadcrumb-item"><a href="index.php">Home</a></li>
-                  <li class="breadcrumb-item active">Units</li>
+                  <li class="breadcrumb-item active">Batch</li>
                </ol>
          </div>
     
@@ -79,8 +79,8 @@ adminLogin();
                         <div class="card-body">
 
                         <div class="d-flex align-items-center justify-content-between mb-3">
-                            <h5 class="card-title m-0 fw-bold"><i class="bi bi-chat-square-heart"></i> Rank</h5>
-                            <button type="button" class="btn btn-success btn-sm shadow-none" data-bs-toggle="modal" data-bs-target="#unit">
+                            <h5 class="card-title m-0 fw-bold"><i class="bi bi-chat-square-heart"></i> Batch</h5>
+                            <button type="button" class="btn btn-success btn-sm shadow-none" data-bs-toggle="modal" data-bs-target="#batch">
                             <i class="bi bi-file-plus"></i> Add
                             </button>
                         </div>
@@ -91,12 +91,11 @@ adminLogin();
                             <thead>
                                 <tr class="text-white" style="background-color:#1d3557;">
                                 <th scope="col">No.</th>
-                                <th scope="col">Unit</th>
-                                <th scope="col">Description</th>
+                                <th scope="col">Batch</th>
                                 <th scope="col">Action</th>
                                 </tr>
                             </thead>
-                            <tbody id="unit_data">
+                            <tbody id="batch_data">
                           
                              
                            
@@ -110,21 +109,17 @@ adminLogin();
 
 
                     
-        <div class="modal fade" id="unit" data-bs-backdrop="static" data-bs-keyboard= "true" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal fade" id="batch" data-bs-backdrop="static" data-bs-keyboard= "true" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog">
-                <form id="unit_form">
+                <form id="batch_form">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <div class="modal-title"><i class="bi bi-clipboard-data"></i> Add Unit</div>
+                            <div class="modal-title"><i class="bi bi-clipboard-data"></i> Add Batch</div>
                         </div>
                         <div class="modal-body"> 
                             <div class="mb-3">
-                                <label class="form-label fw-bold">Unit</label>
-                                <input type="text" name="unit_name" class="form-control shadow-none">
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label fw-bold">Description</label>
-                                <input type="text" name="desc_name" class="form-control shadow-none">
+                                <label class="form-label fw-bold">Batch</label>
+                                <input type="text" name="batch_name" class="form-control shadow-none">
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -160,34 +155,32 @@ adminLogin();
 
 
         <script>
-            let unit_form = document.getElementById("unit_form");
+            let batch_form = document.getElementById("batch_form");
 
 
-            unit_form.addEventListener('submit', function(e){
+            batch_form.addEventListener('submit', function(e){
                e.preventDefault();
-               add_unit();
+               add_batch();
             });
 
-            function add_unit(){
+            function add_batch(){
                let data = new FormData();
-               data.append('name',unit_form.elements['unit_name'].value);
-               data.append('desc',unit_form.elements['desc_name'].value);
-               data.append('add_unit','');
+               data.append('name',batch_form.elements['batch_name'].value);
+               data.append('add_batch','');
 
                let xhr = new XMLHttpRequest();
-               xhr.open("POST","./ajax/unit.php",true);
+               xhr.open("POST","./ajax/batch.php",true);
 
                xhr.onload = function(){
-               var myModalEl = document.getElementById('unit')
+               var myModalEl = document.getElementById('batch')
                var modal = bootstrap.Modal.getInstance(myModalEl) // Returns a Bootstrap modal instanceof
               modal.hide();
 
             if(this.responseText==1){
                swal("Good job!", "You Successfully Create!", "success");
 
-                unit_form.elements['unit_name'].values='';
-                 unit_form.elements['desc_name'].values='';
-                get_unit();
+                batch_form.elements['batch_name'].values='';
+                get_batch();
             }else{
                swal("Error!", "Server Down!", "error");
             }
@@ -198,37 +191,37 @@ adminLogin();
             };
 
 
-            function get_unit(){
+            function get_batch(){
                let xhr = new XMLHttpRequest();
-               xhr.open("POST","./ajax/unit.php",true);
+               xhr.open("POST","./ajax/batch.php",true);
                xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
 
                xhr.onload = function (){
-            document.getElementById('unit_data').innerHTML = this.responseText;
+            document.getElementById('batch_data').innerHTML = this.responseText;
           }
 
-          xhr.send('get_unit');
+          xhr.send('get_batch');
 
                
             }
 
 
-            function rem_unit(val){
+            function rem_batch(val){
                let xhr = new XMLHttpRequest();
-               xhr.open("POST","./ajax/unit.php",true);
+               xhr.open("POST","./ajax/batch.php",true);
                xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
 
              xhr.onload = function (){
             if(this.responseText==1){
-               swal("Good job!", "Remove Unit Successfully!", "success");
-                get_unit();
+               swal("Good job!", "Remove Batch Successfully!", "success");
+                get_batch();
             }
             else{
                swal("Error!", "Server Down!", "success");
             }
         }
 
-        xhr.send('rem_unit='+val);
+        xhr.send('rem_batch='+val);
             }
 
 
@@ -236,7 +229,7 @@ adminLogin();
 
 
             window.onload = function(){
-               get_unit();
+               get_batch();
             }
 
          

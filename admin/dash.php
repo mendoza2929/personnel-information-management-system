@@ -28,6 +28,13 @@ adminLogin();
       <link href="assets/css/styles.css" rel="stylesheet">
    </head>
    <body>
+
+
+   <?php 
+
+   $current_user = mysqli_fetch_assoc(mysqli_query($con,"SELECT COUNT(id) AS `count` FROM `personnel` $condition"));
+   
+   ?>
    
       <header id="header" class="header fixed-top d-flex align-items-center">
          <div class="d-flex align-items-center justify-content-between"> <a href="dash.php" class="logo d-flex align-items-center"> <span class="d-none d-lg-block">R8 Management System</span> </a> <i class="bi bi-list toggle-sidebar-btn"></i></div>
@@ -57,6 +64,7 @@ adminLogin();
                   <li> <a href="rank.php"> <i class="bi bi-circle"></i><span>Rank</span> </a></li>
                   <li> <a href="unit.php"> <i class="bi bi-circle"></i><span>Unit</span> </a></li>
                   <li> <a href=""> <i class="bi bi-circle"></i><span>Courses</span> </a></li>
+                  <li> <a href="batch.php"> <i class="bi bi-circle"></i><span>Batch</span> </a></li>
                   <li> <a href="address.php"> <i class="bi bi-circle"></i><span>Address</span> </a></li>
                </ul>
          </li>
@@ -81,7 +89,7 @@ adminLogin();
                   <div class="row">
                   <div class="col-xxl-4 col-xl-12">
                         <div class="card info-card customers-card">
-                           <div class="filter">
+                           <!--<div class="filter">
                               <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
                               <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                                  <li class="dropdown-header text-start">
@@ -91,13 +99,13 @@ adminLogin();
                                  <li><a class="dropdown-item" href="#">This Month</a></li>
                                  <li><a class="dropdown-item" href="#">This Year</a></li>
                               </ul>
-                           </div>
+                           </div>-->
                            <div class="card-body">
                               <h5 class="card-title">Personnel <span>| Record</span></h5>
                               <div class="d-flex align-items-center">
                                  <div class="card-icon rounded-circle d-flex align-items-center justify-content-center"> <i class="bi bi-people"></i></div>
                                  <div class="ps-3">
-                                    <h6>1244</h6>
+                                    <h6><?php echo $current_user['count']?></h6>
                                     <span class="text-danger small pt-1 fw-bold"></span> <span class="text-muted small pt-2 ps-1">Total Personnel</span>
                                  </div>
                               </div>
@@ -126,6 +134,9 @@ adminLogin();
         <script src="assets/js/tinymce.min.js"></script>
         <script src="assets/js/validate.js"></script>
         <script src="assets/js/main.js"></script> 
+
+
+      
              
    </body>
 </html>
