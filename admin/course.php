@@ -10,7 +10,7 @@ adminLogin();
    <head>
       <meta charset="utf-8">
       <meta content="width=device-width, initial-scale=1.0" name="viewport">
-      <title>Rank - Personnel Information Managment System</title>
+      <title>Course - Personnel Information Managment System</title>
       <meta name="robots" content="noindex, nofollow">
       <meta content="" name="description">
       <meta content="" name="keywords">
@@ -74,11 +74,11 @@ adminLogin();
       </aside>
       <main id="main" class="main">
          <div class="pagetitle">
-            <h1>Rank</h1>
+            <h1>Courses</h1>
             <nav>
                <ol class="breadcrumb">
                   <li class="breadcrumb-item"><a href="index.php">Home</a></li>
-                  <li class="breadcrumb-item active">Rank</li>
+                  <li class="breadcrumb-item active">Course</li>
                </ol>
          </div>
     
@@ -87,8 +87,8 @@ adminLogin();
                         <div class="card-body">
 
                         <div class="d-flex align-items-center justify-content-between mb-3">
-                            <h5 class="card-title m-0 fw-bold"><i class="bi bi-chat-square-heart"></i> Rank</h5>
-                            <button type="button" class="btn btn-success btn-sm shadow-none" data-bs-toggle="modal" data-bs-target="#rank">
+                            <h5 class="card-title m-0 fw-bold"><i class="bi bi-chat-square-heart"></i> Course</h5>
+                            <button type="button" class="btn btn-success btn-sm shadow-none" data-bs-toggle="modal" data-bs-target="#course">
                             <i class="bi bi-file-plus"></i> Add
                             </button>
                         </div>
@@ -99,11 +99,12 @@ adminLogin();
                             <thead>
                                 <tr class="text-white" style="background-color:#1d3557;">
                                 <th scope="col">No.</th>
-                                <th scope="col">Rank</th>
+                                <th scope="col">Course</th>
+                                <th scope="col">description</th>
                                 <th scope="col">Action</th>
                                 </tr>
                             </thead>
-                            <tbody id="rank_data">
+                            <tbody id="course_data">
                           
                              
                            
@@ -117,17 +118,21 @@ adminLogin();
 
 
                     
-        <div class="modal fade" id="rank" data-bs-backdrop="static" data-bs-keyboard= "true" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal fade" id="course" data-bs-backdrop="static" data-bs-keyboard= "true" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog">
-                <form id="rank_form">
+                <form id="course_form">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <div class="modal-title"><i class="bi bi-clipboard-data"></i> Add Rank</div>
+                            <div class="modal-title"><i class="bi bi-clipboard-data"></i> Add Course</div>
                         </div>
                         <div class="modal-body"> 
                             <div class="mb-3">
-                                <label class="form-label fw-bold">Rank</label>
-                                <input type="text" name="rank_name" class="form-control shadow-none">
+                                <label class="form-label fw-bold">Course</label>
+                                <input type="text" name="course_name" class="form-control shadow-none">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Description</label>
+                                <input type="text" name="desc_name" class="form-control shadow-none">
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -163,32 +168,33 @@ adminLogin();
 
 
         <script>
-            let rank_form = document.getElementById("rank_form");
+            let course_form = document.getElementById("course_form");
 
 
-            rank_form.addEventListener('submit', function(e){
+            course_form.addEventListener('submit', function(e){
                e.preventDefault();
-               add_rank();
+               add_course();
             });
 
-            function add_rank(){
+            function add_course(){
                let data = new FormData();
-               data.append('name',rank_form.elements['rank_name'].value);
-               data.append('add_rank','');
+               data.append('name',course_form.elements['course_name'].value);
+               data.append('desc',course_form.elements['desc_name'].value);
+               data.append('add_course','');
 
                let xhr = new XMLHttpRequest();
-               xhr.open("POST","./ajax/rank.php",true);
+               xhr.open("POST","./ajax/course.php",true);
 
                xhr.onload = function(){
-               var myModalEl = document.getElementById('rank')
+               var myModalEl = document.getElementById('course')
                var modal = bootstrap.Modal.getInstance(myModalEl) // Returns a Bootstrap modal instanceof
               modal.hide();
 
             if(this.responseText==1){
                swal("Good job!", "You Successfully Create!", "success");
 
-                rank_form.elements['rank_name'].values='';
-                get_rank();
+               course_form.elements['course_name'].values='';
+                get_course();
             }else{
                swal("Error!", "Server Down!", "error");
             }
@@ -199,37 +205,37 @@ adminLogin();
             };
 
 
-            function get_rank(){
+            function get_course(){
                let xhr = new XMLHttpRequest();
-               xhr.open("POST","./ajax/rank.php",true);
+               xhr.open("POST","./ajax/course.php",true);
                xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
 
                xhr.onload = function (){
-            document.getElementById('rank_data').innerHTML = this.responseText;
+            document.getElementById('course_data').innerHTML = this.responseText;
           }
 
-          xhr.send('get_rank');
+          xhr.send('get_course');
 
                
             }
 
 
-            function rem_rank(val){
+            function rem_course(val){
                let xhr = new XMLHttpRequest();
-               xhr.open("POST","./ajax/rank.php",true);
+               xhr.open("POST","./ajax/course.php",true);
                xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
 
              xhr.onload = function (){
             if(this.responseText==1){
-               swal("Good job!", "Remove Rank Successfully!", "success");
-                get_rank();
+               swal("Good job!", "Remove Course Successfully!", "success");
+                get_course();
             }
             else{
                swal("Error!", "Server Down!", "success");
             }
         }
 
-        xhr.send('rem_rank='+val);
+        xhr.send('rem_course='+val);
             }
 
 
@@ -237,7 +243,7 @@ adminLogin();
 
 
             window.onload = function(){
-               get_rank();
+               get_course();
             }
 
          

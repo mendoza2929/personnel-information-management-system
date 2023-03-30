@@ -55,14 +55,22 @@ adminLogin();
             <li class="nav-item">
             <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#"> <i class="bi bi-menu-button-wide"></i><span>Master List</span><i class="bi bi-chevron-down ms-auto"></i> </a>
             <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-            <li> <a href="rank.php"> <i class="bi bi-circle"></i><span>Rank</span> </a></li>
+                  <li> <a href="rank.php"> <i class="bi bi-circle"></i><span>Rank</span> </a></li>
                   <li> <a href="unit.php"> <i class="bi bi-circle"></i><span>Unit</span> </a></li>
-                  <li> <a href=""> <i class="bi bi-circle"></i><span>Courses</span> </a></li>
+                  <li> <a href="course.php"> <i class="bi bi-circle"></i><span>Courses</span> </a></li>
                   <li> <a href="batch.php"> <i class="bi bi-circle"></i><span>Batch</span> </a></li>
                   <li> <a href="address.php"> <i class="bi bi-circle"></i><span>Address</span> </a></li>
                </ul>
          </li>
          <li class="nav-item"> <a class="nav-link " href="personnel.php"> <i class="bi bi-person"></i> <span>Personnel</span> </a></li>
+         <li class="nav-item">
+            <a class="nav-link collapsed" data-bs-target="#training-nav" data-bs-toggle="collapse" href="#"> <i class="bi bi-menu-button-wide"></i><span>Training</span><i class="bi bi-chevron-down ms-auto"></i> </a>
+            <ul id="training-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                    <li> <a href="training.php"> <i class="bi bi-circle"></i><span> PSOSEC</span> </a></li>
+                  <li> <a href="training1.php"> <i class="bi bi-circle"></i><span>PSOAC</span> </a></li>
+               </ul>
+         </li>
+      
          </ul>
       </aside>
       <main id="main" class="main">
@@ -92,7 +100,7 @@ adminLogin();
                             <button type="button" class="btn btn-success btn-sm shadow-none mt-2 mb-2 text-start me-2" data-bs-toggle="modal" data-bs-target="#add-room">
                             <i class="bi bi-file-earmark-spreadsheet"></i> Export to excel
                             </button>
-                            <input type="text" oninput="search_apparatus(this.value)" class="form-control shadow-none w-25 ms-auto mb-2" placeholder="Type to search..">
+                            <input type="text" oninput="search_personnel(this.value)" class="form-control shadow-none w-25 ms-auto mb-2" placeholder="Type to search..">
                         </div>
 
 
@@ -111,6 +119,7 @@ adminLogin();
                                 <th scope="col">Address</th>
                                 <th scope="col">Unit</th> 
                                 <th scope="col">Batch</th> 
+                                <th scope="col">Course</th> 
                                 <th scope="col">Status</th> 
                                 <th scope="col">Action</th> 
                                 </tr>
@@ -240,6 +249,18 @@ adminLogin();
                                 <option disabled selected value="">Select a Batch</option> <!-- placeholder option -->
                                 <?php
                                 $res = selectAll('batch');
+                                while($opt = mysqli_fetch_assoc($res)){
+                                    echo "<option value='$opt[name]'>$opt[name]</option>";
+                                }
+                                ?>
+                            </select>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label class="form-label fw-bold">Course</label>
+                                <select class='form-select shadow-none' aria-label='Default select example' name='course' required>
+                                <option disabled selected value="">Select a Course</option> <!-- placeholder option -->
+                                <?php
+                                $res = selectAll('course');
                                 while($opt = mysqli_fetch_assoc($res)){
                                     echo "<option value='$opt[name]'>$opt[name]</option>";
                                 }
@@ -409,6 +430,20 @@ adminLogin();
                             </select>
                             </div>
 
+                            <div class="col-md-3 mb-3">
+                                <label class="form-label fw-bold">Course</label>
+                                <select class='form-select shadow-none' aria-label='Default select example' name='course' required>
+                                <option disabled selected value="">Select a Course</option> <!-- placeholder option -->
+                                <?php
+                                $res = selectAll('course');
+                                while($opt = mysqli_fetch_assoc($res)){
+                                    echo "<option value='$opt[name]'>$opt[name]</option>";
+                                }
+                                ?>
+                            </select>
+                            </div>
+                            
+
                      
                           
                             <input type="hidden" name="personnel_id">
@@ -449,6 +484,7 @@ adminLogin();
         data.append('gender',personnel_form.elements['gender'].value);
         data.append('birthday',personnel_form.elements['birthday'].value);
         data.append('batch',personnel_form.elements['batch'].value);
+        data.append('course',personnel_form.elements['course'].value);
 
 
         let xhr  = new XMLHttpRequest();
@@ -473,7 +509,7 @@ adminLogin();
         xhr.send(data);
     }
 
-    function get_personnel(){
+    function get_personnel(search=''){
         let xhr = new XMLHttpRequest();
         xhr.open("POST","./ajax/personnel.php",true);
         xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
@@ -481,7 +517,7 @@ adminLogin();
         xhr.onload = function(){
          document.getElementById('personnel_data').innerHTML = this.responseText;
         }
-        xhr.send('get_personnel');
+        xhr.send('get_personnel&search='+search);
     }
 
 
@@ -533,6 +569,7 @@ function toggleStatus(id,val){
             edit_personnel.elements['gender'].value = data.personneldata.gender;
             edit_personnel.elements['birthday'].value = data.personneldata.birthday;
             edit_personnel.elements['batch'].value = data.personneldata.batch;
+            edit_personnel.elements['course'].value = data.personneldata.course;
             edit_personnel.elements['personnel_id'].value = data.personneldata.id;
        }
 
@@ -562,6 +599,7 @@ function toggleStatus(id,val){
         data.append('gender',edit_personnel.elements['gender'].value);
         data.append('birthday',edit_personnel.elements['birthday'].value);
         data.append('batch',edit_personnel.elements['batch'].value);
+        data.append('course',edit_personnel.elements['course'].value);
 
         let xhr = new XMLHttpRequest();
         xhr.open("POST","./ajax/personnel.php",true);
@@ -585,6 +623,19 @@ function toggleStatus(id,val){
 
 
     }
+
+
+    function search_personnel(personnelname){
+        let xhr = new XMLHttpRequest();
+        xhr.open("POST","./ajax/personnel.php",true);
+        xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+
+        xhr.onload = function(){
+            document.getElementById('personnel_data').innerHTML = this.responseText;
+        }
+        xhr.send('search_personnel&name='+personnelname);
+    }
+
     
 
     window.onload = function(){

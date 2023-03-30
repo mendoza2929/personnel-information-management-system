@@ -63,12 +63,20 @@ adminLogin();
             <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                   <li> <a href="rank.php"> <i class="bi bi-circle"></i><span>Rank</span> </a></li>
                   <li> <a href="unit.php"> <i class="bi bi-circle"></i><span>Unit</span> </a></li>
-                  <li> <a href=""> <i class="bi bi-circle"></i><span>Courses</span> </a></li>
+                  <li> <a href="course.php"> <i class="bi bi-circle"></i><span>Courses</span> </a></li>
                   <li> <a href="batch.php"> <i class="bi bi-circle"></i><span>Batch</span> </a></li>
                   <li> <a href="address.php"> <i class="bi bi-circle"></i><span>Address</span> </a></li>
                </ul>
          </li>
          <li class="nav-item"> <a class="nav-link " href="personnel.php"> <i class="bi bi-person"></i> <span>Personnel</span> </a></li>
+         <li class="nav-item">
+            <a class="nav-link collapsed" data-bs-target="#training-nav" data-bs-toggle="collapse" href="#"> <i class="bi bi-menu-button-wide"></i><span>Training</span><i class="bi bi-chevron-down ms-auto"></i> </a>
+            <ul id="training-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+            <li> <a href="training.php"> <i class="bi bi-circle"></i><span> PSOSEC</span> </a></li>
+                  <li> <a href="training1.php"> <i class="bi bi-circle"></i><span>PSOAC</span> </a></li>
+               </ul>
+         </li>
+      
          </ul>
       </aside>
       <main id="main" class="main">
