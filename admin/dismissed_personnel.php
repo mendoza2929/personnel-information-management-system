@@ -10,7 +10,7 @@ adminLogin();
    <head>
       <meta charset="utf-8">
       <meta content="width=device-width, initial-scale=1.0" name="viewport">
-      <title>Rank - Personnel Training Information Managment System</title>
+      <title>Dismissed Personnel - Personnel Training Information Managment System</title>
       <meta name="robots" content="noindex, nofollow">
       <meta content="" name="description">
       <meta content="" name="keywords">
@@ -26,6 +26,7 @@ adminLogin();
       <link href="assets/css/remixicon.css" rel="stylesheet">
       <link href="assets/css/simple-datatables.css" rel="stylesheet">
       <link href="assets/css/styles.css" rel="stylesheet">
+      
    </head>
    <body>
    
@@ -72,9 +73,9 @@ adminLogin();
             </ul>
          </li>
          <li class="nav-item">
-            <a class="nav-link collapsed" data-bs-target="#training-nav" data-bs-toggle="collapse" href="#"> <i class="bi bi-menu-button-wide"></i><span>Traning</span><i class="bi bi-chevron-down ms-auto"></i> </a>
+            <a class="nav-link collapsed" data-bs-target="#training-nav" data-bs-toggle="collapse" href="#"> <i class="bi bi-menu-button-wide"></i><span>Training</span><i class="bi bi-chevron-down ms-auto"></i> </a>
             <ul id="training-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-            <li> <a href="training.php"> <i class="bi bi-circle"></i><span> PSOSEC</span> </a></li>
+                    <li> <a href="training.php"> <i class="bi bi-circle"></i><span> PSOSEC</span> </a></li>
                   <li> <a href="training1.php"> <i class="bi bi-circle"></i><span>PSOAC</span> </a></li>
                </ul>
          </li>
@@ -83,36 +84,52 @@ adminLogin();
       </aside>
       <main id="main" class="main">
          <div class="pagetitle">
-            <h1>Rank</h1>
+            <h1>Personnel</h1>
             <nav>
                <ol class="breadcrumb">
                   <li class="breadcrumb-item"><a href="index.php">Home</a></li>
-                  <li class="breadcrumb-item active">Rank</li>
+                  <li class="breadcrumb-item active">Dismissed Personnel</li>
                </ol>
+
+               <h1>Dismissed Personnel Records</h1>
          </div>
-    
-         
-                 <div class="card border-0 shadow-sm mb-4">
+
+                        <div class="card border-0 shadow-sm mb-4">
                         <div class="card-body">
 
-                        <div class="d-flex align-items-center justify-content-between mb-3">
-                            <h5 class="card-title m-0 fw-bold"><i class="bi bi-chat-square-heart"></i> Rank</h5>
-                            <button type="button" class="btn btn-success btn-sm shadow-none" data-bs-toggle="modal" data-bs-target="#rank">
-                            <i class="bi bi-file-plus"></i> Add
+                          
+                    
+                        <div class="text-end mb-4">
+                         
+                        </div>
+
+                        <div class="d-flex align-items-center">
+                            <button type="button" class="btn btn-success btn-sm shadow-none mt-2 mb-2 text-start me-2" data-bs-toggle="modal" data-bs-target="#add-room">
+                            <i class="bi bi-file-earmark-spreadsheet"></i> Export to excel
                             </button>
+                            <input type="text" oninput="search_active_personnel(this.value)" class="form-control shadow-none w-25 ms-auto mb-2" placeholder="Type to search..">
                         </div>
 
 
-                           <div class="table-responsive-md" style="height:450px; overflow-y:scroll;">
-                           <table class="table table-hover border">
+                     
+
+
+
+                           <div class="table-responsive-lg" style="height:450px; overflow-y:scroll;">
+                           <table class="table table-hover border text-center">
                             <thead>
                                 <tr class="text-white" style="background-color:#1d3557;">
                                 <th scope="col">No.</th>
-                                <th scope="col">Rank</th>
-                                <th scope="col">Action</th>
+                                <th scope="col">Rank</th> 
+                                <th scope="col">Name</th>
+                                <th scope="col">Gender</th>
+                                <th scope="col">Address</th>
+                                <th scope="col">Unit</th> 
+                                <th scope="col">Batch Training</th> 
+                                <th scope="col">Training</th>  
                                 </tr>
                             </thead>
-                            <tbody id="rank_data">
+                            <tbody id="dismissed_personnel_data">
                           
                              
                            
@@ -123,33 +140,13 @@ adminLogin();
                         </div>
                     </div>
 
-
-
-                    
-        <div class="modal fade" id="rank" data-bs-backdrop="static" data-bs-keyboard= "true" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <form id="rank_form">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <div class="modal-title"><i class="bi bi-clipboard-data"></i> Add Rank</div>
-                        </div>
-                        <div class="modal-body"> 
-                            <div class="mb-3">
-                                <label class="form-label fw-bold">Rank</label>
-                                <input type="text" name="rank_name" class="form-control shadow-none">
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="reset" class="btn btn-secondary shadow-none" data-bs-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-success shadow-none">Submit</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-
-
+    
+    
+    
+ 
+  
       </main>
+
 
 
       <footer id="footer" class="footer">
@@ -167,99 +164,52 @@ adminLogin();
         <script src="assets/js/validate.js"></script>
         <script src="assets/js/main.js"></script> 
         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        
 
-
-
-
-        <script>
-            let rank_form = document.getElementById("rank_form");
-
-
-            rank_form.addEventListener('submit', function(e){
-               e.preventDefault();
-               add_rank();
-            });
-
-            function add_rank(){
-               let data = new FormData();
-               data.append('name',rank_form.elements['rank_name'].value);
-               data.append('add_rank','');
-
-               let xhr = new XMLHttpRequest();
-               xhr.open("POST","./ajax/rank.php",true);
-
-               xhr.onload = function(){
-               var myModalEl = document.getElementById('rank')
-               var modal = bootstrap.Modal.getInstance(myModalEl) // Returns a Bootstrap modal instanceof
-              modal.hide();
-
-            if(this.responseText==1){
-               swal("Good job!", "You Successfully Create!", "success");
-
-                rank_form.elements['rank_name'].values='';
-                get_rank();
-            }else{
-               swal("Error!", "Server Down!", "error");
-            }
-
-        }
-        xhr.send(data);
-
-            };
-
-
-            function get_rank(){
-               let xhr = new XMLHttpRequest();
-               xhr.open("POST","./ajax/rank.php",true);
-               xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
-
-               xhr.onload = function (){
-            document.getElementById('rank_data').innerHTML = this.responseText;
-          }
-
-          xhr.send('get_rank');
-
-               
-            }
-
-
-            function rem_rank(val){
-               let xhr = new XMLHttpRequest();
-               xhr.open("POST","./ajax/rank.php",true);
-               xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
-
-             xhr.onload = function (){
-            if(this.responseText==1){
-               swal("Good job!", "Remove Rank Successfully!", "success");
-                get_rank();
-            }
-            else{
-               swal("Error!", "Server Down!", "success");
-            }
-        }
-
-        xhr.send('rem_rank='+val);
-            }
-
-
-
-
-
-            window.onload = function(){
-               get_rank();
-            }
-
+   
+        
          
-
-        </script>
-
-
-
+                    
+        
+   <script>
 
 
 
+    function get_dismissed_personnel(){
+        let xhr = new XMLHttpRequest();
+        xhr.open("POST","./ajax/new_personnel.php",true);
+        xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+
+        xhr.onload = function(){
+         document.getElementById('dismissed_personnel_data').innerHTML = this.responseText;
+        }
+        xhr.send('get_dismissed_personnel');
+    }
 
 
+
+
+    // function search_active_personnel(newpersonnelname){
+    //     let xhr = new XMLHttpRequest();
+    //     xhr.open("POST","./ajax/new_personnel.php",true);
+    //     xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+
+    //     xhr.onload = function(){
+    //         document.getElementById('retired_personnel_data').innerHTML = this.responseText;
+    //     }
+    //     xhr.send('search_active_personnel&name='+newpersonnelname);
+    // }
+
+    
+
+    window.onload = function(){
+        get_dismissed_personnel();
+    }
+    
+
+
+    </script>
              
+
    </body>
 </html>

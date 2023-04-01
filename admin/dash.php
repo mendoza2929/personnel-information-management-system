@@ -10,7 +10,7 @@ adminLogin();
    <head>
       <meta charset="utf-8">
       <meta content="width=device-width, initial-scale=1.0" name="viewport">
-      <title>Dashboard - Personnel Information Managment System</title>
+      <title>Dashboard - Personnel Training Information Managment System</title>
       <meta name="robots" content="noindex, nofollow">
       <meta content="" name="description">
       <meta content="" name="keywords">
@@ -32,12 +32,16 @@ adminLogin();
 
    <?php 
 
-   $current_user = mysqli_fetch_assoc(mysqli_query($con,"SELECT COUNT(id) AS `count` FROM `personnel` $condition"));
+   $current_user = mysqli_fetch_assoc(mysqli_query($con,"SELECT COUNT(id) AS `count` FROM `personnel`"));
+
+   $training = mysqli_fetch_assoc(mysqli_query($con,"SELECT COUNT(id) AS `count` FROM `personnel` WHERE course='PSOSEC'; "));
+
+   $training1 = mysqli_fetch_assoc(mysqli_query($con,"SELECT COUNT(id) AS `count` FROM `personnel` WHERE course='PSOAC'; "));
    
    ?>
    
       <header id="header" class="header fixed-top d-flex align-items-center">
-         <div class="d-flex align-items-center justify-content-between"> <a href="dash.php" class="logo d-flex align-items-center"> <span class="d-none d-lg-block">R8 Management System</span> </a> <i class="bi bi-list toggle-sidebar-btn"></i></div>
+         <div class="d-flex align-items-center justify-content-between"> <a href="dash.php" class="logo d-flex align-items-center"> <span class="d-none d-lg-block">R8 PIMS</span> </a> <i class="bi bi-list toggle-sidebar-btn"></i></div>
          
          <nav class="header-nav ms-auto">
             <ul class="d-flex align-items-center">
@@ -66,9 +70,20 @@ adminLogin();
                   <li> <a href="course.php"> <i class="bi bi-circle"></i><span>Courses</span> </a></li>
                   <li> <a href="batch.php"> <i class="bi bi-circle"></i><span>Batch</span> </a></li>
                   <li> <a href="address.php"> <i class="bi bi-circle"></i><span>Address</span> </a></li>
+                  <li> <a href="personnel.php"> <i class="bi bi-circle"></i><span>All Record Personnel</span> </a></li>
                </ul>
          </li>
-         <li class="nav-item"> <a class="nav-link " href="personnel.php"> <i class="bi bi-person"></i> <span>Personnel</span> </a></li>
+
+         <li class="nav-item">
+            <a class="nav-link collapsed" data-bs-target="#personnel-nav" data-bs-toggle="collapse" href="#"> <i class="bi bi-menu-button-wide"></i><span>Personnel Record</span><i class="bi bi-chevron-down ms-auto"></i> </a>
+            <ul id="personnel-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+            <li> <a href="new_personnel.php"> <i class="bi bi-circle"></i><span> Active Personnel</span> </a></li>
+            <li> <a href="retired_personnel.php"> <i class="bi bi-circle"></i><span>Retired Personnel</span> </a></li>
+            <li> <a href="suspended_personnel.php"> <i class="bi bi-circle"></i><span>Suspended Personnel</span> </a></li>
+            <li> <a href="dismissed_personnel.php"> <i class="bi bi-circle"></i><span>Dismissed Personnel</span> </a></li>
+            </ul>
+         </li>
+        
          <li class="nav-item">
             <a class="nav-link collapsed" data-bs-target="#training-nav" data-bs-toggle="collapse" href="#"> <i class="bi bi-menu-button-wide"></i><span>Training</span><i class="bi bi-chevron-down ms-auto"></i> </a>
             <ul id="training-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
@@ -80,7 +95,7 @@ adminLogin();
          </ul>
       </aside>
       <main id="main" class="main">
-         <div class="pagetitle">
+         <div class="pagetitle mb-4">
             <h1>Dashboard</h1>
             <nav>
                <ol class="breadcrumb">
@@ -88,7 +103,7 @@ adminLogin();
                   <li class="breadcrumb-item active">Dashboard</li>
                </ol>
 
-               <h1>Welcome to Personnel Information Management System</h1>
+               <h1>Welcome to Personnel Training Information Management System</h1>
          </div>
 
          <section class="section dashboard">
@@ -115,6 +130,60 @@ adminLogin();
                                  <div class="ps-3">
                                     <h6><?php echo $current_user['count']?></h6>
                                     <span class="text-danger small pt-1 fw-bold"></span> <span class="text-muted small pt-2 ps-1">Total Personnel</span>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+
+
+                     <div class="col-xxl-4 col-xl-12">
+                        <div class="card info-card customers-card">
+                           <!--<div class="filter">
+                              <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                              <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                 <li class="dropdown-header text-start">
+                                    <h6>Filter</h6>
+                                 </li>
+                                 <li><a class="dropdown-item" href="#">Today</a></li>
+                                 <li><a class="dropdown-item" href="#">This Month</a></li>
+                                 <li><a class="dropdown-item" href="#">This Year</a></li>
+                              </ul>
+                           </div>-->
+                           <div class="card-body">
+                              <h5 class="card-title">PSOSEC <span>| Record</span></h5>
+                              <div class="d-flex align-items-center">
+                                 <div class="card-icon rounded-circle d-flex align-items-center justify-content-center"> <i class="bi bi-clipboard-data"></i> </div>
+                                 <div class="ps-3">
+                                    <h6><?php echo $training['count']?></h6>
+                                    <span class="text-danger small pt-1 fw-bold"></span> <span class="text-muted small pt-2 ps-1">Public Safety  </span>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+
+
+                     <div class="col-xxl-4 col-xl-12">
+                        <div class="card info-card customers-card">
+                           <!--<div class="filter">
+                              <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                              <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                 <li class="dropdown-header text-start">
+                                    <h6>Filter</h6>
+                                 </li>
+                                 <li><a class="dropdown-item" href="#">Today</a></li>
+                                 <li><a class="dropdown-item" href="#">This Month</a></li>
+                                 <li><a class="dropdown-item" href="#">This Year</a></li>
+                              </ul>
+                           </div>-->
+                           <div class="card-body">
+                              <h5 class="card-title">PSOAC <span>| Record</span></h5>
+                              <div class="d-flex align-items-center">
+                                 <div class="card-icon rounded-circle d-flex align-items-center justify-content-center"> <i class="bi bi-clipboard-data"></i> </div>
+                                 <div class="ps-3">
+                                    <h6><?php echo $training1['count']?></h6>
+                                    <span class="text-danger small pt-1 fw-bold"></span> <span class="text-muted small pt-2 ps-1">Public Safety  </span>
                                  </div>
                               </div>
                            </div>

@@ -41,15 +41,15 @@ if(isset($_POST['get_personnel'])){
     $data = "";
 
     while($row = mysqli_fetch_assoc($res)){
-        if($row['status']==1){
-       
-            $status = "<button  onclick='toggleStatus($row[id],0)'class='btn btn-success btn-sm shadow-none'>Active</button>";
-    
-    }else{
-    
-        $status = "<button onclick='toggleStatus($row[id],1)' class='btn btn-danger btn-sm shadow-none'>Not active</button>";
-    
-    }
+        if ($row['status'] == 1) {
+            $status = "<button onclick='toggleStatus($row[id],0)' class='btn btn-success btn-sm shadow-none'>Active</button>";
+        } else if ($row['status'] == 2) {
+            $status = "<button onclick='toggleStatus($row[id],1)' class='btn btn-danger btn-sm shadow-none'>Dismissed</button>";
+        } else if ($row['status'] == 3) {
+            $status = "<button onclick='toggleStatus($row[id],2)' class='btn btn-danger btn-sm shadow-none'>Suspended</button>";
+        } else {
+            $status = "<button onclick='toggleStatus($row[id],3)' class='btn btn-danger btn-sm shadow-none'>Retired</button>";;
+        }
 
     if($row['training_status']==1){
        

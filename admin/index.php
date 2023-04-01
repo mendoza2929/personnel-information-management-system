@@ -19,7 +19,7 @@ if((isset($_SESSION['adminLogin']) && $_SESSION['adminLogin']==true)){
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Personnl Information Management System</title>
-    <link rel="stylesheet" href="../admin//css/style.css">
+    <link rel="stylesheet" href="../admin/css/styles.css">
     <link href="../img/PNP_PRO_9_logo.webp" rel="icon">
 </head>
 <body>
@@ -30,7 +30,7 @@ if((isset($_SESSION['adminLogin']) && $_SESSION['adminLogin']==true)){
     <img src="../img/PNP_PRO_9_logo.webp" alt="">
   </div>
   <div class="title_container">
-    <p class="title">Personnel Information Management System</p>
+    <p class="title">Personnel Training Information Management System</p>
     <span class="subtitle">Admin</span>
   </div>
   <br>
