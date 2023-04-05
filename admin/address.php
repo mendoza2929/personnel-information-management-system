@@ -72,13 +72,32 @@ adminLogin();
             </ul>
          </li>
          
+               
          <li class="nav-item">
-            <a class="nav-link collapsed" data-bs-target="#training-nav" data-bs-toggle="collapse" href="#"> <i class="bi bi-menu-button-wide"></i><span>Traning</span><i class="bi bi-chevron-down ms-auto"></i> </a>
-            <ul id="training-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-            <li> <a href="training.php"> <i class="bi bi-circle"></i><span> PSOSEC</span> </a></li>
-            <li> <a href="training1.php"> <i class="bi bi-circle"></i><span>PSOAC</span> </a></li>
-               </ul>
-         </li>
+    <a class="nav-link collapsed" data-bs-target="#training-nav" data-bs-toggle="collapse" href="#">
+        <i class="bi bi-menu-button-wide"></i><span>Training</span><i class="bi bi-chevron-down ms-auto"></i>
+    </a>
+    <ul id="training-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+        <?php
+        $res = selectAll('course');
+        while($opt = mysqli_fetch_assoc($res)){
+            // Get the id value of the current course
+            $id = $opt['id'];
+            
+            // Check if the id value is set in the query parameter
+            $active = '';
+            if(isset($_GET['id']) && $_GET['id'] == $id){
+                // Add the 'active' class to highlight the current course
+                $active = 'active';
+            }
+            
+            // Display the course in the navigation menu
+            echo "<li><a class='$active' href='course.php?id=$id'><i class='bi bi-circle'></i><span>$opt[name]</span></a></li>";
+        }
+        ?>
+    </ul>
+</li>
+      
       
          </ul>
       </aside>
@@ -124,6 +143,40 @@ adminLogin();
                         </div>
                         
                     </div>
+
+                    
+                 <div class="card border-0 shadow-sm mb-4">
+                        <div class="card-body">
+
+                        <div class="d-flex align-items-center justify-content-between mb-3">
+                            <h5 class="card-title m-0 fw-bold"><i class="bi bi-chat-square-heart"></i> City</h5>
+                            <button type="button" class="btn btn-success btn-sm shadow-none" data-bs-toggle="modal" data-bs-target="#city ">
+                            <i class="bi bi-file-plus"></i> Add
+                            </button>
+                        </div>
+
+
+                           <div class="table-responsive-md" style="height:450px; overflow-y:scroll;">
+                           <table class="table table-hover border">
+                            <thead>
+                                <tr class="text-white" style="background-color:#1d3557;">
+                                <th scope="col">No.</th>
+                                <th scope="col">City</th>
+                                <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="city_data">
+                          
+                             
+                           
+                            </tbody>
+                            </table>
+                            </div>
+
+                        </div>
+                        
+                    </div>
+
 
                     
                  <div class="card border-0 shadow-sm mb-4">
@@ -184,6 +237,31 @@ adminLogin();
             </div>
         </div>
 
+        
+                    
+        <div class="modal fade" id="city" data-bs-backdrop="static" data-bs-keyboard= "true" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <form id="city_form">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <div class="modal-title"><i class="bi bi-clipboard-data"></i> City</div>
+                        </div>
+                        <div class="modal-body"> 
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">City </label>
+                                <input type="text" name="city_name" class="form-control shadow-none">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="reset" class="btn btn-secondary shadow-none" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-success shadow-none">Submit</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
 
         
                     
@@ -237,6 +315,8 @@ adminLogin();
 
 
             let barangay_form = document.getElementById("barangay_form");
+
+            let city_form= document.getElementById("city_form");
             
             let province_form = document.getElementById("province_form");
 
@@ -343,6 +423,7 @@ adminLogin();
 
             };
 
+   
 
             function get_province(){
                let xhr = new XMLHttpRequest();
@@ -359,12 +440,109 @@ adminLogin();
             }
 
 
+            
+            function rem_province(val){
+               let xhr = new XMLHttpRequest();
+               xhr.open("POST","./ajax/address.php",true);
+               xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+
+             xhr.onload = function (){
+            if(this.responseText==1){
+               swal("Good job!", "Remove province Successfully!", "success");
+                get_province();
+            }
+            else{
+               swal("Error!", "Server Down!", "success");
+            }
+        }
+
+        xhr.send('rem_province='+val);
+            }
+
+
+
+
+
+
+
+
+
+
+
+            city_form.addEventListener('submit', function(e){
+             e.preventDefault();
+             add_city();  
+      });
+
+      
+
+      function add_city(){
+         let data = new FormData();
+               data.append('city',city_form.elements['city_name'].value);
+               data.append('add_city','');
+
+               let xhr = new XMLHttpRequest();
+               xhr.open("POST","./ajax/address.php",true);
+
+               xhr.onload = function(){
+               var myModalEl = document.getElementById('city')
+               var modal = bootstrap.Modal.getInstance(myModalEl) // Returns a Bootstrap modal instanceof
+              modal.hide();
+
+            if(this.responseText==1){
+               swal("Good job!", "You Successfully Create!", "success");
+
+               city_form.elements['city_name'].values='';
+               get_city();
+            }else{
+               swal("Error!", "Server Down!", "error");
+            }
+
+        }
+        xhr.send(data);
+      }
+
+
+      function get_city(){
+               let xhr = new XMLHttpRequest();
+               xhr.open("POST","./ajax/address.php",true);
+               xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+
+               xhr.onload = function (){
+            document.getElementById('city_data').innerHTML = this.responseText;
+          }
+
+          xhr.send('get_city');
+
+               
+            }
+
+
+            function rem_city(val){
+               let xhr = new XMLHttpRequest();
+               xhr.open("POST","./ajax/address.php",true);
+               xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+
+             xhr.onload = function (){
+            if(this.responseText==1){
+               swal("Good job!", "Remove City Successfully!", "success");
+                get_city();
+            }
+            else{
+               swal("Error!", "Server Down!", "success");
+            }
+        }
+
+        xhr.send('rem_city='+val);
+            }
+
 
 
 
 
             window.onload = function(){
                get_barangay();
+               get_city();
                get_province();
             }
 

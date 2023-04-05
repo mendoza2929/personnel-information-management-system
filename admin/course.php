@@ -73,12 +73,30 @@ adminLogin();
          </li>
          
          <li class="nav-item">
-            <a class="nav-link collapsed" data-bs-target="#training-nav" data-bs-toggle="collapse" href="#"> <i class="bi bi-menu-button-wide"></i><span>Traning</span><i class="bi bi-chevron-down ms-auto"></i> </a>
-            <ul id="training-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-            <li> <a href="training.php"> <i class="bi bi-circle"></i><span> PSOSEC</span> </a></li>
-                  <li> <a href="training1.php"> <i class="bi bi-circle"></i><span>PSOAC</span> </a></li>
-               </ul>
-         </li>
+    <a class="nav-link collapsed" data-bs-target="#training-nav" data-bs-toggle="collapse" href="#">
+        <i class="bi bi-menu-button-wide"></i><span>Training</span><i class="bi bi-chevron-down ms-auto"></i>
+    </a>
+    <ul id="training-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+        <?php
+        $res = selectAll('course');
+        while($opt = mysqli_fetch_assoc($res)){
+            // Get the id value of the current course
+            $id = $opt['id'];
+            
+            // Check if the id value is set in the query parameter
+            $active = '';
+            if(isset($_GET['id']) && $_GET['id'] == $id){
+                // Add the 'active' class to highlight the current course
+                $active = 'active';
+            }
+            
+            // Display the course in the navigation menu
+            echo "<li><a class='$active' href='course.php?id=$id'><i class='bi bi-circle'></i><span>$opt[name]</span></a></li>";
+        }
+        ?>
+    </ul>
+</li>
+      
       
          </ul>
       </aside>
@@ -154,6 +172,92 @@ adminLogin();
             </div>
         </div>
 
+<?php 
+
+
+
+
+?>
+        
+              
+    <div class="modal fade" id="add_personnel" data-bs-backdrop="static" data-bs-keyboard= "true" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-md" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"><i class="bi bi-book"></i> Course Training</h5>
+        <button type="button" class="btn-close shadow-none" data-bs-dismiss="modal" aria-label="Close"><span aria-hidden="true"></button>
+      </div>
+      <div class="modal-body">
+      <div id="image-alert">
+
+</div>
+            <div class="border-bottom border-3 pb-3 mb-3">
+                <form id="add_personnel_course">
+                <div class="row">
+                <label class="form-label fw-bold">Add Course Training</label>
+
+            
+                                <label class="form-label fw-bold">Batch</label>
+                                <select class='form-select shadow-none mb-2' aria-label='Default select example' name='batch' required>
+                                <option disabled selected value="">Select a Batch</option> <!-- placeholder option -->
+                                <?php
+                                $res = selectAll('batch');
+                                while($opt = mysqli_fetch_assoc($res)){
+                                    echo "<option value='$opt[name]'>$opt[name]</option>";
+                                }
+                                ?>
+                            </select>
+                            
+                
+                <input type="text" class="form-control mb-2 shadow-none" list="personnel_list" name="personnel_name" placeholder="Type to search personnel ID">
+                <datalist id="personnel_list" >
+                <?php
+                                $res = selectAll('personnel');
+                                while($opt = mysqli_fetch_assoc($res)){
+                                    echo "<option value='$opt[id], $opt[last] $opt[first] $opt[suffix]'></option>";
+                                }
+                         ?>
+                </datalist>
+
+                <input type="text" class="form-control mb-2 shadow-none" list="personnel_list_name" name="personnel_name_list" placeholder="Type to search personnel ID">
+                <datalist id="personnel_list_name">
+                <?php
+                                $res = selectAll('personnel');
+                                while($opt = mysqli_fetch_assoc($res)){
+                                    echo "<option value='$opt[rank], $opt[last] $opt[first] $opt[suffix]'></option>";
+                                }
+                         ?>
+                </datalist>
+
+              
+
+                    <input type="hidden" name="course_id">
+                    </div>
+                     <button type="submit" class="btn btn-success shadow-none">Submit</button>
+                 </form>
+            </div>
+            <div class="table-responsive-lg" style="height:350px; overflow-y:scroll;">
+                           <table class="table table-hover border text-center">
+                            <thead>
+                                <tr class="text-white sticky-top" style="background-color:#1d3557;">
+                                <th scope="col">Class Batch</th>
+                                <th scope="col">Personnel Name</th>
+                                <th scope="col">Date</th>
+                                </tr>
+                            </thead>
+                            <tbody id="course-personnel-data">
+                            </tbody>
+                            </table>
+                            </div>
+         </div>
+     </div>
+    </div>
+</div>
+
+
+
+
+
 
       </main>
 
@@ -173,6 +277,7 @@ adminLogin();
         <script src="assets/js/validate.js"></script>
         <script src="assets/js/main.js"></script> 
         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+       
 
 
 
@@ -188,8 +293,8 @@ adminLogin();
 
             function add_course(){
                let data = new FormData();
-               data.append('name',course_form.elements['course_name'].value);
-               data.append('desc',course_form.elements['desc_name'].value);
+               data.append('course_name',course_form.elements['course_name'].value);
+               data.append('desc_name',course_form.elements['desc_name'].value);
                data.append('add_course','');
 
                let xhr = new XMLHttpRequest();
@@ -250,10 +355,81 @@ adminLogin();
 
 
 
+            
+    let add_personnel_course = document.getElementById('add_personnel_course');
+
+    add_personnel_course.addEventListener('submit', function(e){
+    e.preventDefault();
+    add_course_personnel();
+});
+
+
+function add_course_personnel(){
+    let data = new FormData();
+    data.append('batch',add_personnel_course.elements['batch'].value);
+    data.append('personnel_name',add_personnel_course.elements['personnel_name'].value);
+    data.append('personnel_name_list',add_personnel_course.elements['personnel_name_list'].value);
+    data.append('course_id',add_personnel_course.elements['course_id'].value);
+    data.append('add_course_personnel','');
+
+    let xhr  = new XMLHttpRequest();
+    xhr.open("POST","./ajax/course.php",true);
+    
+    
+    xhr.onload = function(){
+        var myModalEl = document.getElementById('add_personnel')
+        var modal = bootstrap.Modal.getInstance(myModalEl) // Returns a Bootstrap modal instanceof
+        modal.hide();
+
+        if(this.responseText==1){
+         // alertCourse('success','New Image Added','image-alert');
+            swal("Success!", "You Successfully Enter a course!", "success");
+            // add_course_personnel(add_personnel_course.elements['personnel_id'].value,document.querySelectorAll("#add_personnel .modal-title").innerText);
+            add_personnel_course.reset();
+          
+            // get_personnel_course();
+            
+        }else{
+            swal("Error!", "Server Down!", "error");
+        }
+
+    }
+    xhr.send(data);
+}
+
+
+function personnel_course(id){
+   add_personnel_course.elements['course_id'].value = id;
+   add_personnel_course.elements['batch'].value= '';
+    add_personnel_course.elements['personnel_name_list'].value='';
+   add_personnel_course.elements['personnel_name'].value='';
+
+        
+        let xhr = new XMLHttpRequest();
+        xhr.open("POST","./ajax/course.php",true);
+        xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+
+        xhr.onload = function(){
+         //   document.querySelectorAll("#add_personnel .modal-title").innerHTML = id;
+            document.getElementById('course-personnel-data').innerHTML = this.responseText;
+        }
+
+        xhr.send('get_personnel_course='+id);
+    }
+
+
+
+
+
+
+
+
+
 
 
             window.onload = function(){
                get_course();
+               // get_personnel_course();
             }
 
          

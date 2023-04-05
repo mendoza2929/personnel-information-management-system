@@ -72,13 +72,31 @@ adminLogin();
             <li> <a href="dismissed_personnel.php"> <i class="bi bi-circle"></i><span>Dismissed Personnel</span> </a></li>
             </ul>
          </li>
+             
          <li class="nav-item">
-            <a class="nav-link collapsed" data-bs-target="#training-nav" data-bs-toggle="collapse" href="#"> <i class="bi bi-menu-button-wide"></i><span>Training</span><i class="bi bi-chevron-down ms-auto"></i> </a>
-            <ul id="training-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                    <li> <a href="training.php"> <i class="bi bi-circle"></i><span> PSOSEC</span> </a></li>
-                  <li> <a href="training1.php"> <i class="bi bi-circle"></i><span>PSOAC</span> </a></li>
-               </ul>
-         </li>
+    <a class="nav-link collapsed" data-bs-target="#training-nav" data-bs-toggle="collapse" href="#">
+        <i class="bi bi-menu-button-wide"></i><span>Training</span><i class="bi bi-chevron-down ms-auto"></i>
+    </a>
+    <ul id="training-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+        <?php
+        $res = selectAll('course');
+        while($opt = mysqli_fetch_assoc($res)){
+            // Get the id value of the current course
+            $id = $opt['id'];
+            
+            // Check if the id value is set in the query parameter
+            $active = '';
+            if(isset($_GET['id']) && $_GET['id'] == $id){
+                // Add the 'active' class to highlight the current course
+                $active = 'active';
+            }
+            
+            // Display the course in the navigation menu
+            echo "<li><a class='$active' href='course.php?id=$id'><i class='bi bi-circle'></i><span>$opt[name]</span></a></li>";
+        }
+        ?>
+    </ul>
+</li>
       
          </ul>
       </aside>
@@ -128,7 +146,6 @@ adminLogin();
                                 <th scope="col">Address</th>
                                 <th scope="col">Unit</th> 
                                 <th scope="col">Batch</th> 
-                                <th scope="col">Course</th> 
                                 <th scope="col">Status</th> 
                                 <th scope="col">Action</th> 
                                 </tr>
@@ -144,9 +161,9 @@ adminLogin();
                         </div>
                     </div>
 
-    
-    
-    <!--add personnel-->
+
+                    
+       <!--add personnel-->
                           
       <div class="modal fade" id="add-personnel" data-bs-backdrop="static" data-bs-keyboard= "true" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg">
@@ -264,6 +281,7 @@ adminLogin();
                                 ?>
                             </select>
                             </div>
+
                             <div class="col-md-3 mb-3">
                                 <label class="form-label fw-bold">Course</label>
                                 <select class='form-select shadow-none' aria-label='Default select example' name='course' required>
@@ -276,6 +294,9 @@ adminLogin();
                                 ?>
                             </select>
                             </div>
+                            
+                            
+                            
 
                      
                           
@@ -291,20 +312,20 @@ adminLogin();
         </div>
 
 
+       
 
-                    
 
- 
+
+    
+    
   
       </main>
 
 
 
-      <footer id="footer" class="footer">
-         <div class="copyright"> &copy; Copyright <strong><span>reuel mendoza dev</span></strong>. All Rights Reserved</div>
-       
-      </footer>
+      
       <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>  
+
         <script src="assets/js/apexcharts.min.js"></script>
         <script src="assets/js/bootstrap.bundle.min.js"></script>
         <script src="assets/js/chart.min.js"></script>
@@ -313,16 +334,14 @@ adminLogin();
         <script src="assets/js/simple-datatables.js"></script>
         <script src="assets/js/tinymce.min.js"></script>
         <script src="assets/js/validate.js"></script>
-        <script src="assets/js/main.js"></script> 
+        <script src="assets/js/main.js"></script>
         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-        
+
+         <!---edit personnel-->
 
 
-        <!---edit personnel-->
-
-        
-                          
-        <div class="modal fade" id="edit-personnel" data-bs-backdrop="static" data-bs-keyboard= "true" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+             
+         <div class="modal fade" id="edit-personnel" data-bs-backdrop="static" data-bs-keyboard= "true" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg">
                 <form id="edit_personnel" autocomplete="off">
                     <div class="modal-content">
@@ -452,6 +471,8 @@ adminLogin();
                             </select>
                             </div>
                             
+                            
+                            
 
                      
                           
@@ -465,9 +486,25 @@ adminLogin();
                 </form>
             </div>
         </div>
-                    
+
+
+
+       
+    
+        
+       
+
+   
+        
+
+
+
+   
         
    <script>
+
+
+
 
 
     let personnel_form = document.getElementById('personnel_form')
@@ -585,7 +622,7 @@ function toggleStatus(id,val){
        xhr.send('edit_personnel='+id);
     }
 
-
+    
     edit_personnel.addEventListener('submit',function(e){
         e.preventDefault();
         submit_edit_personnel();
@@ -645,10 +682,76 @@ function toggleStatus(id,val){
         xhr.send('search_personnel&name='+personnelname);
     }
 
+
+
+
+    // let add_form_course = document.getElementById('add_form_course');
+
+    // add_form_course.addEventListener('submit', function(e){
+    //     e.preventDefault();
+    //     add_course();
+    // });
+
+
+    // function add_course(){
+    //     let data = new FormData();
+    //     data.append('batch',add_form_course.elements['batch'].value);
+    //     data.append('course',add_form_course.elements['course'].value);
+    //     data.append('start',add_form_course.elements['start'].value);
+    //     data.append('end',add_form_course.elements['end'].value);
+    //     data.append('personnel_id',add_form_course.elements['personnel_id'].value);
+    //     data.append('add_course','');
+
+    //     let xhr  = new XMLHttpRequest();
+    //     xhr.open("POST","./ajax/personnel.php",true);
+        
+        
+    //     xhr.onload = function(){
+    //         var myModalEl = document.getElementById('edit_course')
+    //         var modal = bootstrap.Modal.getInstance(myModalEl) // Returns a Bootstrap modal instanceof
+    //         modal.hide();
+
+    //         if(this.responseText==1){
+    //             swal("Success!", "You Successfully Enter a course!", "success");
+    //             // personnel_course(add_form_course.elements['personnel_id'].value);
+    //             add_form_course.reset();
+    //             // get_course();
+                
+    //         }else{
+    //             swal("Error!", "Server Down!", "error");
+    //         }
+
+    //     }
+    //     xhr.send(data);
+    // }
+
+
+    // function personnel_course(id){
+    //         // add_form_course.elements['personnel_id'].value = id;
+    //         // add_form_course.elements['batch'].value= '';
+    //         // add_form_course.elements['course'].value= '';
+    //     // add_form_course.elements['start'].value= '';
+    //     // add_form_course.elements['end'].value= '';
+
+        
+    //     let xhr = new XMLHttpRequest();
+    //     xhr.open("POST","./ajax/personnel.php",true);
+    //     xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+
+    //     xhr.onload = function(){
+    //         document.getElementById('course-data').innerHTML = this.responseText;
+    //     }
+
+    //     xhr.send('get_course='+id);
+    // }
+
+
+
     
 
     window.onload = function(){
         get_personnel();
+        // get_course();
     }
     
 

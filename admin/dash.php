@@ -41,7 +41,7 @@ adminLogin();
    ?>
    
       <header id="header" class="header fixed-top d-flex align-items-center">
-         <div class="d-flex align-items-center justify-content-between"> <a href="dash.php" class="logo d-flex align-items-center"> <span class="d-none d-lg-block">R8 PIMS</span> </a> <i class="bi bi-list toggle-sidebar-btn"></i></div>
+         <div class="d-flex align-items-center justify-content-between"> <a href="dash.php" class="logo d-flex align-items-center"> <span class="d-none d-lg-block">R8 PTIMS</span> </a> <i class="bi bi-list toggle-sidebar-btn"></i></div>
          
          <nav class="header-nav ms-auto">
             <ul class="d-flex align-items-center">
@@ -71,6 +71,7 @@ adminLogin();
                   <li> <a href="batch.php"> <i class="bi bi-circle"></i><span>Batch</span> </a></li>
                   <li> <a href="address.php"> <i class="bi bi-circle"></i><span>Address</span> </a></li>
                   <li> <a href="personnel.php"> <i class="bi bi-circle"></i><span>All Record Personnel</span> </a></li>
+                
                </ul>
          </li>
 
@@ -85,12 +86,14 @@ adminLogin();
          </li>
         
          <li class="nav-item">
-            <a class="nav-link collapsed" data-bs-target="#training-nav" data-bs-toggle="collapse" href="#"> <i class="bi bi-menu-button-wide"></i><span>Training</span><i class="bi bi-chevron-down ms-auto"></i> </a>
-            <ul id="training-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-            <li> <a href="training.php"> <i class="bi bi-circle"></i><span> PSOSEC</span> </a></li>
-                  <li> <a href="training1.php"> <i class="bi bi-circle"></i><span>PSOAC</span> </a></li>
-               </ul>
-         </li>
+    <a class="nav-link collapsed" data-bs-target="#training-nav" data-bs-toggle="collapse" href="#">
+        <i class="bi bi-menu-button-wide"></i><span>Training</span><i class="bi bi-chevron-down ms-auto"></i>
+    </a>
+    <ul id="training-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+    <li> <a href="training.php"> <i class="bi bi-circle"></i><span> BSIT</span> </a></li>
+    </ul>
+</li>
+      
       
          </ul>
       </aside>

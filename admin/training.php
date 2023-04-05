@@ -73,12 +73,29 @@ adminLogin();
             </ul>
          </li>
          <li class="nav-item">
-            <a class="nav-link collapsed" data-bs-target="#training-nav" data-bs-toggle="collapse" href="#"> <i class="bi bi-menu-button-wide"></i><span>Training</span><i class="bi bi-chevron-down ms-auto"></i> </a>
-            <ul id="training-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-            <li> <a href="training.php"> <i class="bi bi-circle"></i><span> PSOSEC</span> </a></li>
-                  <li> <a href="training1.php"> <i class="bi bi-circle"></i><span>PSOAC</span> </a></li>
-               </ul>
-         </li>
+    <a class="nav-link collapsed" data-bs-target="#training-nav" data-bs-toggle="collapse" href="#">
+        <i class="bi bi-menu-button-wide"></i><span>Training</span><i class="bi bi-chevron-down ms-auto"></i>
+    </a>
+    <ul id="training-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+        <?php
+        $res = selectAll('course');
+        while($opt = mysqli_fetch_assoc($res)){
+            // Get the id value of the current course
+            $id = $opt['id'];
+            
+            // Check if the id value is set in the query parameter
+            $active = '';
+            if(isset($_GET['id']) && $_GET['id'] == $id){
+                // Add the 'active' class to highlight the current course
+                $active = 'active';
+            }
+            
+            // Display the course in the navigation menu
+            echo "<li><a class='$active' href='course.php?id=$id'><i class='bi bi-circle'></i><span>$opt[name]</span></a></li>";
+        }
+        ?>
+    </ul>
+</li>
       
          </ul>
       </aside>
@@ -100,14 +117,14 @@ adminLogin();
                           
                     
                         <div class="text-end mb-4">
-                           
+                          
                         </div>
 
                         <div class="d-flex align-items-center">
                             <button type="button" class="btn btn-success btn-sm shadow-none mt-2 mb-2 text-start me-2" data-bs-toggle="modal" data-bs-target="#add-room">
                             <i class="bi bi-file-earmark-spreadsheet"></i> Export to excel
                             </button>
-                            <!--<input type="text" oninput="search_training(this.value)" class="form-control shadow-none w-25 ms-auto mb-2" placeholder="Type to search..">-->
+                            <input type="text" oninput="search_training(this.value)" class="form-control shadow-none w-25 ms-auto mb-2" placeholder="Type to search..">
                         </div>
 
 
@@ -120,10 +137,9 @@ adminLogin();
                             <thead>
                                 <tr class="text-white" style="background-color:#1d3557;">
                                 <th scope="col">No.</th>
-                                <th scope="col">Rank</th> 
+                                <th scope="col">Class Bath</th> 
                                 <th scope="col">Name</th>
-                                <th scope="col">Unit</th> 
-                                <th scope="col">Batch</th> 
+                                <th scope="col">Date</th> 
                                 <th scope="col">Status</th> 
                                 </tr>
                             </thead>
@@ -141,6 +157,65 @@ adminLogin();
     
     
     <!--add personnel-->
+
+    <div class="modal fade" id="add-course" data-bs-backdrop="static" data-bs-keyboard= "true" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-md">
+                <form id="personnel_form" autocomplete="off">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <div class="modal-title fw-bold"><i class="bi bi-plus-square"></i> Add Personnel Training</div>
+                        </div>
+                        <div class="modal-body"> 
+                            <div class="row">
+                            <div class="col-md-6 mb-3 mb-3">
+                                <label class="form-label fw-bold">Class Batch</label>
+                                <select class='form-select shadow-none mb-2' aria-label='Default select example' name='batch' required id='batch-select' required>
+                                <option disabled selected value="">Select a Class Batch</option> <!-- placeholder option -->
+                                <?php
+                                $res = selectAll('batch');
+                                while($opt = mysqli_fetch_assoc($res)){
+                                    echo "<option value='$opt[name]'>$opt[name]</option>";
+                                }
+                                ?>
+                            </select>
+                            <label class="form-label fw-bold">Personnel </label>
+                            <input type="text" class="form-control mb-2 shadow-none" list="personnel_list" name="personnel_name" placeholder="Type to search personnel">
+                            <datalist id="personnel_list">
+                            <?php
+                                $res = selectAll('personnel');
+                                while($opt = mysqli_fetch_assoc($res)){
+                                    echo "<option value='$opt[rank], $opt[last] $opt[first] $opt[suffix] '></option>";
+                                }
+                                ?>
+                                </datalist>
+                      
+                            <tbody id="training_data">
+                          
+                             
+                           
+                            </tbody>
+                            </table>
+
+
+                              
+                           
+                     
+                          
+                            
+                        </div>
+                        <div class="modal-footer">
+                            <button type="reset" class="btn btn-secondary shadow-none" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-success shadow-none">Submit</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+       
+
+
      
 
  
@@ -169,6 +244,45 @@ adminLogin();
 
         <!---edit personnel-->
    <script>
+
+
+
+let personnel_form = document.getElementById("personnel_form");
+
+
+personnel_form.addEventListener('submit', function(e){
+   e.preventDefault();
+   add_training();
+});
+
+function add_training(){
+   let data = new FormData();
+   data.append('batch',personnel_form.elements['batch'].value);
+   data.append('personnel_name',personnel_form.elements['personnel_name'].value);
+   data.append('add_training','');
+
+   let xhr = new XMLHttpRequest();
+   xhr.open("POST","./ajax/training.php",true);
+
+   xhr.onload = function(){
+   var myModalEl = document.getElementById('add-course')
+   var modal = bootstrap.Modal.getInstance(myModalEl) // Returns a Bootstrap modal instanceof
+  modal.hide();
+
+if(this.responseText==1){
+   swal("Good job!", "You Successfully Create!", "success");
+
+//    personnel_form.elements['batch'].values='';
+//    personnel_form.elements['personnel_name'].values='';
+get_training();
+}else{
+   swal("Error!", "Server Down!", "error");
+}
+
+}
+xhr.send(data);
+
+};
 
 
     function get_training(){
@@ -203,18 +317,26 @@ function toggleStatus(id,val){
     }
 
 
+//     function downloadCertificate(certificate_file) {
+//     const a = document.createElement("a");
+//     a.href = certificate_file;
+//     a.download = "certificate.jpg";
+//     a.click();
+// }
 
 
-    function search_training(search_training){
-        let xhr = new XMLHttpRequest();
-        xhr.open("POST","./ajax/training.php",true);
-        xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
 
-        xhr.onload = function(){
-            document.getElementById('training_data').innerHTML = this.responseText;
-        }
-        xhr.send('search_training&name='+search_training);
-    }
+
+//     function search_training(search_training){
+//         let xhr = new XMLHttpRequest();
+//         xhr.open("POST","./ajax/training.php",true);
+//         xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+
+//         xhr.onload = function(){
+//             document.getElementById('training_data').innerHTML = this.responseText;
+//         }
+//         xhr.send('search_training&name='+search_training);
+//     }
 
     
 

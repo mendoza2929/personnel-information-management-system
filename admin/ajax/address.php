@@ -82,7 +82,7 @@ if(isset($_POST['get_province'])){
         <td>
 
 
-        <button type="button" onclick="rem_barangay($row[id])" class="btn btn-danger btn-sm shadow-none">
+        <button type="button" onclick="rem_province($row[id])" class="btn btn-danger btn-sm shadow-none">
         <i class="bi bi-trash"></i>Delete
          </button>
         
@@ -95,6 +95,70 @@ if(isset($_POST['get_province'])){
 
   
 }
+
+
+if(isset($_POST['rem_province'])){
+    $frm_data = filteration($_POST);
+    $values = [$frm_data['rem_province']];
+
+    $q = "DELETE FROM `province` WHERE `id`=?";
+    $res = delete($q, $values,'i');
+    echo $res;
+}
+
+
+
+
+
+if(isset($_POST['add_city'])){
+    $frm_data = filteration($_POST);
+
+    $q = "INSERT INTO `city` (`city`) VALUES (?)";
+    $values = [$frm_data['city']];
+    $res = insert($q,$values,'s');
+    echo $res;
+}
+
+if(isset($_POST['get_city'])){
+    
+    $res =selectAll('city');
+    $i = 1;
+
+
+    while($row = mysqli_fetch_assoc($res)){
+        echo <<<data
+
+        <tr class="align-middle">
+        <td>$i</td>
+        <td>$row[city]</td>
+        <td>
+
+
+        <button type="button" onclick="rem_city($row[id])" class="btn btn-danger btn-sm shadow-none">
+        <i class="bi bi-trash"></i>Delete
+         </button>
+        
+        </td>
+        </tr>
+
+        data;
+        $i++;
+    }
+
+
+  
+}
+
+
+if(isset($_POST['rem_city'])){
+    $frm_data = filteration($_POST);
+    $values = [$frm_data['rem_city']];
+
+    $q = "DELETE FROM `city` WHERE `id`=?";
+    $res = delete($q, $values,'i');
+    echo $res;
+}
+
 
 
 

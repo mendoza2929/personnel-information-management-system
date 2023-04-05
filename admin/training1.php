@@ -73,12 +73,30 @@ adminLogin();
             </ul>
          </li>
          <li class="nav-item">
-            <a class="nav-link collapsed" data-bs-target="#training-nav" data-bs-toggle="collapse" href="#"> <i class="bi bi-menu-button-wide"></i><span>Training</span><i class="bi bi-chevron-down ms-auto"></i> </a>
-            <ul id="training-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                  <li> <a href="training.php"> <i class="bi bi-circle"></i><span> PSOSEC</span> </a></li>
-                  <li> <a href="training1.php"> <i class="bi bi-circle"></i><span>PSOAC</span> </a></li>
-               </ul>
-         </li>
+    <a class="nav-link collapsed" data-bs-target="#training-nav" data-bs-toggle="collapse" href="#">
+        <i class="bi bi-menu-button-wide"></i><span>Training</span><i class="bi bi-chevron-down ms-auto"></i>
+    </a>
+    <ul id="training-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+        <?php
+        $res = selectAll('course');
+        while($opt = mysqli_fetch_assoc($res)){
+            // Get the id value of the current course
+            $id = $opt['id'];
+            
+            // Check if the id value is set in the query parameter
+            $active = '';
+            if(isset($_GET['id']) && $_GET['id'] == $id){
+                // Add the 'active' class to highlight the current course
+                $active = 'active';
+            }
+            
+            // Display the course in the navigation menu
+            echo "<li><a class='$active' href='course.php?id=$id'><i class='bi bi-circle'></i><span>$opt[name]</span></a></li>";
+        }
+        ?>
+    </ul>
+</li>
+      
       
          </ul>
       </aside>

@@ -10,7 +10,7 @@ adminLogin();
    <head>
       <meta charset="utf-8">
       <meta content="width=device-width, initial-scale=1.0" name="viewport">
-      <title>Dismissed Personnel - Personnel Training Information Managment System</title>
+      <title>Course - Personnel Training Information Managment System</title>
       <meta name="robots" content="noindex, nofollow">
       <meta content="" name="description">
       <meta content="" name="keywords">
@@ -26,7 +26,6 @@ adminLogin();
       <link href="assets/css/remixicon.css" rel="stylesheet">
       <link href="assets/css/simple-datatables.css" rel="stylesheet">
       <link href="assets/css/styles.css" rel="stylesheet">
-      
    </head>
    <body>
    
@@ -72,7 +71,7 @@ adminLogin();
             <li> <a href="dismissed_personnel.php"> <i class="bi bi-circle"></i><span>Dismissed Personnel</span> </a></li>
             </ul>
          </li>
-               
+             
          <li class="nav-item">
     <a class="nav-link collapsed" data-bs-target="#training-nav" data-bs-toggle="collapse" href="#">
         <i class="bi bi-menu-button-wide"></i><span>Training</span><i class="bi bi-chevron-down ms-auto"></i>
@@ -101,51 +100,37 @@ adminLogin();
       </aside>
       <main id="main" class="main">
          <div class="pagetitle">
-            <h1>Personnel</h1>
+            <h1>Courses</h1>
             <nav>
                <ol class="breadcrumb">
                   <li class="breadcrumb-item"><a href="index.php">Home</a></li>
-                  <li class="breadcrumb-item active">Dismissed Personnel</li>
+                  <li class="breadcrumb-item active">Course</li>
                </ol>
-
-               <h1>Dismissed Personnel Records</h1>
          </div>
-
-                        <div class="card border-0 shadow-sm mb-4">
+    
+         
+                 <div class="card border-0 shadow-sm mb-4">
                         <div class="card-body">
 
-                          
-                    
-                        <div class="text-end mb-4">
-                         
-                        </div>
-
-                        <div class="d-flex align-items-center">
-                            <button type="button" class="btn btn-success btn-sm shadow-none mt-2 mb-2 text-start me-2" data-bs-toggle="modal" data-bs-target="#add-room">
-                            <i class="bi bi-file-earmark-spreadsheet"></i> Export to excel
+                        <div class="d-flex align-items-center justify-content-between mb-3">
+                            <h5 class="card-title m-0 fw-bold"><i class="bi bi-chat-square-heart"></i> Course</h5>
+                            <button type="button" class="btn btn-success btn-sm shadow-none" data-bs-toggle="modal" data-bs-target="#course">
+                            <i class="bi bi-file-plus"></i> Add
                             </button>
-                            <input type="text" oninput="search_active_personnel(this.value)" class="form-control shadow-none w-25 ms-auto mb-2" placeholder="Type to search..">
                         </div>
 
 
-                     
-
-
-
-                           <div class="table-responsive-lg" style="height:450px; overflow-y:scroll;">
-                           <table class="table table-hover border text-center">
+                           <div class="table-responsive-md" style="height:450px; overflow-y:scroll;">
+                           <table class="table table-hover border">
                             <thead>
                                 <tr class="text-white" style="background-color:#1d3557;">
                                 <th scope="col">No.</th>
-                                <th scope="col">Rank</th> 
-                                <th scope="col">Name</th>
-                                <th scope="col">Gender</th>
-                                <th scope="col">Address</th>
-                                <th scope="col">Unit</th> 
-                                <th scope="col">Training Course</th> 
+                                <th scope="col">Course</th>
+                                <th scope="col">description</th>
+                                <th scope="col">Action</th>
                                 </tr>
                             </thead>
-                            <tbody id="dismissed_personnel_data">
+                            <tbody id="course_data">
                           
                              
                            
@@ -158,52 +143,35 @@ adminLogin();
 
 
 
-
-                         
-                    <div class="modal fade" id="edit_course" data-bs-backdrop="static" data-bs-keyboard= "true" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog modal-md" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title"><i class="bi bi-book"></i> Course Training</h5>
-        <button type="button" class="btn-close shadow-none" data-bs-dismiss="modal" aria-label="Close"><span aria-hidden="true"></button>
-      </div>
-      <div class="modal-body">
-            <div class="border-bottom border-3 pb-3 mb-3">
-                <form id="add_form_course">
-                <div class="row">
-              
-                    <h4 class="text-center fw-bold">All Training Course Records</h4>
-                
-                 </form>
+                    
+        <div class="modal fade" id="course" data-bs-backdrop="static" data-bs-keyboard= "true" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <form id="course_form">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <div class="modal-title"><i class="bi bi-clipboard-data"></i> Add Course</div>
+                        </div>
+                        <div class="modal-body"> 
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Course</label>
+                                <input type="text" name="course_name" class="form-control shadow-none">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Description</label>
+                                <input type="text" name="desc_name" class="form-control shadow-none">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="reset" class="btn btn-secondary shadow-none" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-success shadow-none">Submit</button>
+                        </div>
+                    </div>
+                </form>
             </div>
-            
-                           <table class="table table-hover border text-center">
-                            <thead>
-                                <tr class="text-white sticky-top" style="background-color:#1d3557;">
-                                <th scope="col">Batch</th>
-                                <th scope="col">Course</th>
-                                <th scope="col">Date</th>
-                                <th scope="col">Status</th>
-                                </tr>
-                            </thead>
-                            <tbody id="course-data">
-                            </tbody>
-                            </table>
-                            
-         </div>
-     </div>
-    </div>
-</div>
+        </div>
 
 
-
-    
-    
-    
- 
-  
       </main>
-
 
 
       <footer id="footer" class="footer">
@@ -221,74 +189,100 @@ adminLogin();
         <script src="assets/js/validate.js"></script>
         <script src="assets/js/main.js"></script> 
         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-        
 
-   
-        
+
+
+
+        <script>
+            let course_form = document.getElementById("course_form");
+
+
+            course_form.addEventListener('submit', function(e){
+               e.preventDefault();
+               add_course();
+            });
+
+            function add_course(){
+               let data = new FormData();
+               data.append('name',course_form.elements['course_name'].value);
+               data.append('desc',course_form.elements['desc_name'].value);
+               data.append('add_course','');
+
+               let xhr = new XMLHttpRequest();
+               xhr.open("POST","./ajax/course.php",true);
+
+               xhr.onload = function(){
+               var myModalEl = document.getElementById('course')
+               var modal = bootstrap.Modal.getInstance(myModalEl) // Returns a Bootstrap modal instanceof
+              modal.hide();
+
+            if(this.responseText==1){
+               swal("", "", "success");
+
+               course_form.elements['course_name'].values='';
+                get_course();
+            }else{
+               swal("Error!", "Server Down!", "error");
+            }
+
+        }
+        xhr.send(data);
+
+            };
+
+
+            function get_course(){
+               let xhr = new XMLHttpRequest();
+               xhr.open("POST","./ajax/course.php",true);
+               xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+
+               xhr.onload = function (){
+            document.getElementById('course_data').innerHTML = this.responseText;
+          }
+
+          xhr.send('get_course');
+
+               
+            }
+
+
+            function rem_course(val){
+               let xhr = new XMLHttpRequest();
+               xhr.open("POST","./ajax/course.php",true);
+               xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+
+             xhr.onload = function (){
+            if(this.responseText==1){
+               swal("Good job!", "Remove Course Successfully!", "success");
+                get_course();
+            }
+            else{
+               swal("Error!", "Server Down!", "success");
+            }
+        }
+
+        xhr.send('rem_course='+val);
+            }
+
+
+
+
+
+            window.onload = function(){
+               get_course();
+            }
+
          
-                    
-        
-   <script>
 
-
-
-    function get_dismissed_personnel(){
-        let xhr = new XMLHttpRequest();
-        xhr.open("POST","./ajax/new_personnel.php",true);
-        xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
-
-        xhr.onload = function(){
-         document.getElementById('dismissed_personnel_data').innerHTML = this.responseText;
-        }
-        xhr.send('get_dismissed_personnel');
-    }
-
-
-     
-    function personnel_course(id){
-            // add_form_course.elements['personnel_id'].value = id;
-            // add_form_course.elements['batch'].value= '';
-            // add_form_course.elements['course'].value= '';
-        // add_form_course.elements['start'].value= '';
-        // add_form_course.elements['end'].value= '';
-
-        
-        let xhr = new XMLHttpRequest();
-        xhr.open("POST","./ajax/personnel.php",true);
-        xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
-
-        xhr.onload = function(){
-            document.getElementById('course-data').innerHTML = this.responseText;
-        }
-
-        xhr.send('get_course='+id);
-    }
+        </script>
 
 
 
 
 
-    // function search_active_personnel(newpersonnelname){
-    //     let xhr = new XMLHttpRequest();
-    //     xhr.open("POST","./ajax/new_personnel.php",true);
-    //     xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
-
-    //     xhr.onload = function(){
-    //         document.getElementById('retired_personnel_data').innerHTML = this.responseText;
-    //     }
-    //     xhr.send('search_active_personnel&name='+newpersonnelname);
-    // }
-
-    
-
-    window.onload = function(){
-        get_dismissed_personnel();
-    }
-    
 
 
-    </script>
+
              
-
    </body>
 </html>

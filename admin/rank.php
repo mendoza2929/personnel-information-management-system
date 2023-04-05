@@ -71,13 +71,31 @@ adminLogin();
             <li> <a href="dismissed_personnel.php"> <i class="bi bi-circle"></i><span>Dismissed Personnel</span> </a></li>
             </ul>
          </li>
+              
          <li class="nav-item">
-            <a class="nav-link collapsed" data-bs-target="#training-nav" data-bs-toggle="collapse" href="#"> <i class="bi bi-menu-button-wide"></i><span>Traning</span><i class="bi bi-chevron-down ms-auto"></i> </a>
-            <ul id="training-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-            <li> <a href="training.php"> <i class="bi bi-circle"></i><span> PSOSEC</span> </a></li>
-                  <li> <a href="training1.php"> <i class="bi bi-circle"></i><span>PSOAC</span> </a></li>
-               </ul>
-         </li>
+    <a class="nav-link collapsed" data-bs-target="#training-nav" data-bs-toggle="collapse" href="#">
+        <i class="bi bi-menu-button-wide"></i><span>Training</span><i class="bi bi-chevron-down ms-auto"></i>
+    </a>
+    <ul id="training-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+        <?php
+        $res = selectAll('course');
+        while($opt = mysqli_fetch_assoc($res)){
+            // Get the id value of the current course
+            $id = $opt['id'];
+            
+            // Check if the id value is set in the query parameter
+            $active = '';
+            if(isset($_GET['id']) && $_GET['id'] == $id){
+                // Add the 'active' class to highlight the current course
+                $active = 'active';
+            }
+            
+            // Display the course in the navigation menu
+            echo "<li><a class='$active' href='course.php?id=$id'><i class='bi bi-circle'></i><span>$opt[name]</span></a></li>";
+        }
+        ?>
+    </ul>
+</li>
       
          </ul>
       </aside>
@@ -149,6 +167,7 @@ adminLogin();
         </div>
 
 
+
       </main>
 
 
@@ -182,7 +201,7 @@ adminLogin();
 
             function add_rank(){
                let data = new FormData();
-               data.append('name',rank_form.elements['rank_name'].value);
+               data.append('rank',rank_form.elements['rank_name'].value);
                data.append('add_rank','');
 
                let xhr = new XMLHttpRequest();
@@ -194,7 +213,7 @@ adminLogin();
               modal.hide();
 
             if(this.responseText==1){
-               swal("Good job!", "You Successfully Create!", "success");
+               swal("Success", "", "success");
 
                 rank_form.elements['rank_name'].values='';
                 get_rank();
@@ -240,6 +259,28 @@ adminLogin();
 
         xhr.send('rem_rank='+val);
             }
+
+
+
+
+let edt_rank_form = document.getElementById('edt_rank_form');
+
+function personnel_rank(id){
+
+    let xhr = new XMLHttpRequest();
+    xhr.open("POST","./ajax/rank.php",true);
+    xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+
+
+    xhr.onload = function(){
+        let data = JSON.parse(this.responseText);
+        edt_rank_form.elements['rank'].value = data.personneldata.rank;
+        edt_rank_form.elements['personnel_id'].value = data.personneldata.id;
+   }
+
+   xhr.send('edit_rank='+id);
+}
+
 
 
 

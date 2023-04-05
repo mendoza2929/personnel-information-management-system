@@ -47,6 +47,9 @@ function alert($type, $message){
         
 }
 
+
+
+
 function uploadImage($image,$folder){
     $valid_mime = ['image/jpeg', 'image/png', 'image/webp'];
     $img_mime = $image['type'];

@@ -72,13 +72,31 @@ adminLogin();
             <li> <a href="dismissed_personnel.php"> <i class="bi bi-circle"></i><span>Dismissed Personnel</span> </a></li>
             </ul>
          </li>
+             
          <li class="nav-item">
-            <a class="nav-link collapsed" data-bs-target="#training-nav" data-bs-toggle="collapse" href="#"> <i class="bi bi-menu-button-wide"></i><span>Training</span><i class="bi bi-chevron-down ms-auto"></i> </a>
-            <ul id="training-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                    <li> <a href="training.php"> <i class="bi bi-circle"></i><span> PSOSEC</span> </a></li>
-                  <li> <a href="training1.php"> <i class="bi bi-circle"></i><span>PSOAC</span> </a></li>
-               </ul>
-         </li>
+    <a class="nav-link collapsed" data-bs-target="#training-nav" data-bs-toggle="collapse" href="#">
+        <i class="bi bi-menu-button-wide"></i><span>Training</span><i class="bi bi-chevron-down ms-auto"></i>
+    </a>
+    <ul id="training-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+        <?php
+        $res = selectAll('course');
+        while($opt = mysqli_fetch_assoc($res)){
+            // Get the id value of the current course
+            $id = $opt['id'];
+            
+            // Check if the id value is set in the query parameter
+            $active = '';
+            if(isset($_GET['id']) && $_GET['id'] == $id){
+                // Add the 'active' class to highlight the current course
+                $active = 'active';
+            }
+            
+            // Display the course in the navigation menu
+            echo "<li><a class='$active' href='course.php?id=$id'><i class='bi bi-circle'></i><span>$opt[name]</span></a></li>";
+        }
+        ?>
+    </ul>
+</li>
       
          </ul>
       </aside>
@@ -125,8 +143,7 @@ adminLogin();
                                 <th scope="col">Gender</th>
                                 <th scope="col">Address</th>
                                 <th scope="col">Unit</th> 
-                                <th scope="col">Batch Training</th> 
-                                <th scope="col">Training</th>  
+                                <th scope="col">Training Course</th> 
                                 </tr>
                             </thead>
                             <tbody id="suspended_personnel_data">
@@ -141,6 +158,43 @@ adminLogin();
                     </div>
 
     
+                    <div class="modal fade" id="edit_course" data-bs-backdrop="static" data-bs-keyboard= "true" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-md" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"><i class="bi bi-book"></i> Course Training</h5>
+        <button type="button" class="btn-close shadow-none" data-bs-dismiss="modal" aria-label="Close"><span aria-hidden="true"></button>
+      </div>
+      <div class="modal-body">
+            <div class="border-bottom border-3 pb-3 mb-3">
+                <form id="add_form_course">
+                <div class="row">
+              
+                    <h4 class="text-center fw-bold">All Training Course Records</h4>
+                
+                 </form>
+            </div>
+            
+                           <table class="table table-hover border text-center">
+                            <thead>
+                                <tr class="text-white sticky-top" style="background-color:#1d3557;">
+                                <th scope="col">Batch</th>
+                                <th scope="col">Course</th>
+                                <th scope="col">Date</th>
+                                <th scope="col">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="course-data">
+                            </tbody>
+                            </table>
+                            
+         </div>
+     </div>
+    </div>
+</div>
+
+
+                 
     
     
  
@@ -184,6 +238,27 @@ adminLogin();
          document.getElementById('suspended_personnel_data').innerHTML = this.responseText;
         }
         xhr.send('get_suspended_personnel');
+    }
+
+
+     
+    function personnel_course(id){
+            // add_form_course.elements['personnel_id'].value = id;
+            // add_form_course.elements['batch'].value= '';
+            // add_form_course.elements['course'].value= '';
+        // add_form_course.elements['start'].value= '';
+        // add_form_course.elements['end'].value= '';
+
+        
+        let xhr = new XMLHttpRequest();
+        xhr.open("POST","./ajax/personnel.php",true);
+        xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+
+        xhr.onload = function(){
+            document.getElementById('course-data').innerHTML = this.responseText;
+        }
+
+        xhr.send('get_course='+id);
     }
 
 

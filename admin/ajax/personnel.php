@@ -51,15 +51,15 @@ if(isset($_POST['get_personnel'])){
             $status = "<button onclick='toggleStatus($row[id],3)' class='btn btn-danger btn-sm shadow-none'>Retired</button>";;
         }
 
-    if($row['training_status']==1){
+//     if($row['training_status']==1){
        
-        $trainingstatus = "<span  onclick='toggleStatus($row[id],0)'class=' rounded-pill bg-light text-info mb-3 text-wrap lh-base'>On Going</span>";
+//         $trainingstatus = "<span  onclick='toggleStatus($row[id],0)'class=' rounded-pill bg-light text-info mb-3 text-wrap lh-base'>On Going</span>";
 
-}else{
+// }else{
 
-    $trainingstatus = "<span onclick='toggleStatus($row[id],1)' class=' rounded-pill bg-light text-success mb-3 text-wrap lh-base'>Completed</span>";
+//     $trainingstatus = "<span onclick='toggleStatus($row[id],1)' class=' rounded-pill bg-light text-success mb-3 text-wrap lh-base'>Completed</span>";
 
-}
+// }
 
  
    
@@ -73,21 +73,11 @@ if(isset($_POST['get_personnel'])){
         <td>$row[street] <br> $row[address] <br> $row[province]</td>
         <td>$row[unit]</td>
         <td>$row[batch]</td>
-        <td>
-        <span class='badge rounded-pill bg-light text-success mb-3 text-wrap lh-base'>
-        $row[course] = $trainingstatus
-        </span>
-        </td>
-        
         <td>$status</td>
         <td>
-         
-
         <button type='button' onclick='personnel_details($row[id])' class='btn btn-warning btn-sm shadow-none me-3' data-bs-toggle='modal' data-bs-target='#edit-personnel'>
         <i class='i bi-pencil-square'></i>
         </button>
-          
-         
         </td>
     </tr>
 ";
@@ -129,7 +119,7 @@ if(isset($_POST['edit_personnel'])){
 
     $personneldata = mysqli_fetch_assoc($res1);
 
-
+    
     // if(mysqli_num_rows($res2)>0){
     //      while($row = mysqli_fetch_assoc($res2)){
     //         array_push($features,$row['facilities_id']);
@@ -143,6 +133,8 @@ if(isset($_POST['edit_personnel'])){
 
     echo $data;
 }
+
+
 
 
 
@@ -196,27 +188,30 @@ if(isset($_POST['search_personnel'])){
     $data.= "
     
     <tr class='align-middle'>
-    <td>$i</td>
-    <td>$row[rank]</td>
-    <td>$row[last]  $row[first] $row[middle] $row[suffix] <br> Birthday: $row[birthday] </td>
-    <td>$row[gender]</td>
-    <td>$row[street] <br> $row[address] <br> $row[province]</td>
-    <td>$row[unit]</td>
-    <td>$row[batch]</td>
-    <td>
-    <span class='badge rounded-pill bg-light text-success mb-3 text-wrap lh-base'>
-    $row[course]
-    </span>
-    </td>
-    <td>$status</td>
-    <td>
-     
+        <td>$i</td>
+        <td>$row[rank]</td>
+        <td>$row[last]  $row[first] $row[middle] $row[suffix] <br> Birthday: $row[birthday] </td>
+        <td>$row[gender]</td>
+        <td>$row[street] <br> $row[address] <br> $row[province]</td>
+        <td>$row[unit]</td>
+        <td>$row[batch]</td>
+        <td>
+        <span class='badge rounded-pill bg-light text-success mb-3 text-wrap lh-base'>
+      
+        </span>
+        </td>
+        
+        <td>$status</td>
+        <td>
+
+        <button type='button' onclick='personnel_course($row[id])' class='btn btn-info btn-sm shadow-none me-3 mb-2' data-bs-toggle='modal' data-bs-target='#edit-course'>
+        <i class='bi bi-book'></i>
+        </button>
 
         <button type='button' onclick='personnel_details($row[id])' class='btn btn-warning btn-sm shadow-none me-3' data-bs-toggle='modal' data-bs-target='#edit-personnel'>
         <i class='i bi-pencil-square'></i>
         </button>
-        
-        
+
         </td>
     </tr>
 
@@ -227,6 +222,120 @@ if(isset($_POST['search_personnel'])){
     }
     echo $data;
 }
+
+
+
+if(isset($_POST['add_course'])){
+
+    $frm_data = filteration($_POST);
+    $flag = 0;
+
+    $q1 = "INSERT INTO `personnel_course` (`personnel_id`, `batch`,`course`,`start`,`end`) 
+    VALUES (?,?,?,?,?)";
+    $values = [$frm_data['personnel_id'],$frm_data['batch'],$frm_data['course'],$frm_data['start'],$frm_data['end']];
+
+    
+    if(insert($q1,$values,'issss')){
+        $flag=1;
+    }
+
+    
+    if($flag){
+        echo 1;
+    }else{
+        echo 0;
+    }
+}
+
+
+// if(isset($_POST['get_course'])){
+
+//     $frm_data = filteration($_POST);
+//     $res = select("SELECT * FROM `personnel_details` WHERE `personnel_id`=? AND `course_id`=? ",[$frm_data['get_course']],'i');
+
+//    while($row = mysqli_fetch_assoc($res)){
+//     echo<<<data
+
+//     <tr class='align-middle'>
+//     <td>$row[batch]</td>
+
+    
+    
+//     </tr>
+
+//     data;
+//    }
+// }
+
+if(isset($_POST['get_course'])){
+    $frm_data = filteration($_POST);
+    $res = select("SELECT * FROM `personnel_details` WHERE `personnel_id`=?",[$frm_data['get_course']],'i');
+
+    while($row = mysqli_fetch_assoc($res)){
+        // Retrieve the course_id value
+        $courseId = $row['course_id'];
+        
+        // Query to retrieve the course value based on course_id
+        $courseQuery = "SELECT name FROM course  WHERE id = $courseId";
+        $courseResult = mysqli_query($con, $courseQuery);
+        $courseRow = mysqli_fetch_assoc($courseResult);
+        $row['name'] = $courseRow['name'];
+
+      // Retrieve the training_status value
+      $trainingStatus = $row['training_status'];
+
+      // Use the retrieved values as needed
+      if($trainingStatus == 1){
+          $trainingstatus = "<span onclick='toggleStatus($row[id],0)' class='rounded-pill bg-light text-warning mb-3 text-wrap lh-base'>On Going</span>";
+      } else {
+          $trainingstatus = "<span onclick='toggleStatus($row[id],1)' class='rounded-pill bg-light text-success mb-3 text-wrap lh-base'>Completed</span>";
+      }
+        
+        // Use the retrieved values as needed
+        echo<<<data
+        <tr class='align-middle'>
+        <td>{$row['batch']}</td>
+        <td>{$row['name']}</td>
+        <td>{$row['datentime']}</td>
+        <td>{$trainingstatus}</td>
+        </tr>
+        data;
+    }
+}
+
+
+
+
+
+
+// if(isset($_POST['get_course'])){
+
+//     $frm_data = filteration($_POST);
+//    $res = select("SELECT * FROM `personnel_course` WHERE `personnel_id`=?",[$frm_data['get_course']],'i');
+
+//    while($row = mysqli_fetch_assoc($res)){
+//     echo<<<data
+
+//     <tr class='align-middle'>
+//     <td>$row[batch]</td>
+//     <td>$row[course]</td>
+//     <td>Start Date: $row[start] <br> End Date: $row[end]</td>
+    
+    
+//     </tr>
+
+//     data;
+//    }
+// }
+
+
+
+
+
+
+
+
+
 
 
 

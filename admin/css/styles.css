@@ -12,6 +12,14 @@ html {
     height: 100%;
   }
 
+  .custom-alert{
+    position:fixed;
+    top:10px;
+    left:68%;
+    width: 30%;
+}
+
+
  
   
 
