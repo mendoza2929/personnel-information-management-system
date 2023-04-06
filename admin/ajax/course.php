@@ -85,9 +85,36 @@ if(isset($_POST['edit_course'])){
 // }
 
 
+// if(isset($_POST['add_course_personnel'])){
+//     $frm_data = filteration($_POST);
+
+//     $q = "INSERT INTO `personnel_details` (`course_id`,`personnel_id`, `batch`,`personnel`) VALUES (?,?,?,?)";
+//     $values = [$frm_data['course_id'],$frm_data['personnel_name'],$frm_data['batch'],$frm_data['personnel_name_list']];
+//     $res = insert($q,$values,'iiss');
+//     echo $res;
+
+//     // $q1 = "INSERT INTO `personnel_order` (`batch`) VALUES (?)";
+//     // $values = [$frm_data['batch']];
+//     // $res1 = insert($q1,$values,'s'); // Change variable name from $res to $res1
+//     // echo $res1;
+// }
+
+
 if(isset($_POST['add_course_personnel'])){
     $frm_data = filteration($_POST);
 
+    // Validate that the personnel has not already been assigned to the selected course
+    $validation_query = "SELECT * FROM `personnel_details` WHERE `personnel_id` = ? AND `course_id` = ?";
+    $validation_values = [$frm_data['personnel_name'], $frm_data['course_id']];
+    $validation_result = select($validation_query, $validation_values, 'si');
+
+    if (mysqli_num_rows($validation_result) > 0) {
+        // The personnel has already been assigned to the selected course
+        echo "Error: The selected personnel has already been assigned to the selected course.";
+        exit;
+    }
+
+    // Insert the new record
     $q = "INSERT INTO `personnel_details` (`course_id`,`personnel_id`, `batch`,`personnel`) VALUES (?,?,?,?)";
     $values = [$frm_data['course_id'],$frm_data['personnel_name'],$frm_data['batch'],$frm_data['personnel_name_list']];
     $res = insert($q,$values,'iiss');

@@ -30,7 +30,7 @@ adminLogin();
    <body>
    
       <header id="header" class="header fixed-top d-flex align-items-center">
-         <div class="d-flex align-items-center justify-content-between"> <a href="dash.php" class="logo d-flex align-items-center"> <span class="d-none d-lg-block">R8 PIMS</span> </a> <i class="bi bi-list toggle-sidebar-btn"></i></div>
+         <div class="d-flex align-items-center justify-content-between"> <a href="dash.php" class="logo d-flex align-items-center"> <span class="d-none d-lg-block">R8 PTIMS</span> </a> <i class="bi bi-list toggle-sidebar-btn"></i></div>
          
          <nav class="header-nav ms-auto">
             <ul class="d-flex align-items-center">
@@ -72,28 +72,14 @@ adminLogin();
             </ul>
          </li>
          
+         
          <li class="nav-item">
     <a class="nav-link collapsed" data-bs-target="#training-nav" data-bs-toggle="collapse" href="#">
         <i class="bi bi-menu-button-wide"></i><span>Training</span><i class="bi bi-chevron-down ms-auto"></i>
     </a>
     <ul id="training-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
-        <?php
-        $res = selectAll('course');
-        while($opt = mysqli_fetch_assoc($res)){
-            // Get the id value of the current course
-            $id = $opt['id'];
-            
-            // Check if the id value is set in the query parameter
-            $active = '';
-            if(isset($_GET['id']) && $_GET['id'] == $id){
-                // Add the 'active' class to highlight the current course
-                $active = 'active';
-            }
-            
-            // Display the course in the navigation menu
-            echo "<li><a class='$active' href='course.php?id=$id'><i class='bi bi-circle'></i><span>$opt[name]</span></a></li>";
-        }
-        ?>
+    <li> <a href="training.php"> <i class="bi bi-circle"></i><span> Investigation</span> </a></li>
+    <li> <a href="training1.php"> <i class="bi bi-circle"></i><span> PSOSEC</span> </a></li>
     </ul>
 </li>
       
@@ -199,32 +185,32 @@ adminLogin();
             
                                 <label class="form-label fw-bold">Batch</label>
                                 <select class='form-select shadow-none mb-2' aria-label='Default select example' name='batch' required>
-                                <option disabled selected value="">Select a Batch</option> <!-- placeholder option -->
+                                <option disabled selected value="">Select a Class Batch</option> <!-- placeholder option -->
                                 <?php
-                                $res = selectAll('batch');
+                                $res = selectAll('class');
                                 while($opt = mysqli_fetch_assoc($res)){
-                                    echo "<option value='$opt[name]'>$opt[name]</option>";
+                                    echo "<option value='$opt[class]'>$opt[class]</option>";
                                 }
                                 ?>
                             </select>
                             
                 
-                <input type="text" class="form-control mb-2 shadow-none" list="personnel_list" name="personnel_name" placeholder="Type to search personnel ID">
+                <input type="text" class="form-control mb-2 shadow-none" list="personnel_list" name="personnel_name" placeholder="Type to search Personnel ID" required>
                 <datalist id="personnel_list" >
                 <?php
                                 $res = selectAll('personnel');
                                 while($opt = mysqli_fetch_assoc($res)){
-                                    echo "<option value='$opt[id], $opt[last] $opt[first] $opt[suffix]'></option>";
+                                    echo "<option value='$opt[id], $opt[last] $opt[first] $opt[middle] $opt[suffix]'></option>";
                                 }
                          ?>
                 </datalist>
 
-                <input type="text" class="form-control mb-2 shadow-none" list="personnel_list_name" name="personnel_name_list" placeholder="Type to search personnel ID">
+                <input type="text" class="form-control mb-2 shadow-none" list="personnel_list_name" name="personnel_name_list" placeholder="Type to search Personnel Name" required>
                 <datalist id="personnel_list_name">
                 <?php
                                 $res = selectAll('personnel');
                                 while($opt = mysqli_fetch_assoc($res)){
-                                    echo "<option value='$opt[rank], $opt[last] $opt[first] $opt[suffix]'></option>";
+                                    echo "<option value='$opt[rank], $opt[last] $opt[first] $opt[middle] $opt[suffix]'></option>";
                                 }
                          ?>
                 </datalist>
@@ -390,7 +376,7 @@ function add_course_personnel(){
             // get_personnel_course();
             
         }else{
-            swal("Error!", "Server Down!", "error");
+            swal("Error!", " has already been assigned to the selected course.  ", "error");
         }
 
     }

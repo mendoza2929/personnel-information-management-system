@@ -34,9 +34,9 @@ adminLogin();
 
    $current_user = mysqli_fetch_assoc(mysqli_query($con,"SELECT COUNT(id) AS `count` FROM `personnel`"));
 
-   $training = mysqli_fetch_assoc(mysqli_query($con,"SELECT COUNT(id) AS `count` FROM `personnel` WHERE course='PSOSEC'; "));
+   $training = mysqli_fetch_assoc(mysqli_query($con,"SELECT COUNT(id) AS `count` FROM `personnel_details` WHERE course_id = '35'; "));
 
-   $training1 = mysqli_fetch_assoc(mysqli_query($con,"SELECT COUNT(id) AS `count` FROM `personnel` WHERE course='PSOAC'; "));
+   $training1 = mysqli_fetch_assoc(mysqli_query($con,"SELECT COUNT(id) AS `count` FROM `personnel_details` WHERE course_id='36'; "));
    
    ?>
    
@@ -67,6 +67,7 @@ adminLogin();
             <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                   <li> <a href="rank.php"> <i class="bi bi-circle"></i><span>Rank</span> </a></li>
                   <li> <a href="unit.php"> <i class="bi bi-circle"></i><span>Unit</span> </a></li>
+                  <li> <a href="class.php"> <i class="bi bi-circle"></i><span>Class Batch</span> </a></li>
                   <li> <a href="course.php"> <i class="bi bi-circle"></i><span>Courses</span> </a></li>
                   <li> <a href="batch.php"> <i class="bi bi-circle"></i><span>Batch</span> </a></li>
                   <li> <a href="address.php"> <i class="bi bi-circle"></i><span>Address</span> </a></li>
@@ -90,7 +91,8 @@ adminLogin();
         <i class="bi bi-menu-button-wide"></i><span>Training</span><i class="bi bi-chevron-down ms-auto"></i>
     </a>
     <ul id="training-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
-    <li> <a href="training.php"> <i class="bi bi-circle"></i><span> BSIT</span> </a></li>
+    <li> <a href="training.php"> <i class="bi bi-circle"></i><span> Investigation</span> </a></li>
+    <li> <a href="training1.php"> <i class="bi bi-circle"></i><span> PSOSEC</span> </a></li>
     </ul>
 </li>
       
@@ -154,12 +156,12 @@ adminLogin();
                               </ul>
                            </div>-->
                            <div class="card-body">
-                              <h5 class="card-title">PSOSEC <span>| Record</span></h5>
+                              <h5 class="card-title">CCIC <span>| Record</span></h5>
                               <div class="d-flex align-items-center">
                                  <div class="card-icon rounded-circle d-flex align-items-center justify-content-center"> <i class="bi bi-clipboard-data"></i> </div>
                                  <div class="ps-3">
                                     <h6><?php echo $training['count']?></h6>
-                                    <span class="text-danger small pt-1 fw-bold"></span> <span class="text-muted small pt-2 ps-1">Public Safety  </span>
+                                    <span class="text-danger small pt-1 fw-bold"></span> <span class="text-muted small pt-2 ps-1">Investigation  </span>
                                  </div>
                               </div>
                            </div>
@@ -181,12 +183,12 @@ adminLogin();
                               </ul>
                            </div>-->
                            <div class="card-body">
-                              <h5 class="card-title">PSOAC <span>| Record</span></h5>
+                              <h5 class="card-title">PSOSEC <span>| Record</span></h5>
                               <div class="d-flex align-items-center">
                                  <div class="card-icon rounded-circle d-flex align-items-center justify-content-center"> <i class="bi bi-clipboard-data"></i> </div>
                                  <div class="ps-3">
                                     <h6><?php echo $training1['count']?></h6>
-                                    <span class="text-danger small pt-1 fw-bold"></span> <span class="text-muted small pt-2 ps-1">Public Safety  </span>
+                                    <span class="text-danger small pt-1 fw-bold"></span> <span class="text-muted small pt-2 ps-1">Officer Senior</span>
                                  </div>
                               </div>
                            </div>

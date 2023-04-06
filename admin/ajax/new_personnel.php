@@ -7,7 +7,7 @@ adminLogin();
 
 
 if(isset($_POST['get_new_personnel'])){  
-    $res = mysqli_query($con, "SELECT id, last, first, middle, suffix , gender,street,address,province,rank, unit, training_status FROM personnel WHERE status='1';");
+    $res = mysqli_query($con, "SELECT id, last, first, middle, suffix , gender,street,address,province,rank, unit, batch, training_status FROM personnel WHERE status='1';");
 
     if($res === false){
         echo "Error: " . mysqli_error($con);
@@ -32,6 +32,7 @@ if(isset($_POST['get_new_personnel'])){
                 <td>$row[last]  $row[first] $row[middle] $row[suffix]
                 <td>$row[gender]</td>
                 <td>$row[street] <br> $row[address] <br> $row[province]</td>
+                <td>$row[batch]</td>
                 <td>$row[unit]</td>
                 <td> 
                 <button type='button'onclick='personnel_course($row[id])' class='btn btn-info btn-sm shadow-none me-3' data-bs-toggle='modal' data-bs-target='#edit_course'>
@@ -51,7 +52,7 @@ if(isset($_POST['get_new_personnel'])){
 
 
 if(isset($_POST['get_retired_personnel'])){  
-    $res = mysqli_query($con, "SELECT id, last, first, middle, suffix , gender,street,address,province,rank, unit, training_status FROM personnel WHERE status='0';");
+    $res = mysqli_query($con, "SELECT id, last, first, middle, suffix , gender,street,address,province,rank, unit, batch, training_status FROM personnel WHERE status='0';");
 
     if($res === false){
         echo "Error: " . mysqli_error($con);
@@ -76,6 +77,7 @@ if(isset($_POST['get_retired_personnel'])){
                 <td>$row[last]  $row[first] $row[middle] $row[suffix]
                 <td>$row[gender]</td>
                 <td>$row[street] <br> $row[address] <br> $row[province]</td>
+                <td>$row[batch]</td>
                 <td>$row[unit]</td>
                 <td> 
                 <button type='button'onclick='personnel_course($row[id])' class='btn btn-info btn-sm shadow-none me-3' data-bs-toggle='modal' data-bs-target='#edit_course'>
@@ -94,7 +96,7 @@ if(isset($_POST['get_retired_personnel'])){
 
 
 if(isset($_POST['get_suspended_personnel'])){  
-    $res = mysqli_query($con, "SELECT id, last, first, middle, suffix , gender,street,address,province,rank, unit, training_status FROM personnel WHERE status='3';");
+    $res = mysqli_query($con, "SELECT id, last, first, middle, suffix , gender,street,address,province,rank, unit,batch, training_status FROM personnel WHERE status='3';");
 
     if($res === false){
         echo "Error: " . mysqli_error($con);
@@ -119,6 +121,7 @@ if(isset($_POST['get_suspended_personnel'])){
                 <td>$row[last]  $row[first] $row[middle] $row[suffix]
                 <td>$row[gender]</td>
                 <td>$row[street] <br> $row[address] <br> $row[province]</td>
+                <td>$row[batch]</td>
                 <td>$row[unit]</td>
                 <td> 
                 <button type='button'onclick='personnel_course($row[id])' class='btn btn-info btn-sm shadow-none me-3' data-bs-toggle='modal' data-bs-target='#edit_course'>
@@ -134,7 +137,7 @@ if(isset($_POST['get_suspended_personnel'])){
 }
 
 if(isset($_POST['get_dismissed_personnel'])){  
-    $res = mysqli_query($con, "SELECT id, last, first, middle, suffix , gender,street,address,province,rank, unit, training_status FROM personnel WHERE status='2';");
+    $res = mysqli_query($con, "SELECT id, last, first, middle, suffix , gender,street,address,province,rank, unit, batch, training_status FROM personnel WHERE status='2';");
 
     if($res === false){
         echo "Error: " . mysqli_error($con);
@@ -159,6 +162,7 @@ if(isset($_POST['get_dismissed_personnel'])){
                 <td>$row[last]  $row[first] $row[middle] $row[suffix]
                 <td>$row[gender]</td>
                 <td>$row[street] <br> $row[address] <br> $row[province]</td>
+                <td>$row[batch]</td>
                 <td>$row[unit]</td>
                 <td> 
                 <button type='button'onclick='personnel_course($row[id])' class='btn btn-info btn-sm shadow-none me-3' data-bs-toggle='modal' data-bs-target='#edit_course'>
@@ -180,7 +184,7 @@ if(isset($_POST['get_dismissed_personnel'])){
 
 if(isset($_POST['search_active_personnel'])){
     $frm_data = filteration($_POST);
-    $query = "SELECT * FROM `personnel` WHERE CONCAT(`rank`, `last`,`first`,`birthday`,`unit`,`batch`) LIKE ?";
+    $query = "SELECT * FROM `personnel` WHERE `status` = '1' AND CONCAT(`rank`, `last`, `first`, `birthday`, `unit`, `batch`) LIKE ?";
     $res = select($query,["%$frm_data[name]%"],'s');
     $i=1;
     $data= "";
@@ -195,7 +199,11 @@ if(isset($_POST['search_active_personnel'])){
                 <td>$row[last]  $row[first] $row[middle] $row[suffix]
                 <td>$row[gender]</td>
                 <td>$row[street] <br> $row[address] <br> $row[province]</td>
+                <td>$row[batch]</td>
                 <td>$row[unit]</td>
+                <td> <button type='button'onclick='personnel_course($row[id])' class='btn btn-info btn-sm shadow-none me-3' data-bs-toggle='modal' data-bs-target='#edit_course'>
+                <i class='bi bi-eye'></i>
+                </button></td>
      </tr>
 
     ";
@@ -205,6 +213,106 @@ if(isset($_POST['search_active_personnel'])){
     }
     echo $data;
 }
+
+
+if(isset($_POST['search_retired_personnel'])){
+    $frm_data = filteration($_POST);
+    $query = "SELECT * FROM `personnel` WHERE `status` = '0' AND CONCAT(`rank`, `last`, `first`, `birthday`, `unit`, `batch`) LIKE ?";
+    $res = select($query,["%$frm_data[name]%"],'s');
+    $i=1;
+    $data= "";
+    while($row = mysqli_fetch_array($res)){
+       
+
+    $data.= "
+    
+    <tr class='align-middle'>
+                <td>$i</td>
+                <td>$row[rank]</td>
+                <td>$row[last]  $row[first] $row[middle] $row[suffix]
+                <td>$row[gender]</td>
+                <td>$row[street] <br> $row[address] <br> $row[province]</td>
+                <td>$row[batch]</td>
+                <td>$row[unit]</td>
+                <td> <button type='button'onclick='personnel_course($row[id])' class='btn btn-info btn-sm shadow-none me-3' data-bs-toggle='modal' data-bs-target='#edit_course'>
+                <i class='bi bi-eye'></i>
+                </button></td>
+     </tr>
+
+    ";
+    $i++;
+
+
+    }
+    echo $data;
+}
+
+
+if(isset($_POST['search_suspended_personnel'])){
+    $frm_data = filteration($_POST);
+    $query = "SELECT * FROM `personnel` WHERE `status` = '3' AND CONCAT(`rank`, `last`, `first`, `birthday`, `unit`, `batch`) LIKE ?";
+    $res = select($query,["%$frm_data[name]%"],'s');
+    $i=1;
+    $data= "";
+    while($row = mysqli_fetch_array($res)){
+       
+
+    $data.= "
+    
+    <tr class='align-middle'>
+                <td>$i</td>
+                <td>$row[rank]</td>
+                <td>$row[last]  $row[first] $row[middle] $row[suffix]
+                <td>$row[gender]</td>
+                <td>$row[street] <br> $row[address] <br> $row[province]</td>
+                <td>$row[batch]</td>
+                <td>$row[unit]</td>
+                <td> <button type='button'onclick='personnel_course($row[id])' class='btn btn-info btn-sm shadow-none me-3' data-bs-toggle='modal' data-bs-target='#edit_course'>
+                <i class='bi bi-eye'></i>
+                </button></td>
+     </tr>
+
+    ";
+    $i++;
+
+
+    }
+    echo $data;
+}
+
+if(isset($_POST['search_dismissed_personnel'])){
+    $frm_data = filteration($_POST);
+    $query = "SELECT * FROM `personnel` WHERE `status` = '2' AND CONCAT(`rank`, `last`, `first`, `birthday`, `unit`, `batch`) LIKE ?";
+    $res = select($query,["%$frm_data[name]%"],'s');
+    $i=1;
+    $data= "";
+    while($row = mysqli_fetch_array($res)){
+       
+
+    $data.= "
+    
+    <tr class='align-middle'>
+                <td>$i</td>
+                <td>$row[rank]</td>
+                <td>$row[last]  $row[first] $row[middle] $row[suffix]
+                <td>$row[gender]</td>
+                <td>$row[street] <br> $row[address] <br> $row[province]</td>
+                <td>$row[batch]</td>
+                <td>$row[unit]</td>
+                <td> <button type='button'onclick='personnel_course($row[id])' class='btn btn-info btn-sm shadow-none me-3' data-bs-toggle='modal' data-bs-target='#edit_course'>
+                <i class='bi bi-eye'></i>
+                </button></td>
+     </tr>
+
+    ";
+    $i++;
+
+
+    }
+    echo $data;
+}
+
+
 
 
 

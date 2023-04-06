@@ -31,7 +31,7 @@ adminLogin();
    <body>
    
       <header id="header" class="header fixed-top d-flex align-items-center">
-         <div class="d-flex align-items-center justify-content-between"> <a href="dash.php" class="logo d-flex align-items-center"> <span class="d-none d-lg-block">R8 PIMS</span> </a> <i class="bi bi-list toggle-sidebar-btn"></i></div>
+         <div class="d-flex align-items-center justify-content-between"> <a href="dash.php" class="logo d-flex align-items-center"> <span class="d-none d-lg-block">R8 PTIMS</span> </a> <i class="bi bi-list toggle-sidebar-btn"></i></div>
          
          <nav class="header-nav ms-auto">
             <ul class="d-flex align-items-center">
@@ -73,28 +73,14 @@ adminLogin();
             </ul>
          </li>
              
+      
          <li class="nav-item">
     <a class="nav-link collapsed" data-bs-target="#training-nav" data-bs-toggle="collapse" href="#">
         <i class="bi bi-menu-button-wide"></i><span>Training</span><i class="bi bi-chevron-down ms-auto"></i>
     </a>
     <ul id="training-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
-        <?php
-        $res = selectAll('course');
-        while($opt = mysqli_fetch_assoc($res)){
-            // Get the id value of the current course
-            $id = $opt['id'];
-            
-            // Check if the id value is set in the query parameter
-            $active = '';
-            if(isset($_GET['id']) && $_GET['id'] == $id){
-                // Add the 'active' class to highlight the current course
-                $active = 'active';
-            }
-            
-            // Display the course in the navigation menu
-            echo "<li><a class='$active' href='course.php?id=$id'><i class='bi bi-circle'></i><span>$opt[name]</span></a></li>";
-        }
-        ?>
+    <li> <a href="training.php"> <i class="bi bi-circle"></i><span> Investigation</span> </a></li>
+    <li> <a href="training1.php"> <i class="bi bi-circle"></i><span> PSOSEC</span> </a></li>
     </ul>
 </li>
       
@@ -118,15 +104,16 @@ adminLogin();
                           
                     
                         <div class="text-end mb-4">
-                            <button type="button" class="btn btn-success btn-sm shadow-none mt-2 mb-2 text-start me-2" data-bs-toggle="modal" data-bs-target="#add-personnel">
-                                <i class="bi bi-file-plus"></i> Add
-                            </button>
+                        
                         </div>
 
                         <div class="d-flex align-items-center">
-                            <button type="button" class="btn btn-success btn-sm shadow-none mt-2 mb-2 text-start me-2" data-bs-toggle="modal" data-bs-target="#add-room">
+                        <form action="excel.php" method="post">
+                        <button type="submit" name="export_excel" class="btn btn-success btn-sm shadow-none mt-2 mb-2 text-start me-2" data-bs-toggle="modal" data-bs-target="#add-room">
                             <i class="bi bi-file-earmark-spreadsheet"></i> Export to excel
                             </button>
+                        </form>
+
                             <input type="text" oninput="search_personnel(this.value)" class="form-control shadow-none w-25 ms-auto mb-2" placeholder="Type to search..">
                         </div>
 
@@ -218,11 +205,11 @@ adminLogin();
                                 <option value="sr">Sr.</option>
                                 </select>
                             </div>
-                            <div class="col-md-5 mb-3">
+                            <div class="col-md-3 mb-3">
                                 <label class="form-label fw-bold">Street</label>
                                 <input type="text" name="street" class="form-control shadow-none">
                             </div>
-                            <div class="col-md-4 mb-3">
+                            <div class="col-md-3 mb-3">
                                 <label class="form-label fw-bold">Address</label>
                                 <select class='form-select shadow-none' aria-label='Default select example' name='address' required>
                                 <option disabled selected value="">Select a Barangay</option> <!-- placeholder option -->
@@ -230,6 +217,18 @@ adminLogin();
                                 $res = selectAll('address');
                                 while($opt = mysqli_fetch_assoc($res)){
                                     echo "<option value='$opt[name]'>$opt[name]</option>";
+                                }
+                                ?>
+                            </select>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label class="form-label fw-bold">City</label>
+                                <select class='form-select shadow-none' aria-label='Default select example' name='city' required>
+                                <option disabled selected value="">Select a City</option> <!-- placeholder option -->
+                                <?php
+                                $res = selectAll('city');
+                                while($opt = mysqli_fetch_assoc($res)){
+                                    echo "<option value='$opt[city]'>$opt[city]</option>";
                                 }
                                 ?>
                             </select>
@@ -282,19 +281,7 @@ adminLogin();
                             </select>
                             </div>
 
-                            <div class="col-md-3 mb-3">
-                                <label class="form-label fw-bold">Course</label>
-                                <select class='form-select shadow-none' aria-label='Default select example' name='course' required>
-                                <option disabled selected value="">Select a Course</option> <!-- placeholder option -->
-                                <?php
-                                $res = selectAll('course');
-                                while($opt = mysqli_fetch_assoc($res)){
-                                    echo "<option value='$opt[name]'>$opt[name]</option>";
-                                }
-                                ?>
-                            </select>
-                            </div>
-                            
+        
                             
                             
 
@@ -394,11 +381,11 @@ adminLogin();
                                 <option value="sr">Sr.</option>
                                 </select>
                             </div>
-                            <div class="col-md-5 mb-3">
+                            <div class="col-md-3 mb-3">
                                 <label class="form-label fw-bold">Street</label>
                                 <input type="text" name="street" class="form-control shadow-none">
                             </div>
-                            <div class="col-md-4 mb-3">
+                            <div class="col-md-3 mb-3">
                                 <label class="form-label fw-bold">Address</label>
                                 <select class='form-select shadow-none' aria-label='Default select example' name='address' required>
                                 <option disabled selected value="">Select a Barangay</option> <!-- placeholder option -->
@@ -406,6 +393,18 @@ adminLogin();
                                 $res = selectAll('address');
                                 while($opt = mysqli_fetch_assoc($res)){
                                     echo "<option value='$opt[name]'>$opt[name]</option>";
+                                }
+                                ?>
+                            </select>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label class="form-label fw-bold">City</label>
+                                <select class='form-select shadow-none' aria-label='Default select example' name='city' required>
+                                <option disabled selected value="">Select a City</option> <!-- placeholder option -->
+                                <?php
+                                $res = selectAll('city');
+                                while($opt = mysqli_fetch_assoc($res)){
+                                    echo "<option value='$opt[city]'>$opt[city]</option>";
                                 }
                                 ?>
                             </select>
@@ -458,18 +457,6 @@ adminLogin();
                             </select>
                             </div>
 
-                            <div class="col-md-3 mb-3">
-                                <label class="form-label fw-bold">Course</label>
-                                <select class='form-select shadow-none' aria-label='Default select example' name='course' required>
-                                <option disabled selected value="">Select a Course</option> <!-- placeholder option -->
-                                <?php
-                                $res = selectAll('course');
-                                while($opt = mysqli_fetch_assoc($res)){
-                                    echo "<option value='$opt[name]'>$opt[name]</option>";
-                                }
-                                ?>
-                            </select>
-                            </div>
                             
                             
                             
@@ -526,11 +513,12 @@ adminLogin();
         data.append('suffix',personnel_form.elements['suffix'].value);
         data.append('street',personnel_form.elements['street'].value);
         data.append('address',personnel_form.elements['address'].value);
+        data.append('city',personnel_form.elements['city'].value);
         data.append('province',personnel_form.elements['province'].value);
         data.append('gender',personnel_form.elements['gender'].value);
         data.append('birthday',personnel_form.elements['birthday'].value);
         data.append('batch',personnel_form.elements['batch'].value);
-        data.append('course',personnel_form.elements['course'].value);
+        // data.append('course',personnel_form.elements['course'].value);
 
 
         let xhr  = new XMLHttpRequest();
@@ -611,11 +599,12 @@ function toggleStatus(id,val){
             edit_personnel.elements['suffix'].value = data.personneldata.suffix;
             edit_personnel.elements['street'].value = data.personneldata.street;
             edit_personnel.elements['address'].value = data.personneldata.address;
+            edit_personnel.elements['city'].value = data.personneldata.city;
             edit_personnel.elements['province'].value = data.personneldata.province;
             edit_personnel.elements['gender'].value = data.personneldata.gender;
             edit_personnel.elements['birthday'].value = data.personneldata.birthday;
             edit_personnel.elements['batch'].value = data.personneldata.batch;
-            edit_personnel.elements['course'].value = data.personneldata.course;
+            // edit_personnel.elements['course'].value = data.personneldata.course;
             edit_personnel.elements['personnel_id'].value = data.personneldata.id;
        }
 
@@ -641,11 +630,12 @@ function toggleStatus(id,val){
         data.append('suffix',edit_personnel.elements['suffix'].value);
         data.append('street',edit_personnel.elements['street'].value);
         data.append('address',edit_personnel.elements['address'].value);
+        data.append('city',edit_personnel.elements['city'].value);
         data.append('province',edit_personnel.elements['province'].value);
         data.append('gender',edit_personnel.elements['gender'].value);
         data.append('birthday',edit_personnel.elements['birthday'].value);
         data.append('batch',edit_personnel.elements['batch'].value);
-        data.append('course',edit_personnel.elements['course'].value);
+        // data.append('course',edit_personnel.elements['course'].value);
 
         let xhr = new XMLHttpRequest();
         xhr.open("POST","./ajax/personnel.php",true);

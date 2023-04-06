@@ -72,32 +72,18 @@ adminLogin();
             <li> <a href="dismissed_personnel.php"> <i class="bi bi-circle"></i><span>Dismissed Personnel</span> </a></li>
             </ul>
          </li>
-               
+         
          <li class="nav-item">
     <a class="nav-link collapsed" data-bs-target="#training-nav" data-bs-toggle="collapse" href="#">
         <i class="bi bi-menu-button-wide"></i><span>Training</span><i class="bi bi-chevron-down ms-auto"></i>
     </a>
     <ul id="training-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
-        <?php
-        $res = selectAll('course');
-        while($opt = mysqli_fetch_assoc($res)){
-            // Get the id value of the current course
-            $id = $opt['id'];
-            
-            // Check if the id value is set in the query parameter
-            $active = '';
-            if(isset($_GET['id']) && $_GET['id'] == $id){
-                // Add the 'active' class to highlight the current course
-                $active = 'active';
-            }
-            
-            // Display the course in the navigation menu
-            echo "<li><a class='$active' href='course.php?id=$id'><i class='bi bi-circle'></i><span>$opt[name]</span></a></li>";
-        }
-        ?>
+    <li> <a href="training.php"> <i class="bi bi-circle"></i><span> Investigation</span> </a></li>
+    <li> <a href="training1.php"> <i class="bi bi-circle"></i><span> PSOSEC</span> </a></li>
     </ul>
-</li>
-         </ul>
+</li>  
+
+</ul>
       </aside>
       <main id="main" class="main">
          <div class="pagetitle">
@@ -121,10 +107,9 @@ adminLogin();
                         </div>
 
                         <div class="d-flex align-items-center">
-                            <button type="button" class="btn btn-success btn-sm shadow-none mt-2 mb-2 text-start me-2" data-bs-toggle="modal" data-bs-target="#add-room">
-                            <i class="bi bi-file-earmark-spreadsheet"></i> Export to excel
-                            </button>
-                            <input type="text" oninput="search_active_personnel(this.value)" class="form-control shadow-none w-25 ms-auto mb-2" placeholder="Type to search..">
+                         
+                           
+                            <input type="text" oninput="search_dismissed_personnel(this.value)" class="form-control shadow-none w-25 ms-auto mb-2" placeholder="Type to search..">
                         </div>
 
 
@@ -141,7 +126,8 @@ adminLogin();
                                 <th scope="col">Name</th>
                                 <th scope="col">Gender</th>
                                 <th scope="col">Address</th>
-                                <th scope="col">Unit</th> 
+                                <th scope="col">Unit</th>
+                                <th scope="col">Batch</th>  
                                 <th scope="col">Training Course</th> 
                                 </tr>
                             </thead>
@@ -263,6 +249,21 @@ adminLogin();
 
         xhr.send('get_course='+id);
     }
+
+
+
+    
+    function search_dismissed_personnel(newpersonnelname){
+        let xhr = new XMLHttpRequest();
+        xhr.open("POST","./ajax/new_personnel.php",true);
+        xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+
+        xhr.onload = function(){
+            document.getElementById('dismissed_personnel_data').innerHTML = this.responseText;
+        }
+        xhr.send('search_dismissed_personnel&name='+newpersonnelname);
+    }
+
 
 
 
