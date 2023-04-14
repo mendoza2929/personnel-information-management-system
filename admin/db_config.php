@@ -2,7 +2,7 @@
  
   $hname='localhost';
   $uname='root';
-  $pass= '';
+  $pass= '272727';
   $db="ptraining";
 
 

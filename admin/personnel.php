@@ -31,7 +31,7 @@ adminLogin();
    <body>
    
       <header id="header" class="header fixed-top d-flex align-items-center">
-         <div class="d-flex align-items-center justify-content-between"> <a href="dash.php" class="logo d-flex align-items-center"> <span class="d-none d-lg-block">R8 PTIMS</span> </a> <i class="bi bi-list toggle-sidebar-btn"></i></div>
+         <div class="d-flex align-items-center justify-content-between"> <a href="dash.php" class="logo d-flex align-items-center"> <span class="d-none d-lg-block"> <img src="../img//PNP_PRO_9_logo.webp"> R8 PTIMS</span> </a> <i class="bi bi-list toggle-sidebar-btn"></i></div>
          
          <nav class="header-nav ms-auto">
             <ul class="d-flex align-items-center">
@@ -53,36 +53,95 @@ adminLogin();
          <ul class="sidebar-nav" id="sidebar-nav">
             <li class="nav-item"> <a class="nav-link " href="dash.php"> <i class="bi bi-grid"></i> <span>Dashboard</span> </a></li>
             <li class="nav-item">
-            <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#"> <i class="bi bi-menu-button-wide"></i><span>Master List</span><i class="bi bi-chevron-down ms-auto"></i> </a>
-            <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+           
+            <li class="nav-item">
+  <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
+    <i class="bi bi-menu-button-wide"></i>
+    <span>Personnel Records</span>
+    <i class="bi bi-chevron-down ms-auto"></i>
+  </a>
+  <ul id="components-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+    <li class="nav-item">
+      <a class="nav-link collapsed" data-bs-target="#newrecords-nav" data-bs-toggle="collapse" href="#">
+        <i class="bi bi-menu-button-wide"></i>
+        <span class="text-black">New Records</span>
+        <i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul id="newrecords-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
                   <li> <a href="rank.php"> <i class="bi bi-circle"></i><span>Rank</span> </a></li>
                   <li> <a href="unit.php"> <i class="bi bi-circle"></i><span>Unit</span> </a></li>
+                  <!--<li> <a href="class.php"> <i class="bi bi-circle"></i><span>Class Number</span> </a></li>
+                  <li> <a href="course.php"> <i class="bi bi-circle"></i><span>Courses</span> </a></li>-->
+                  <li> <a href="batch.php"> <i class="bi bi-circle"></i><span>Batch</span> </a></li>
+                  <li> <a href="address.php"> <i class="bi bi-circle"></i><span>Address</span> </a></li>
+      </ul>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-link collapsed" data-bs-target="#other-nav" data-bs-toggle="collapse" href="#">
+        <i class="bi bi-menu-button-wide"></i>
+        <span class="text-black">List of Personnel</span>
+        <i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul id="other-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+            <!--<li> <a href="new_personnel.php"> <i class="bi bi-circle"></i><span> Active Personnel</span> </a></li>-->
+            <li> <a href="personnel.php"> <i class="bi bi-circle"></i><span>Active Personnel</span> </a></li>
+            <li> <a href="retired_personnel.php"> <i class="bi bi-circle"></i><span>Retired Personnel</span> </a></li>
+            <li> <a href="suspended_personnel.php"> <i class="bi bi-circle"></i><span>Suspended Personnel</span> </a></li>
+            <li> <a href="dismissed_personnel.php"> <i class="bi bi-circle"></i><span>Dismissed Personnel</span> </a></li>
+      </ul>
+    </li>
+  </ul>
+</li>
+
+            
+            <!--<ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                  <li> <a href="rank.php"> <i class="bi bi-circle"></i><span>Rank</span> </a></li>
+                  <li> <a href="unit.php"> <i class="bi bi-circle"></i><span>Unit</span> </a></li>
+                  <li> <a href="class.php"> <i class="bi bi-circle"></i><span>Class Number</span> </a></li>
                   <li> <a href="course.php"> <i class="bi bi-circle"></i><span>Courses</span> </a></li>
                   <li> <a href="batch.php"> <i class="bi bi-circle"></i><span>Batch</span> </a></li>
                   <li> <a href="address.php"> <i class="bi bi-circle"></i><span>Address</span> </a></li>
-                  <li> <a href="personnel.php"> <i class="bi bi-circle"></i><span>Add Personnel</span> </a></li>
+                  <<li> <a href="personnel.php"> <i class="bi bi-circle"></i><span>All Record Personnel</span> </a></li>
                </ul>
          </li>
          <li class="nav-item">
-            <a class="nav-link collapsed" data-bs-target="#personnel-nav" data-bs-toggle="collapse" href="#"> <i class="bi bi-menu-button-wide"></i><span>Personnel Record</span><i class="bi bi-chevron-down ms-auto"></i> </a>
+            <a class="nav-link collapsed" data-bs-target="#personnel-nav" data-bs-toggle="collapse" href="#"> <i class="bi bi-menu-button-wide"></i><span>Personnel Records</span><i class="bi bi-chevron-down ms-auto"></i> </a>
             <ul id="personnel-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
             <li> <a href="new_personnel.php"> <i class="bi bi-circle"></i><span> Active Personnel</span> </a></li>
             <li> <a href="retired_personnel.php"> <i class="bi bi-circle"></i><span>Retired Personnel</span> </a></li>
             <li> <a href="suspended_personnel.php"> <i class="bi bi-circle"></i><span>Suspended Personnel</span> </a></li>
             <li> <a href="dismissed_personnel.php"> <i class="bi bi-circle"></i><span>Dismissed Personnel</span> </a></li>
             </ul>
-         </li>
-             
-      
+         </li>-->
+  
          <li class="nav-item">
     <a class="nav-link collapsed" data-bs-target="#training-nav" data-bs-toggle="collapse" href="#">
-        <i class="bi bi-menu-button-wide"></i><span>Training</span><i class="bi bi-chevron-down ms-auto"></i>
+        <i class="bi bi-menu-button-wide"></i><span>Training Records</span><i class="bi bi-chevron-down ms-auto"></i>
     </a>
     <ul id="training-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
-    <li> <a href="training.php"> <i class="bi bi-circle"></i><span> Investigation</span> </a></li>
-    <li> <a href="training1.php"> <i class="bi bi-circle"></i><span> PSOSEC</span> </a></li>
+    <li> <a href="course.php"> <i class="bi bi-circle"></i><span>New Course</span> </a></li>
+    <?php
+        $res = selectAll('course');
+        while($opt = mysqli_fetch_assoc($res)){
+            // Get the id value of the current course
+            $id = $opt['id'];
+            
+            // Check if the id value is set in the query parameter
+            $active = '';
+            if(isset($_GET['id']) && $_GET['id'] == $id){
+                // Add the 'active' class to highlight the current course
+                $active = 'active';
+            }
+            
+            // Display the course in the navigation menu
+            echo "<li><a class='$active' href='course_view.php?id=$id'><i class='bi bi-circle'></i><span>$opt[name]</span></a></li>";
+        }
+        ?>
     </ul>
 </li>
+      
+      
       
          </ul>
       </aside>
@@ -104,7 +163,9 @@ adminLogin();
                           
                     
                         <div class="text-end mb-4">
-                        
+                        <button  class="btn btn-success btn-sm shadow-none mt-2 mb-2 text-start me-2" data-bs-toggle="modal" data-bs-target="#add-personnel">
+                            <i class="bi bi-plus"></i> Add
+                            </button>
                         </div>
 
                         <div class="d-flex align-items-center">
@@ -673,67 +734,6 @@ function toggleStatus(id,val){
     }
 
 
-
-
-    // let add_form_course = document.getElementById('add_form_course');
-
-    // add_form_course.addEventListener('submit', function(e){
-    //     e.preventDefault();
-    //     add_course();
-    // });
-
-
-    // function add_course(){
-    //     let data = new FormData();
-    //     data.append('batch',add_form_course.elements['batch'].value);
-    //     data.append('course',add_form_course.elements['course'].value);
-    //     data.append('start',add_form_course.elements['start'].value);
-    //     data.append('end',add_form_course.elements['end'].value);
-    //     data.append('personnel_id',add_form_course.elements['personnel_id'].value);
-    //     data.append('add_course','');
-
-    //     let xhr  = new XMLHttpRequest();
-    //     xhr.open("POST","./ajax/personnel.php",true);
-        
-        
-    //     xhr.onload = function(){
-    //         var myModalEl = document.getElementById('edit_course')
-    //         var modal = bootstrap.Modal.getInstance(myModalEl) // Returns a Bootstrap modal instanceof
-    //         modal.hide();
-
-    //         if(this.responseText==1){
-    //             swal("Success!", "You Successfully Enter a course!", "success");
-    //             // personnel_course(add_form_course.elements['personnel_id'].value);
-    //             add_form_course.reset();
-    //             // get_course();
-                
-    //         }else{
-    //             swal("Error!", "Server Down!", "error");
-    //         }
-
-    //     }
-    //     xhr.send(data);
-    // }
-
-
-    // function personnel_course(id){
-    //         // add_form_course.elements['personnel_id'].value = id;
-    //         // add_form_course.elements['batch'].value= '';
-    //         // add_form_course.elements['course'].value= '';
-    //     // add_form_course.elements['start'].value= '';
-    //     // add_form_course.elements['end'].value= '';
-
-        
-    //     let xhr = new XMLHttpRequest();
-    //     xhr.open("POST","./ajax/personnel.php",true);
-    //     xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
-
-    //     xhr.onload = function(){
-    //         document.getElementById('course-data').innerHTML = this.responseText;
-    //     }
-
-    //     xhr.send('get_course='+id);
-    // }
 
 
 

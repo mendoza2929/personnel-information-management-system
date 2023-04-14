@@ -31,7 +31,7 @@ adminLogin();
    <body>
    
       <header id="header" class="header fixed-top d-flex align-items-center">
-         <div class="d-flex align-items-center justify-content-between"> <a href="dash.php" class="logo d-flex align-items-center"> <span class="d-none d-lg-block">R8 PTIMS</span> </a> <i class="bi bi-list toggle-sidebar-btn"></i></div>
+         <div class="d-flex align-items-center justify-content-between"> <a href="dash.php" class="logo d-flex align-items-center"> <span class="d-none d-lg-block"> <img src="../img//PNP_PRO_9_logo.webp"> R8 PTIMS</span> </a> <i class="bi bi-list toggle-sidebar-btn"></i></div>
          
          <nav class="header-nav ms-auto">
             <ul class="d-flex align-items-center">
@@ -57,6 +57,7 @@ adminLogin();
             <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                   <li> <a href="rank.php"> <i class="bi bi-circle"></i><span>Rank</span> </a></li>
                   <li> <a href="unit.php"> <i class="bi bi-circle"></i><span>Unit</span> </a></li>
+                  <li> <a href="class.php"> <i class="bi bi-circle"></i><span>Class Batch</span> </a></li>
                   <li> <a href="course.php"> <i class="bi bi-circle"></i><span>Courses</span> </a></li>
                   <li> <a href="batch.php"> <i class="bi bi-circle"></i><span>Batch</span> </a></li>
                   <li> <a href="address.php"> <i class="bi bi-circle"></i><span>Address</span> </a></li>
@@ -267,42 +268,7 @@ function toggleStatus(id,val){
     
     }
 
-            
-//     function downloadCertificate(id) {
-//   let xhr = new XMLHttpRequest();
-//   xhr.open("POST", "./ajax/training.php", true);
-//   xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-//   xhr.onload = function() {
-//     var certificate_path = '../../img/Certificate/' + 'certificate.jpg';
-//     var link = document.createElement('a');
-//     link.href = certificate_path;
-//     link.download = 'certificate.jpg';
-//     link.click();
-//     toggleStatus(id);
-//   }
-//   xhr.send('toggleStatus=' + id );
-// }
 
-
-    // function downloadCertificate(id) {
-    //         // send an AJAX request to generate the certificate
-    //         $.ajax({
-    //             type: 'POST',
-    //             url: './ajax/training.php',
-    //             data: { id: id },
-    //             success: function(response) {
-    //                 // if certificate is generated successfully, download it and toggle the status
-    //                 if (response === 'success') {
-    //                     var certificate_path = '../../img/Certificate/' + id + '_certificate.jpg';
-    //                     var link = document.createElement('a');
-    //                     link.href = certificate_path;
-    //                     link.download = id + '_certificate.jpg';
-    //                     link.click();
-    //                     toggleStatus(id, 1);
-    //                 }
-    //             }
-    //         });
-    //     }
     
 
 

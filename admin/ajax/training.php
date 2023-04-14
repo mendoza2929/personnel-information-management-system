@@ -41,13 +41,13 @@ if(isset($_POST['get_training'])) {
         } else {
             header('Content-type:image/jpeg');
             $font = "../assets/Arial.ttf";
-            $certificate_file_name = $row['personnel'].'_certificate.jpg'; // generate a unique name for the certificate file
-            $certificate_file_path = "../../img/Certificate/".$certificate_file_name; // set the certificate file path
-            $image = imagecreatefromjpeg("../../img/certificate.jpg");
+            $certificate_file_name = $row['personnel'].'_investigation.jpeg'; // generate a unique name for the certificate file
+            $certificate_file_path = "../../img/investigation/".$certificate_file_name; // set the certificate file path
+            $image = imagecreatefromjpeg("../../img/investigation.jpeg");
             $color = imagecolorallocate($image, 5 , 21 ,22);
-            imagettftext($image, 30, 0 , 500, 70,$color,$font,$row['personnel']);
-            imagettftext($image, 30, 0 , 200, 270,$color,$font,$row['batch']);
-            imagettftext($image, 20, 0 , 500, 500,$color,$font,date('F d, Y')); // add date to certificate
+            imagettftext($image, 50, 0 , 700,800,$color,$font,$row['personnel']);
+            imagettftext($image, 30, 0 , 1700, 100,$color,$font,$row['batch']);
+            imagettftext($image, 20, 0 , 1420, 1120,$color,$font,date('F d, Y')); // add date to certificate
             imagejpeg($image, $certificate_file_path); // save the certificate file
             imagedestroy($image);
             $status = "<a href='$certificate_file_path' download>
@@ -70,26 +70,29 @@ if(isset($_POST['get_training'])) {
 
 
 
-
 if(isset($_POST['get_training1'])) {
     $res = selectAll("personnel_details WHERE course_id = '36'");
     $i = 1;
     $data = "";
     while($row = mysqli_fetch_assoc($res)) {
-        // $image = imagecreatefromjpeg("../../img/certificate.jpg");
-        // $color = imagecolorallocate($image, 19 , 21 ,22);
-        // imagettftext($image, 30, 0 , 500, 470,$color,$font,$row['personnel_name']);
-        // $certificate_file = "../../img/Certificate/try.jpg";
-        // imagejpeg($image, $certificate_file);
-        // imagedestroy($image);
-        // // echo "Certificate Added Success";
-    
         if ($row['training_status'] == 1) {
             $status = "<button onclick='toggleStatus1($row[id],0)' class='btn btn-warning btn-sm shadow-none'>On Going</button>";
         } else {
-            $status = "<button onclick='toggleStatus1($row[id],1)' class='btn btn-success btn-sm shadow-none disabled'>Complete</button>";
+            header('Content-type:image/jpeg');
+            $font = "../assets/Arial.ttf";
+            $certificate_file_name = $row['personnel'].'_psosec.jpeg'; // generate a unique name for the certificate file
+            $certificate_file_path = "../../img/psosec/".$certificate_file_name; // set the certificate file path
+            $image = imagecreatefromjpeg("../../img/psosec.jpeg");
+            $color = imagecolorallocate($image, 5 , 21 ,22);
+            imagettftext($image, 50, 0 , 700,800,$color,$font,$row['personnel']);
+            imagettftext($image, 30, 0 , 1700, 100,$color,$font,$row['batch']);
+            imagettftext($image, 20, 0 , 1420, 1120,$color,$font,date('F d, Y')); // add date to certificate
+            imagejpeg($image, $certificate_file_path); // save the certificate file
+            imagedestroy($image);
+            $status = "<a href='$certificate_file_path' download>
+            <button onclick='toggleStatus1($row[id],1)' class='btn btn-success btn-sm shadow-none disabled'>Completed </button>
+            </a>";
         }
-        
         $data .= "
         <tr class='align-middle'>
             <td>$i</td>
@@ -103,6 +106,7 @@ if(isset($_POST['get_training1'])) {
     }
     echo $data;
 }
+
 
 
 

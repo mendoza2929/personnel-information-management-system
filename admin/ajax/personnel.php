@@ -37,12 +37,20 @@ if(isset($_POST['add_personnel'])){
 if(isset($_POST['get_personnel'])){  
     $res = selectAll('personnel');
     $i=1;
+    
 
     $data = "";
 
     while($row = mysqli_fetch_assoc($res)){
         if ($row['status'] == 1) {
-            $status = "<button onclick='toggleStatus($row[id],0)' class='btn btn-success btn-sm shadow-none'>Active</button>";
+            // check if personnel is already 50 years old or older
+            if (strtotime($row['birthday'] . '+50 years') <= time()) {
+                // update status to dismissed (2)
+                update('personnel', array('status' => 2), array('id' => $row['id']));
+                $status = "<button onclick='toggleStatus($row[id],2)' class='btn btn-danger btn-sm shadow-none'>Dismissed</button>";
+            } else {
+                $status = "<button onclick='toggleStatus($row[id],0)' class='btn btn-success btn-sm shadow-none'>Active</button>";
+            }
         } else if ($row['status'] == 2) {
             $status = "<button onclick='toggleStatus($row[id],1)' class='btn btn-danger btn-sm shadow-none'>Dismissed</button>";
         } else if ($row['status'] == 3) {
@@ -75,6 +83,7 @@ if(isset($_POST['get_personnel'])){
         <td>$row[batch]</td>
         <td>$status</td>
         <td>
+
         <button type='button' onclick='personnel_details($row[id])' class='btn btn-warning btn-sm shadow-none me-3' data-bs-toggle='modal' data-bs-target='#edit-personnel'>
         <i class='i bi-pencil-square'></i>
         </button>

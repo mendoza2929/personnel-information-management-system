@@ -27,9 +27,13 @@ if(isset($_POST['get_rank'])){
         <td>$i</td>
         <td>$row[name]</td>
 
-        <td>    <button type="button" onclick="rem_rank($row[id])"  class='btn btn-danger btn-sm shadow-none me-3 mb-2'>
-        <i class="bi bi-pencil-square"></i> Delete
-         </button</td>
+        <td>
+        
+        <button type="button" onclick='rank_details($row[id])'  class="btn btn-success btn-sm shadow-none"  data-bs-toggle='modal' data-bs-target='#edit_rank'>
+        <i class="bi bi-pencil"></i>
+         </button>
+        
+        </td>
 
        
         </tr>
@@ -41,39 +45,56 @@ if(isset($_POST['get_rank'])){
   
 }
 
-if(isset($_POST['rem_rank'])){
-    $frm_data = filteration($_POST);
-    $values = [$frm_data['rem_rank']];
-
-    $q = "DELETE FROM `rank` WHERE `id`=?";
-    $res = delete($q, $values,'i');
-    echo $res;
-}
 
 
 if(isset($_POST['edit_rank'])){
     $frm_data = filteration($_POST);
 
-    $res1 = select("SELECT * FROM `personnel` WHERE  `id`=?",[$frm_data['edit_rank']],'i');
-   
+    $res1 = select("SELECT * FROM `rank` WHERE  `id`=?",[$frm_data['edit_rank']],'i');
 
+    $rankdata = mysqli_fetch_assoc($res1);
 
-    $personneldata = mysqli_fetch_assoc($res1);
+    $data = ["rankdata"=>$rankdata];
 
+    $json_data = json_encode($data);
 
-    // if(mysqli_num_rows($res2)>0){
-    //      while($row = mysqli_fetch_assoc($res2)){
-    //         array_push($features,$row['facilities_id']);
-    //      }
-    // }
-
-    $data = ["personneldata"=>$personneldata];
-
-    
-    $data = json_encode($data);
-
-    echo $data;
+    header('Content-Type: application/json');
+    echo $json_data;
+    exit;
 }
+
+
+if(isset($_POST['submit_edit_rank'])){
+
+    $frm_data = filteration($_POST);
+
+    $flag = 0;
+
+    // check if clearance_id is present
+    if(isset($frm_data['rank_id'])){
+
+        $q1 = "UPDATE `rank` SET `name`=?   WHERE `id`=?";
+        $values = [$frm_data['rank'],$frm_data['rank_id']];
+
+        if(update($q1,$values,'ss')){
+            $flag=1;
+        }
+    } else {
+        // display an error message or redirect the user
+        echo "Error: rank_id is not defined";
+    }
+
+    if($flag){
+        echo 1;
+    }else{
+        echo 0;
+    }
+}
+
+
+
+
+
 
 
 

@@ -30,7 +30,7 @@ adminLogin();
    <body>
    
       <header id="header" class="header fixed-top d-flex align-items-center">
-         <div class="d-flex align-items-center justify-content-between"> <a href="dash.php" class="logo d-flex align-items-center"> <span class="d-none d-lg-block">R8 PTIMS</span> </a> <i class="bi bi-list toggle-sidebar-btn"></i></div>
+         <div class="d-flex align-items-center justify-content-between"> <a href="dash.php" class="logo d-flex align-items-center"> <span class="d-none d-lg-block"> <img src="../img//PNP_PRO_9_logo.webp"> R8 PTIMS</span> </a> <i class="bi bi-list toggle-sidebar-btn"></i></div>
          
          <nav class="header-nav ms-auto">
             <ul class="d-flex align-items-center">
@@ -52,34 +52,92 @@ adminLogin();
          <ul class="sidebar-nav" id="sidebar-nav">
             <li class="nav-item"> <a class="nav-link " href="dash.php"> <i class="bi bi-grid"></i> <span>Dashboard</span> </a></li>
             <li class="nav-item">
-            <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#"> <i class="bi bi-menu-button-wide"></i><span>Master List</span><i class="bi bi-chevron-down ms-auto"></i> </a>
-            <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+           
+            <li class="nav-item">
+  <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
+    <i class="bi bi-menu-button-wide"></i>
+    <span>Personnel Records</span>
+    <i class="bi bi-chevron-down ms-auto"></i>
+  </a>
+  <ul id="components-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+    <li class="nav-item">
+      <a class="nav-link collapsed" data-bs-target="#newrecords-nav" data-bs-toggle="collapse" href="#">
+        <i class="bi bi-menu-button-wide"></i>
+        <span class="text-black">New Records</span>
+        <i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul id="newrecords-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
                   <li> <a href="rank.php"> <i class="bi bi-circle"></i><span>Rank</span> </a></li>
                   <li> <a href="unit.php"> <i class="bi bi-circle"></i><span>Unit</span> </a></li>
+                  <!--<li> <a href="class.php"> <i class="bi bi-circle"></i><span>Class Number</span> </a></li>
+                  <li> <a href="course.php"> <i class="bi bi-circle"></i><span>Courses</span> </a></li>-->
+                  <li> <a href="batch.php"> <i class="bi bi-circle"></i><span>Batch</span> </a></li>
+                  <li> <a href="address.php"> <i class="bi bi-circle"></i><span>Address</span> </a></li>
+      </ul>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-link collapsed" data-bs-target="#other-nav" data-bs-toggle="collapse" href="#">
+        <i class="bi bi-menu-button-wide"></i>
+        <span class="text-black">List of Personnel</span>
+        <i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul id="other-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+            <!--<li> <a href="new_personnel.php"> <i class="bi bi-circle"></i><span> Active Personnel</span> </a></li>-->
+            <li> <a href="personnel.php"> <i class="bi bi-circle"></i><span>Active Personnel</span> </a></li>
+            <li> <a href="retired_personnel.php"> <i class="bi bi-circle"></i><span>Retired Personnel</span> </a></li>
+            <li> <a href="suspended_personnel.php"> <i class="bi bi-circle"></i><span>Suspended Personnel</span> </a></li>
+            <li> <a href="dismissed_personnel.php"> <i class="bi bi-circle"></i><span>Dismissed Personnel</span> </a></li>
+      </ul>
+    </li>
+  </ul>
+</li>
+
+            
+            <!--<ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                  <li> <a href="rank.php"> <i class="bi bi-circle"></i><span>Rank</span> </a></li>
+                  <li> <a href="unit.php"> <i class="bi bi-circle"></i><span>Unit</span> </a></li>
+                  <li> <a href="class.php"> <i class="bi bi-circle"></i><span>Class Number</span> </a></li>
                   <li> <a href="course.php"> <i class="bi bi-circle"></i><span>Courses</span> </a></li>
                   <li> <a href="batch.php"> <i class="bi bi-circle"></i><span>Batch</span> </a></li>
                   <li> <a href="address.php"> <i class="bi bi-circle"></i><span>Address</span> </a></li>
-                  <li> <a href="personnel.php"> <i class="bi bi-circle"></i><span>Add Personnel</span> </a></li>
+                  <<li> <a href="personnel.php"> <i class="bi bi-circle"></i><span>All Record Personnel</span> </a></li>
                </ul>
          </li>
          <li class="nav-item">
-            <a class="nav-link collapsed" data-bs-target="#personnel-nav" data-bs-toggle="collapse" href="#"> <i class="bi bi-menu-button-wide"></i><span>Personnel Record</span><i class="bi bi-chevron-down ms-auto"></i> </a>
+            <a class="nav-link collapsed" data-bs-target="#personnel-nav" data-bs-toggle="collapse" href="#"> <i class="bi bi-menu-button-wide"></i><span>Personnel Records</span><i class="bi bi-chevron-down ms-auto"></i> </a>
             <ul id="personnel-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
             <li> <a href="new_personnel.php"> <i class="bi bi-circle"></i><span> Active Personnel</span> </a></li>
             <li> <a href="retired_personnel.php"> <i class="bi bi-circle"></i><span>Retired Personnel</span> </a></li>
             <li> <a href="suspended_personnel.php"> <i class="bi bi-circle"></i><span>Suspended Personnel</span> </a></li>
             <li> <a href="dismissed_personnel.php"> <i class="bi bi-circle"></i><span>Dismissed Personnel</span> </a></li>
             </ul>
-         </li>
-         
-         
+         </li>-->
+        
+    
          <li class="nav-item">
     <a class="nav-link collapsed" data-bs-target="#training-nav" data-bs-toggle="collapse" href="#">
-        <i class="bi bi-menu-button-wide"></i><span>Training</span><i class="bi bi-chevron-down ms-auto"></i>
+        <i class="bi bi-menu-button-wide"></i><span>Training Records</span><i class="bi bi-chevron-down ms-auto"></i>
     </a>
     <ul id="training-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
-    <li> <a href="training.php"> <i class="bi bi-circle"></i><span> Investigation</span> </a></li>
-    <li> <a href="training1.php"> <i class="bi bi-circle"></i><span> PSOSEC</span> </a></li>
+    <li> <a href="course.php"> <i class="bi bi-circle"></i><span>New Course</span> </a></li>
+    <?php
+        $res = selectAll('course');
+        while($opt = mysqli_fetch_assoc($res)){
+            // Get the id value of the current course
+            $id = $opt['id'];
+            
+            // Check if the id value is set in the query parameter
+            $active = '';
+            if(isset($_GET['id']) && $_GET['id'] == $id){
+                // Add the 'active' class to highlight the current course
+                $active = 'active';
+            }
+            
+            // Display the course in the navigation menu
+            echo "<li><a class='$active' href='course_view.php?id=$id'><i class='bi bi-circle'></i><span>$opt[name]</span></a></li>";
+        }
+        ?>
     </ul>
 </li>
       
@@ -158,87 +216,34 @@ adminLogin();
             </div>
         </div>
 
-<?php 
-
-
-
-
-?>
-        
-              
-    <div class="modal fade" id="add_personnel" data-bs-backdrop="static" data-bs-keyboard= "true" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog modal-md" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title"><i class="bi bi-book"></i> Course Training</h5>
-        <button type="button" class="btn-close shadow-none" data-bs-dismiss="modal" aria-label="Close"><span aria-hidden="true"></button>
-      </div>
-      <div class="modal-body">
-      <div id="image-alert">
-
-</div>
-            <div class="border-bottom border-3 pb-3 mb-3">
-                <form id="add_personnel_course">
-                <div class="row">
-                <label class="form-label fw-bold">Add Course Training</label>
-
-            
-                                <label class="form-label fw-bold">Batch</label>
-                                <select class='form-select shadow-none mb-2' aria-label='Default select example' name='batch' required>
-                                <option disabled selected value="">Select a Class Batch</option> <!-- placeholder option -->
-                                <?php
-                                $res = selectAll('class');
-                                while($opt = mysqli_fetch_assoc($res)){
-                                    echo "<option value='$opt[class]'>$opt[class]</option>";
-                                }
-                                ?>
-                            </select>
-                            
-                
-                <input type="text" class="form-control mb-2 shadow-none" list="personnel_list" name="personnel_name" placeholder="Type to search Personnel ID" required>
-                <datalist id="personnel_list" >
-                <?php
-                                $res = selectAll('personnel');
-                                while($opt = mysqli_fetch_assoc($res)){
-                                    echo "<option value='$opt[id], $opt[last] $opt[first] $opt[middle] $opt[suffix]'></option>";
-                                }
-                         ?>
-                </datalist>
-
-                <input type="text" class="form-control mb-2 shadow-none" list="personnel_list_name" name="personnel_name_list" placeholder="Type to search Personnel Name" required>
-                <datalist id="personnel_list_name">
-                <?php
-                                $res = selectAll('personnel');
-                                while($opt = mysqli_fetch_assoc($res)){
-                                    echo "<option value='$opt[rank], $opt[last] $opt[first] $opt[middle] $opt[suffix]'></option>";
-                                }
-                         ?>
-                </datalist>
-
-              
-
-                    <input type="hidden" name="course_id">
-                    </div>
-                     <button type="submit" class="btn btn-success shadow-none">Submit</button>
-                 </form>
-            </div>
-            <div class="table-responsive-lg" style="height:350px; overflow-y:scroll;">
-                           <table class="table table-hover border text-center">
-                            <thead>
-                                <tr class="text-white sticky-top" style="background-color:#1d3557;">
-                                <th scope="col">Class Batch</th>
-                                <th scope="col">Personnel Name</th>
-                                <th scope="col">Date</th>
-                                </tr>
-                            </thead>
-                            <tbody id="course-personnel-data">
-                            </tbody>
-                            </table>
+                      
+        <div class="modal fade" id="edit_course" data-bs-backdrop="static" data-bs-keyboard= "true" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <form id="edit_course_form">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <div class="modal-title"><i class="bi bi-clipboard-data"></i> Edit Course</div>
+                        </div>
+                        <div class="modal-body"> 
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Course</label>
+                                <input type="text" name="course_name" class="form-control shadow-none">
                             </div>
-         </div>
-     </div>
-    </div>
-</div>
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Description</label>
+                                <input type="text" name="desc_name" class="form-control shadow-none">
+                            </div>
+                            
+                            <input type="hidden" name="course_id">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="reset" class="btn btn-secondary shadow-none" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-success shadow-none">Submit</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
 
 
 
@@ -341,47 +346,6 @@ adminLogin();
 
 
 
-            
-    let add_personnel_course = document.getElementById('add_personnel_course');
-
-    add_personnel_course.addEventListener('submit', function(e){
-    e.preventDefault();
-    add_course_personnel();
-});
-
-
-function add_course_personnel(){
-    let data = new FormData();
-    data.append('batch',add_personnel_course.elements['batch'].value);
-    data.append('personnel_name',add_personnel_course.elements['personnel_name'].value);
-    data.append('personnel_name_list',add_personnel_course.elements['personnel_name_list'].value);
-    data.append('course_id',add_personnel_course.elements['course_id'].value);
-    data.append('add_course_personnel','');
-
-    let xhr  = new XMLHttpRequest();
-    xhr.open("POST","./ajax/course.php",true);
-    
-    
-    xhr.onload = function(){
-        var myModalEl = document.getElementById('add_personnel')
-        var modal = bootstrap.Modal.getInstance(myModalEl) // Returns a Bootstrap modal instanceof
-        modal.hide();
-
-        if(this.responseText==1){
-         // alertCourse('success','New Image Added','image-alert');
-            swal("Success!", "You Successfully Enter a course!", "success");
-            // add_course_personnel(add_personnel_course.elements['personnel_id'].value,document.querySelectorAll("#add_personnel .modal-title").innerText);
-            add_personnel_course.reset();
-          
-            // get_personnel_course();
-            
-        }else{
-            swal("Error!", " has already been assigned to the selected course.  ", "error");
-        }
-
-    }
-    xhr.send(data);
-}
 
 
 function personnel_course(id){
@@ -402,6 +366,69 @@ function personnel_course(id){
 
         xhr.send('get_personnel_course='+id);
     }
+
+
+
+
+    
+    let edit_course_form = document.getElementById('edit_course_form');
+
+    function course_details(id){
+
+        let xhr = new XMLHttpRequest();
+        xhr.open("POST","./ajax/course.php",true);
+        xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+
+
+        xhr.onload = function(){
+            let data = JSON.parse(this.responseText);
+            edit_course_form.elements['course_name'].value = data.coursedata.name;
+            edit_course_form.elements['desc_name'].value = data.coursedata.description;
+            edit_course_form.elements['course_id'].value = data.coursedata.id;
+       }
+
+       xhr.send('edit_course='+id);
+    }
+
+
+    
+    edit_course_form.addEventListener('submit',function(e){
+        e.preventDefault();
+        submit_edit_course();
+    });
+
+
+    function submit_edit_course(){
+        let data = new FormData();
+        data.append('submit_edit_course','');
+        data.append('course_id',edit_course_form.elements['course_id'].value);
+        data.append('course_name',edit_course_form.elements['course_name'].value);
+        data.append('desc_name',edit_course_form.elements['desc_name'].value);
+
+
+        
+        let xhr = new XMLHttpRequest();
+        xhr.open("POST","./ajax/course.php",true);
+
+        xhr.onload = function(){
+            var myModalEl = document.getElementById('edit_course')
+            var modal = bootstrap.Modal.getInstance(myModalEl) // Returns a Bootstrap modal instanceof
+            modal.hide();
+
+            if(this.responseText==1){
+                swal("Good job!", "You Successfully Edit Course!", "success");
+                edit_course_form.reset();
+                get_course();
+                
+            }else{
+                swal("Error!", "Server Down!", "error");
+            }
+
+        }
+        xhr.send(data);
+       
+    }
+
 
 
 

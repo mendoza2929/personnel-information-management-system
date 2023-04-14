@@ -2,13 +2,16 @@
 
 //front end
 define('SITE_URL','http://127.0.0.1/pinfo/');
+define('CERTIFICATE_IMG_PATH',SITE_URL.'img/certificates/');
 
 
 
 //back end
-define('UPLOAD_IMAGE_PATH',$_SERVER['DOCUMENT_ROOT'].'/portfolio/img/');
-define('PORTFOLIO_FOLDER','project/');
-define('MAIN_FOLDER','main/');
+define('UPLOAD_IMAGE_PATH',$_SERVER['DOCUMENT_ROOT'].'/pinfo/img/');
+// define('PORTFOLIO_FOLDER','project/');
+// define('MAIN_FOLDER','main/');
+define('CERTIFICATE_FOLDER','certificates/');
+
 
 
 
