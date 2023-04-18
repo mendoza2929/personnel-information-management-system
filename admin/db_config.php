@@ -3,7 +3,7 @@
   $hname='localhost';
   $uname='root';
   $pass= '272727';
-  $db="ptraining";
+  $db="ptims";
 
 
   

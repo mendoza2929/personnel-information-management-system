@@ -30,8 +30,8 @@ if(isset($_POST['get_unit'])){
         <td>
 
 
-        <button type="button" onclick="rem_unit($row[id])" class="btn btn-danger btn-sm shadow-none">
-        <i class="bi bi-trash"></i>Delete
+        <button type="button" onclick='unit_details($row[id])'  class="btn btn-success btn-sm shadow-none"  data-bs-toggle='modal' data-bs-target='#edit_unit'>
+        <i class="bi bi-pencil"></i>
          </button>
         
         </td>
@@ -44,13 +44,49 @@ if(isset($_POST['get_unit'])){
   
 }
 
-if(isset($_POST['rem_unit'])){
-    $frm_data = filteration($_POST);
-    $values = [$frm_data['rem_unit']];
 
-    $q = "DELETE FROM `unit` WHERE `id`=?";
-    $res = delete($q, $values,'i');
-    echo $res;
+if(isset($_POST['edit_unit'])){
+    $frm_data = filteration($_POST);
+
+    $res1 = select("SELECT * FROM `unit` WHERE  `id`=?",[$frm_data['edit_unit']],'i');
+
+    $unitdata = mysqli_fetch_assoc($res1);
+
+    $data = ["unitdata"=>$unitdata];
+
+    $json_data = json_encode($data);
+
+    header('Content-Type: application/json');
+    echo $json_data;
+    exit;
+}
+
+
+if(isset($_POST['submit_edit_unit'])){
+
+    $frm_data = filteration($_POST);
+
+    $flag = 0;
+
+    // check if clearance_id is present
+    if(isset($frm_data['unit_id'])){
+
+        $q1 = "UPDATE `unit` SET `name`=?, `description`=?   WHERE `id`=?";
+        $values = [$frm_data['unit'],$frm_data['desc'],$frm_data['unit_id']];
+
+        if(update($q1,$values,'sss')){
+            $flag=1;
+        }
+    } else {
+        // display an error message or redirect the user
+        echo "Error: unit_id is not defined";
+    }
+
+    if($flag){
+        echo 1;
+    }else{
+        echo 0;
+    }
 }
 
 

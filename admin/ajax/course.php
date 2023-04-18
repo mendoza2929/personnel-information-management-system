@@ -131,9 +131,9 @@ if(isset($_POST['add_class'])){
     $open = $frm_data['open'];
   
     // Use the class number and course ID in your SQL query
-    $q = "INSERT INTO `course_class` (`class_number`, `class_id`, `course_id`,`proponent`,`open`) VALUES (?, ?, ?,?,?)";
-    $values = [$class_number, $frm_data['class_id'], $course_id,$proponent,$open];
-    $res = insert($q,$values,'siiss');
+    $q = "INSERT INTO `course_class` (`class_number`,`course_id`,`proponent`,`open`) VALUES (?, ?, ?,?)";
+    $values = [$class_number, $course_id,$proponent,$open];
+    $res = insert($q,$values,'siss');
     echo $res;
   }
 
@@ -162,9 +162,16 @@ if(isset($_POST['add_class'])){
             <td>$row[proponent]</td>
             <td>$row[open]</td>
             <td>$status</td>
+            <td>
 
 
-          
+            <button type="button" onclick='course_view_details($row[id])'  class="btn btn-success btn-sm shadow-none"  data-bs-toggle='modal' data-bs-target='#edit_course_view'>
+            <i class="bi bi-pencil"></i>
+             </button>
+            
+            </td>
+
+        
         </tr>
         data;
         $i++;
@@ -186,7 +193,51 @@ if(isset($_POST['toggleStatus1'])){
 
 }
 
+if(isset($_POST['edit_course_view'])){
+    $frm_data = filteration($_POST);
+  
+    $res1 = select("SELECT * FROM `course_class` WHERE  `id`=?",[$frm_data['edit_course_view']],'i');
+  
+    $course_viewdata = mysqli_fetch_assoc($res1);
+  
+    $data = ["course_viewdata"=>$course_viewdata];
+  
+    $json_data = json_encode($data);
+  
+    header('Content-Type: application/json');
+    echo $json_data;
+    exit;
+  }
 
+
+  if(isset($_POST['submit_edit_course_view'])){
+
+    $frm_data = filteration($_POST);
+
+    $flag = 0;
+
+    // check if clearance_id is present
+    if(isset($frm_data['class_number_id'])){
+
+        $q1 = "UPDATE `course_class` SET `class_number`=?, `proponent`=? , `open`=?  WHERE `id`=?";
+        $values = [$frm_data['name'],$frm_data['proponent'],$frm_data['open'],$frm_data['class_number_id']];
+
+        if(update($q1,$values,'ssss')){
+            $flag=1;
+        }
+    } else {
+        // display an error message or redirect the user
+        echo "Error: class_number_id is not defined";
+    }
+
+    if($flag){
+        echo 1;
+    }else{
+        echo 0;
+    }
+}
+
+  
 
 
 

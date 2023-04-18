@@ -88,6 +88,14 @@ if(isset($_POST['get_personnel'])){
         <i class='i bi-pencil-square'></i>
         </button>
         </td>
+
+        <td> 
+        <button type='button'onclick='personnel_course($row[id])' class='btn btn-info btn-sm shadow-none me-3' data-bs-toggle='modal' data-bs-target='#edit_course'>
+        <i class='bi bi-eye'></i>
+        </button>
+        </td>
+
+        
     </tr>
 ";
 $i++;
@@ -210,6 +218,13 @@ if(isset($_POST['submit_edit_personnel'])){
             <i class='i bi-pencil-square'></i>
             </button>
             </td>
+            <td> 
+        <button type='button'onclick='personnel_course($row[id])' class='btn btn-info btn-sm shadow-none me-3' data-bs-toggle='modal' data-bs-target='#edit_course'>
+        <i class='bi bi-eye'></i>
+        </button>
+        </td>
+
+           
         </tr>
 
         ";
@@ -244,86 +259,62 @@ if(isset($_POST['add_course'])){
     }
 }
 
-
-// if(isset($_POST['get_course'])){
-
+// if (isset($_POST['get_course'])) {
 //     $frm_data = filteration($_POST);
-//     $res = select("SELECT * FROM `personnel_details` WHERE `personnel_id`=? AND `course_id`=? ",[$frm_data['get_course']],'i');
+//     $res = select("SELECT DISTINCT cp.personnel_name, c.name AS course_name, cc.class_number 
+//                    FROM course_personnel cp 
+//                    INNER JOIN course_class cc ON cp.class_number_id = cc.id 
+//                    INNER JOIN course c ON cc.course_id = c.id 
+//                    WHERE cp.code_id = ?", [$frm_data['get_course']], 'i');
 
-//    while($row = mysqli_fetch_assoc($res)){
-//     echo<<<data
-
-//     <tr class='align-middle'>
-//     <td>$row[batch]</td>
-
-    
-    
-//     </tr>
-
-//     data;
-//    }
+//     while ($row = mysqli_fetch_assoc($res)) {
+//         // Use the retrieved values as needed
+//         echo <<<data
+//             <tr class='align-middle'>
+           
+//             <td>{$row['course_name']}</td>
+//             <td>{$row['class_number']}</td>
+//             </tr>
+//         data;
+//     }
 // }
 
-if(isset($_POST['get_course'])){
+
+if (isset($_POST['get_course'])) {
     $frm_data = filteration($_POST);
-    $res = select("SELECT * FROM `personnel_details` WHERE `personnel_id`=?",[$frm_data['get_course']],'i');
+    $res = select("SELECT DISTINCT personnel_name, name AS course_name, class_number, end_class, cert_status, cert_image
+    FROM course_personnel
+    INNER JOIN course_class ON course_personnel.class_number_id = course_class.id
+    INNER JOIN course ON course_class.course_id = course.id
+    INNER JOIN certificates ON course_personnel.id = certificates.class_course_id
+    WHERE course_personnel.code_id = ?", [$frm_data['get_course']], 'i');
 
-    while($row = mysqli_fetch_assoc($res)){
-        // Retrieve the course_id value
-        $courseId = $row['course_id'];
-        
-        // Query to retrieve the course value based on course_id
-        $courseQuery = "SELECT name FROM course  WHERE id = $courseId";
-        $courseResult = mysqli_query($con, $courseQuery);
-        $courseRow = mysqli_fetch_assoc($courseResult);
-        $row['name'] = $courseRow['name'];
+    $path = CERTIFICATE_IMG_PATH;
 
-      // Retrieve the training_status value
-      $trainingStatus = $row['training_status'];
 
-      // Use the retrieved values as needed
-      if($trainingStatus == 1){
-          $trainingstatus = "<span onclick='toggleStatus($row[id],0)' class='rounded-pill bg-light text-warning mb-3 text-wrap lh-base fw-bold'>On Going</span>";
-      } else {
-          $trainingstatus = "<span onclick='toggleStatus($row[id],1)' class='rounded-pill bg-light text-success mb-3 text-wrap lh-base fw-bold'>Completed</span>";
-      }
-        
-        // Use the retrieved values as needed
-        echo<<<data
+while ($row = mysqli_fetch_assoc($res)) {
+    // Use the retrieved values as needed
+    echo <<<data
         <tr class='align-middle'>
-        <td>{$row['batch']}</td>
-        <td>{$row['name']}</td>
-        <td>{$row['datentime']}</td>
-        <td>{$trainingstatus}</td>
+        <td class='fw-bold'>{$row['course_name']}</td>
+        <td>{$row['class_number']}</td>
+        <td>{$row['end_class']}</td>
+        <td><span class='rounded-pill bg-light text-success mb-3 text-wrap lh-bas fw-bold'>{$row['cert_status']}</span></td>
+        <td> <img src='{$path}{$row['cert_image']}'class='img-fluid w-50'></td>
+        <td>
+        <button onclick='window.print()' name="export_excel" class="btn btn-success btn-sm shadow-none" id="print-btn">
+        <i class="bi bi-printer"></i> Print
+            </button>
+       </td>
         </tr>
-        data;
-    }
+    data;
+}
 }
 
 
 
 
 
-
-// if(isset($_POST['get_course'])){
-
-//     $frm_data = filteration($_POST);
-//    $res = select("SELECT * FROM `personnel_course` WHERE `personnel_id`=?",[$frm_data['get_course']],'i');
-
-//    while($row = mysqli_fetch_assoc($res)){
-//     echo<<<data
-
-//     <tr class='align-middle'>
-//     <td>$row[batch]</td>
-//     <td>$row[course]</td>
-//     <td>Start Date: $row[start] <br> End Date: $row[end]</td>
-    
-    
-//     </tr>
-
-//     data;
-//    }
-// }
 
 
 

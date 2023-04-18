@@ -10,139 +10,27 @@ adminLogin();
    <head>
       <meta charset="utf-8">
       <meta content="width=device-width, initial-scale=1.0" name="viewport">
-      <title>Course - Personnel Training Information Managment System</title>
+      <title>Course Class - Personnel Training Information Managment System</title>
       <meta name="robots" content="noindex, nofollow">
       <meta content="" name="description">
       <meta content="" name="keywords">
-      <link href="../img/PNP_PRO_9_logo.webp" rel="icon">
-      <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
-      <link href="https://fonts.gstatic.com" rel="preconnect">
-      <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
-      <link href="assets/css/bootstrap.min.css" rel="stylesheet">
-      <link href="assets/css/bootstrap-icons.css" rel="stylesheet">
-      <link href="assets/css/boxicons.min.css" rel="stylesheet">
-      <link href="assets/css/quill.snow.css" rel="stylesheet">
-      <link href="assets/css/quill.bubble.css" rel="stylesheet">
-      <link href="assets/css/remixicon.css" rel="stylesheet">
-      <link href="assets/css/simple-datatables.css" rel="stylesheet">
-      <link href="assets/css/styles.css" rel="stylesheet">
+       
+      <?php 
+      
+        require('./includes/nav_link.php');
+      
+      ?>
    </head>
    <body>
    
-      <header id="header" class="header fixed-top d-flex align-items-center">
-         <div class="d-flex align-items-center justify-content-between"> <a href="dash.php" class="logo d-flex align-items-center"> <span class="d-none d-lg-block">R8 PIMS</span> </a> <i class="bi bi-list toggle-sidebar-btn"></i></div>
+   <?php 
+      
+      require('./includes/header.php');
          
-         <nav class="header-nav ms-auto">
-            <ul class="d-flex align-items-center">
-               <li class="nav-item d-block d-lg-none"> <a class="nav-link nav-icon search-bar-toggle " href="#"> <i class="bi bi-search"></i> </a></li>
-               <li class="nav-item dropdown pe-3">
-                  <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown"> <span class="d-none d-md-block dropdown-toggle ps-2"> Admin</span> </a>
-                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
-                  
-                     <li>
-                        <hr class="dropdown-divider">
-                     </li>
-                     <li> <a class="dropdown-item d-flex align-items-center" href="logout.php"> <i class="bi bi-box-arrow-right"></i> <span>Sign Out</span> </a></li>
-                  </ul>
-               </li>
-            </ul>
-         </nav>
-      </header>
-      <aside id="sidebar" class="sidebar">
-         <ul class="sidebar-nav" id="sidebar-nav">
-            <li class="nav-item"> <a class="nav-link " href="dash.php"> <i class="bi bi-grid"></i> <span>Dashboard</span> </a></li>
-            <li class="nav-item">
-           
-            <li class="nav-item">
-  <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
-    <i class="bi bi-menu-button-wide"></i>
-    <span>Personnel Records</span>
-    <i class="bi bi-chevron-down ms-auto"></i>
-  </a>
-  <ul id="components-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
-    <li class="nav-item">
-      <a class="nav-link collapsed" data-bs-target="#newrecords-nav" data-bs-toggle="collapse" href="#">
-        <i class="bi bi-menu-button-wide"></i>
-        <span class="text-black">New Records</span>
-        <i class="bi bi-chevron-down ms-auto"></i>
-      </a>
-      <ul id="newrecords-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
-                  <li> <a href="rank.php"> <i class="bi bi-circle"></i><span>Rank</span> </a></li>
-                  <li> <a href="unit.php"> <i class="bi bi-circle"></i><span>Unit</span> </a></li>
-                  <!--<li> <a href="class.php"> <i class="bi bi-circle"></i><span>Class Number</span> </a></li>
-                  <li> <a href="course.php"> <i class="bi bi-circle"></i><span>Courses</span> </a></li>-->
-                  <li> <a href="batch.php"> <i class="bi bi-circle"></i><span>Batch</span> </a></li>
-                  <li> <a href="address.php"> <i class="bi bi-circle"></i><span>Address</span> </a></li>
-      </ul>
-    </li>
+      require('./includes/aside.php');
     
-    <li class="nav-item">
-      <a class="nav-link collapsed" data-bs-target="#other-nav" data-bs-toggle="collapse" href="#">
-        <i class="bi bi-menu-button-wide"></i>
-        <span class="text-black">List of Personnel</span>
-        <i class="bi bi-chevron-down ms-auto"></i>
-      </a>
-      <ul id="other-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
-            <!--<li> <a href="new_personnel.php"> <i class="bi bi-circle"></i><span> Active Personnel</span> </a></li>-->
-            <li> <a href="personnel.php"> <i class="bi bi-circle"></i><span>Active Personnel</span> </a></li>
-            <li> <a href="retired_personnel.php"> <i class="bi bi-circle"></i><span>Retired Personnel</span> </a></li>
-            <li> <a href="suspended_personnel.php"> <i class="bi bi-circle"></i><span>Suspended Personnel</span> </a></li>
-            <li> <a href="dismissed_personnel.php"> <i class="bi bi-circle"></i><span>Dismissed Personnel</span> </a></li>
-      </ul>
-    </li>
-  </ul>
-</li>
+   ?>
 
-            
-            <!--<ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                  <li> <a href="rank.php"> <i class="bi bi-circle"></i><span>Rank</span> </a></li>
-                  <li> <a href="unit.php"> <i class="bi bi-circle"></i><span>Unit</span> </a></li>
-                  <li> <a href="class.php"> <i class="bi bi-circle"></i><span>Class Number</span> </a></li>
-                  <li> <a href="course.php"> <i class="bi bi-circle"></i><span>Courses</span> </a></li>
-                  <li> <a href="batch.php"> <i class="bi bi-circle"></i><span>Batch</span> </a></li>
-                  <li> <a href="address.php"> <i class="bi bi-circle"></i><span>Address</span> </a></li>
-                  <<li> <a href="personnel.php"> <i class="bi bi-circle"></i><span>All Record Personnel</span> </a></li>
-               </ul>
-         </li>
-         <li class="nav-item">
-            <a class="nav-link collapsed" data-bs-target="#personnel-nav" data-bs-toggle="collapse" href="#"> <i class="bi bi-menu-button-wide"></i><span>Personnel Records</span><i class="bi bi-chevron-down ms-auto"></i> </a>
-            <ul id="personnel-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-            <li> <a href="new_personnel.php"> <i class="bi bi-circle"></i><span> Active Personnel</span> </a></li>
-            <li> <a href="retired_personnel.php"> <i class="bi bi-circle"></i><span>Retired Personnel</span> </a></li>
-            <li> <a href="suspended_personnel.php"> <i class="bi bi-circle"></i><span>Suspended Personnel</span> </a></li>
-            <li> <a href="dismissed_personnel.php"> <i class="bi bi-circle"></i><span>Dismissed Personnel</span> </a></li>
-            </ul>
-         </li>-->
-        
-         <li class="nav-item">
-    <a class="nav-link collapsed" data-bs-target="#training-nav" data-bs-toggle="collapse" href="#">
-        <i class="bi bi-menu-button-wide"></i><span>Training Records</span><i class="bi bi-chevron-down ms-auto"></i>
-    </a>
-    <ul id="training-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
-    <li> <a href="course.php"> <i class="bi bi-circle"></i><span>New Course</span> </a></li>
-    <?php
-        $res = selectAll('course');
-        while($opt = mysqli_fetch_assoc($res)){
-            // Get the id value of the current course
-            $id = $opt['id'];
-            
-            // Check if the id value is set in the query parameter
-            $active = '';
-            if(isset($_GET['id']) && $_GET['id'] == $id){
-                // Add the 'active' class to highlight the current course
-                $active = 'active';
-            }
-            
-            // Display the course in the navigation menu
-            echo "<li><a class='$active' href='course_view.php?id=$id'><i class='bi bi-circle'></i><span>$opt[name]</span></a></li>";
-        }
-        ?>
-    </ul>
-</li>
-      
-      
-         </ul>
-      </aside>
 
       <main id="main" class="main">
          <div class="pagetitle">
@@ -185,8 +73,8 @@ adminLogin();
                             <thead>
                                 <tr class="text-white" style="background-color:#1d3557;">
                                 <th scope="col">No.</th>
-                                <th scope="col">Personnel</th>
-                                <th scope="col">Status</th>
+                                <th scope="col">Participant</th>
+                                <th scope="col">Action</th>
                              
                                 </tr>
                             </thead>
@@ -211,22 +99,36 @@ adminLogin();
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
+
+        <div class="mb-3">
+        
+        <label class="form-label fw-bold">Participant ID </label>
+        <input type="text" class="form-control mb-2 shadow-none" list="personnel_list_code" name="class_code_<?php echo $result['id']; ?>" placeholder="Type to search Personnel Name" required>
+        <datalist id="personnel_list_code">
+              <?php
+                        $res = selectAll('personnel');
+                        while($opt = mysqli_fetch_assoc($res)){
+                            echo "<option value='$opt[id]'> $opt[last] $opt[first] $opt[middle] $opt[suffix]</option>";
+                        }
+                ?>
+        </datalist>
+      </div>
+      
           <div class="mb-3">
         
-            <label class="form-label fw-bold">Add Personnel </label>
+            <label class="form-label fw-bold">Add Participant</label>
             <input type="text" class="form-control mb-2 shadow-none" list="personnel_list_name" name="class_personnel_<?php echo $result['id']; ?>" placeholder="Type to search Personnel Name" required>
             <datalist id="personnel_list_name">
-            <?php
+                  <?php
                             $res = selectAll('personnel');
                             while($opt = mysqli_fetch_assoc($res)){
-                                echo "<option value='$opt[id], $opt[last] $opt[first] $opt[middle] $opt[suffix]'></option>";
+                                echo "<option value='$opt[rank], $opt[last] $opt[first] $opt[middle] $opt[suffix]'></option>";
                             }
                     ?>
             </datalist>
           </div>
-
-
         </div>
+
         <div class="modal-footer">
 
           <button type="button" class="btn btn-secondary shadow-none" data-bs-dismiss="modal">Close</button>
@@ -260,6 +162,15 @@ adminLogin();
                   <input type="date" name="end" class="form-control shadow-none">
                 </div>
 
+                <div class="mb-3">
+                  <label class="form-label fw-bold">Status</label>
+                  <select class='form-select shadow-none' aria-label='Default select example' name='status' >
+                  <option disabled selected value="">Select a status</option> <!-- placeholder option -->
+                                <option value="Completed">Completed</option>
+                                <option value="Drop">Drop</option>
+                                </select>
+                </div>
+
                 <button type="submit" class="btn btn-success text-white shadow-none text-end">ADD</button>
                 <input type="hidden" name="personnel_id">
             </form>
@@ -268,11 +179,7 @@ adminLogin();
         <div class="table-responsive-md" style="height:450px;">
                            <table class="table table-hover border">
                            <thead>
-                                <tr class="text-white" style="background-color:#1d3557;">
-                                <th scope="col" width="60%">Certificate</th>
-                                <th scope="col">End of Class</th>
-                                <th scope="col">Action</th>
-                                </tr>
+                            
                             </thead>
                             <tbody id="class_certificate_data">
                           
@@ -288,10 +195,6 @@ adminLogin();
       </div>
   </div>
 </div>
-
-
-
-
 
 
 
@@ -328,6 +231,7 @@ adminLogin();
   let data = new FormData(class_form);
   data.append('class_personnel', class_form.elements['class_personnel_' + personnel_id].value);
   data.append('class_number_id', class_form.elements['class_number_id_' + personnel_id].value);
+  data.append('class_code', class_form.elements['class_code_' + personnel_id].value);
   data.append('add_personnel', '');
 
   let xhr = new XMLHttpRequest();
@@ -339,7 +243,7 @@ adminLogin();
       class_form.reset();
       get_personnel(<?php echo $result['id']; ?>);
     } else {
-      swal("Error!", "Server", "error");
+      swal("Error!", "This personnel is already added", "error");
     }
   }
 
@@ -374,7 +278,7 @@ add_certificates_form.addEventListener('submit',function(e){
 function add_certificate(){
     let data = new FormData();
         data.append('image',add_certificates_form.elements['image'].files[0]);
-        // data.append('status',add_certificates_form.elements['status'].value);
+        data.append('status',add_certificates_form.elements['status'].value);
         data.append('end',add_certificates_form.elements['end'].value);
         data.append('personnel_id',add_certificates_form.elements['personnel_id'].value);
         data.append('add_certificate','');
@@ -385,22 +289,20 @@ function add_certificate(){
 
             xhr.onload = function(){
               var myModalEl = document.getElementById('add_certificates')
-               var modal = bootstrap.Modal.getInstance(myModalEl) // Returns a Bootstrap modal instanceof
+              var modal = bootstrap.Modal.getInstance(myModalEl) // Returns a Bootstrap modal instanceof
               modal.hide();
-                if(this.responseText== 'inv_img'){
+                if(this.responseText == 'inv_img'){
                     swal('error', 'Only JPG, WEBP or PNG images are supported');
-                }else if(this.responseText== 'inv_size'){
+                } else if(this.responseText == 'inv_size'){
                     swal('error', 'Image should be less than 2mb!');
-                }else if(this.responseText== 'upd_failed'){
+                } else if(this.responseText == 'upd_failed'){
                     swal('error','Image upload failed');
-                }else{
+                } else if(this.responseText == 'cert_exists'){
+                    swal('error', 'A certificate has already been uploaded for this personnel',"error");
+                } else {
                     swal("success", "Certificate Add To The Personnel", "success");
                     // room_images(add_image_form.elements['room_id'].value,document.querySelector("#room_images .modal-title").innerText);
                     add_certificates_form.reset(); 
-                   
-                
-                  
-                   
                 }
             }
         xhr.send(data);
@@ -412,6 +314,7 @@ function personnel_certificate(id,rname){
     add_certificates_form.elements['personnel_id'].value = id;
     add_certificates_form.elements['image'].value = '';
     add_certificates_form.elements['end'].value = '';
+    add_certificates_form.elements['status'].value = '';
        
        let xhr = new XMLHttpRequest();
        xhr.open("POST", "./ajax/class_course.php", true);
@@ -426,28 +329,6 @@ function personnel_certificate(id,rname){
 }
 
 
-function rem_image(img_id,class_course_id){
-        let data = new FormData();
-        data.append('image_id',img_id);
-        data.append('class_course_id',class_course_id);
-        data.append('rem_image','');
-
-        let xhr = new XMLHttpRequest();
-        xhr.open("POST", "./ajax/class_course.php", true);
-    
-
-            xhr.onload = function(){
-                if(this.responseText== 1){
-                  swal("success", "Delete Certificates", "success");
-                    // room_images(room_id,document.querySelector("#room_images .modal-title").innerText);
-                }else{
-                  swal("Error!", "Server", "error");
-                }
-               
-      
-    }
-    xhr.send(data);
-    }
 
 
        
