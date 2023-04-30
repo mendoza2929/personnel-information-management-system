@@ -154,6 +154,20 @@ xhr.send(data);
 }
 
 
+function search_course(coursename){
+   let xhr = new XMLHttpRequest();
+   xhr.open("POST","./ajax/course.php",true);
+   xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+
+   xhr.onload = function(){
+       document.getElementById('course_data').innerHTML = this.responseText;
+   }
+   xhr.send('search_course&name='+coursename);
+}
+
+
+
+
 
 
 

@@ -51,6 +51,12 @@ adminLogin();
                             </button>
                         </div>
 
+                        <div class="d-flex align-items-center">
+                     
+
+                            <input type="text" oninput="search_course(this.value)" class="form-control shadow-none w-25 ms-auto mb-2" placeholder="Type to search..">
+                        </div>
+
 
                            <div class="table-responsive-md" style="height:450px; overflow-y:scroll;">
                            <table class="table table-hover border">

@@ -10,4 +10,4 @@
       <link href="assets/css/remixicon.css" rel="stylesheet">
       <link href="assets/css/simple-datatables.css" rel="stylesheet">
       <link href="assets/css/styles.css" rel="stylesheet">
-      <link rel="stylesheet" type="text/css" href="assets/css/print.css" media="print">
+      <link rel="stylesheet" type="text/css" href="assets/css/prints.css" media="print">

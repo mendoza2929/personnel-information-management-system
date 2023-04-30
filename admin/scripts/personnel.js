@@ -176,29 +176,6 @@ function search_personnel(personnelname){
     xhr.send('search_personnel&name='+personnelname);
 }
 
-// function personnel_course(id){
-    
-        
-//     let xhr = new XMLHttpRequest();
-//     xhr.open("POST","./ajax/personnel.php",true);
-//     xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
-
-//     xhr.onload = function(){
-//         document.getElementById('course-data').innerHTML = this.responseText;
-//     }
-
-//     xhr.send('get_course='+id);
-// }
-
-// function printCertificate(imageUrl) {
-//     var w = window.open('', 'Print Certificate');
-//     w.document.write('<html><head><title>Print Certificate</title>');
-//     w.document.write('</head><body style="text-align:center">');
-//     w.document.write('<img src="' + imageUrl + '" style="max-width:100%">');
-//     w.document.write('</body></html>');
-//     w.print();
-//     w.close();
-// }
 
 
 
@@ -215,17 +192,7 @@ function personnel_course(id) {
     xhr.send('get_course=' + id);
 }
 
-// function printCertificate() {
-//     var certImage = document.getElementById("cert-image");
-//     var printWindow = window.open('', '_blank', 'width=800,height=600');
-//     printWindow.document.write('<html><head><title>Certificate</title></head><body>');
-//     printWindow.document.write(certImage.outerHTML);
-//     printWindow.document.write('</body></html>');
-//     printWindow.document.close();
-//     printWindow.focus();
-//     printWindow.print();
-//     printWindow.close();
-// }
+
 
 
 window.onload = function(){

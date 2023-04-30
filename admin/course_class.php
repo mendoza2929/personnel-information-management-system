@@ -74,6 +74,7 @@ adminLogin();
                                 <tr class="text-white" style="background-color:#1d3557;">
                                 <th scope="col">No.</th>
                                 <th scope="col">Participant</th>
+                                <th scope="col">Status</th>
                                 <th scope="col">Action</th>
                              
                                 </tr>
@@ -100,33 +101,24 @@ adminLogin();
         </div>
         <div class="modal-body">
 
+       
         <div class="mb-3">
-        
-        <label class="form-label fw-bold">Participant ID </label>
-        <input type="text" class="form-control mb-2 shadow-none" list="personnel_list_code" name="class_code_<?php echo $result['id']; ?>" placeholder="Type to search Personnel Name" required>
-        <datalist id="personnel_list_code">
-              <?php
-                        $res = selectAll('personnel');
-                        while($opt = mysqli_fetch_assoc($res)){
-                            echo "<option value='$opt[id]'> $opt[last] $opt[first] $opt[middle] $opt[suffix]</option>";
-                        }
-                ?>
-        </datalist>
-      </div>
+  <label class="form-label fw-bold">Add Participant </label>
+  <input type="text" class="form-control mb-2 shadow-none" list="personnel_list_code" name="class_code_<?php echo $result['id']; ?>" placeholder="Type to search Personnel Name" required>
+  <datalist id="personnel_list_code">
+    <?php
+    $res = $con->query ('SELECT * FROM `personnel`');
+    while($opt = mysqli_fetch_assoc($res)){
+    ?>
+      <option value="<?php echo $opt['id'];?> <?php echo $opt['rank'].' '. $opt['last'].' '.  $opt['first'].' '.$opt['middle'].' '.  $opt['suffix'] ?> "></option>
+    <?php
+    }
+    ?>
+  </datalist>
+</div>
+
       
-          <div class="mb-3">
-        
-            <label class="form-label fw-bold">Add Participant</label>
-            <input type="text" class="form-control mb-2 shadow-none" list="personnel_list_name" name="class_personnel_<?php echo $result['id']; ?>" placeholder="Type to search Personnel Name" required>
-            <datalist id="personnel_list_name">
-                  <?php
-                            $res = selectAll('personnel');
-                            while($opt = mysqli_fetch_assoc($res)){
-                                echo "<option value='$opt[rank], $opt[last] $opt[first] $opt[middle] $opt[suffix]'></option>";
-                            }
-                    ?>
-            </datalist>
-          </div>
+          
         </div>
 
         <div class="modal-footer">
@@ -179,7 +171,12 @@ adminLogin();
         <div class="table-responsive-md" style="height:450px;">
                            <table class="table table-hover border">
                            <thead>
-                            
+                                <tr class="text-white" style="background-color:#1d3557;">
+                                <th scope="col">Status</th>
+                                <th scope="col">End Class</th>
+                          
+                             
+                                </tr>
                             </thead>
                             <tbody id="class_certificate_data">
                           
@@ -229,7 +226,7 @@ adminLogin();
  function add_personnel(personnel_id) {
   let class_form = document.getElementById("class_form_" + personnel_id);
   let data = new FormData(class_form);
-  data.append('class_personnel', class_form.elements['class_personnel_' + personnel_id].value);
+  // data.append('class_personnel', class_form.elements['class_personnel_' + personnel_id].value);
   data.append('class_number_id', class_form.elements['class_number_id_' + personnel_id].value);
   data.append('class_code', class_form.elements['class_code_' + personnel_id].value);
   data.append('add_personnel', '');
@@ -298,9 +295,9 @@ function add_certificate(){
                 } else if(this.responseText == 'upd_failed'){
                     swal('error','Image upload failed');
                 } else if(this.responseText == 'cert_exists'){
-                    swal('error', 'A certificate has already been uploaded for this personnel',"error");
+                    swal('error', 'A Attachments has already been uploaded for this personnel',"error");
                 } else {
-                    swal("success", "Certificate Add To The Personnel", "success");
+                    swal("success", "Attactments Add To The Personnel", "success");
                     // room_images(add_image_form.elements['room_id'].value,document.querySelector("#room_images .modal-title").innerText);
                     add_certificates_form.reset(); 
                 }

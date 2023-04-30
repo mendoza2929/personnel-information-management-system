@@ -85,7 +85,6 @@ adminLogin();
                                 <th scope="col">Batch</th> 
                                 <th scope="col">Status</th> 
                                 <th scope="col">Action</th> 
-                                <th scope="col">View Course</th> 
                                 </tr>
                             </thead>
                             <tbody id="personnel_data">
@@ -234,9 +233,7 @@ adminLogin();
 
         
                             
-                            
-
-                     
+                        
                           
                             
                         </div>
@@ -249,11 +246,9 @@ adminLogin();
             </div>
         </div>
 
-      
-  
-      </main>
 
-      <div class="modal fade" id="edit_course" data-bs-backdrop="static" data-bs-keyboard= "true" tabindex="1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        
+        <div class="modal fade" id="edit_course" data-bs-backdrop="static" data-bs-keyboard= "true" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -277,7 +272,7 @@ adminLogin();
                                 <th scope="col">Class Number</th>
                                 <th scope="col">End Date</th>
                                 <th scope="col">Status</th>
-                                <th scope="col">Attachments</th>
+                              
                                 <th scope="col">Action</th>
                                 </tr>
                             </thead>
@@ -289,6 +284,10 @@ adminLogin();
      </div>
     </div>
 </div>
+
+      
+  
+      </main>
 
     
        

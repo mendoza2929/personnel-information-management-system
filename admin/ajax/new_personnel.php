@@ -49,6 +49,53 @@ if(isset($_POST['get_new_personnel'])){
 }
 
 
+if(isset($_POST['get_view_training_personnel'])){  
+    $res = mysqli_query($con, "SELECT id, last, first, middle, suffix ,rank, unit, batch, training_status FROM personnel WHERE status='1';");
+
+    if($res === false){
+        echo "Error: " . mysqli_error($con);
+    } else {
+        $i=1;
+        $data = "";
+        while($row = mysqli_fetch_assoc($res)){
+
+        //     if($row['training_status']==1){
+   
+        //         $status = "<button  onclick='toggleStatus($row[id],0)'class='btn btn-warning btn-sm shadow-none'>On Going</button>";
+        
+        // }else{
+        
+        //     $status = "<button onclick='toggleStatus($row[id],1)' class='btn btn-success btn-sm shadow-none'>Complete</button>";
+        
+        // }
+            $data.= "
+            <tr class='align-middle'>
+                <td>$i</td>
+                <td>$row[rank]</td>
+                <td>$row[last]  $row[first] $row[middle] $row[suffix]
+                <td>$row[batch]</td>
+                <td>$row[unit]</td>
+                <td> 
+                <button type='button'onclick='personnel_course($row[id])' class='btn btn-info btn-sm shadow-none me-3' data-bs-toggle='modal' data-bs-target='#edit_course'>
+                <i class='bi bi-eye'></i>
+                </button>
+                </td>
+                
+            </tr>
+            ";
+            $i++;
+        }
+        echo $data;
+    }
+}
+
+
+
+
+
+
+
+
 
 
 if(isset($_POST['get_retired_personnel'])){  
@@ -84,6 +131,15 @@ if(isset($_POST['get_retired_personnel'])){
                 <i class='bi bi-eye'></i>
                 </button>
                 </td>
+
+                <td> 
+                <button type='button 'onclick='p_retired_attachments($row[id])' class='btn btn-info btn-sm shadow-none me-3' data-bs-toggle='modal' data-bs-target='#edit_attachments'>
+                <i class='bi bi-image'></i>
+                </button>
+                </td>
+
+                
+                
                
               
             </tr>
@@ -213,6 +269,39 @@ if(isset($_POST['search_active_personnel'])){
     }
     echo $data;
 }
+
+
+
+if(isset($_POST['search_view_personnel'])){
+    $frm_data = filteration($_POST);
+    $query = "SELECT * FROM `personnel` WHERE `status` = '1' AND CONCAT(`rank`, `last`, `first`, `unit`, `batch`) LIKE ?";
+    $res = select($query,["%$frm_data[name]%"],'s');
+    $i=1;
+    $data= "";
+    while($row = mysqli_fetch_array($res)){
+       
+
+    $data.= "
+    
+    <tr class='align-middle'>
+                <td>$i</td>
+                <td>$row[rank]</td>
+                <td>$row[last]  $row[first] $row[middle] $row[suffix]
+                <td>$row[batch]</td>
+                <td>$row[unit]</td>
+                <td> <button type='button'onclick='personnel_course($row[id])' class='btn btn-info btn-sm shadow-none me-3' data-bs-toggle='modal' data-bs-target='#edit_course'>
+                <i class='bi bi-eye'></i>
+                </button></td>
+     </tr>
+
+    ";
+    $i++;
+
+
+    }
+    echo $data;
+}
+
 
 
 if(isset($_POST['search_retired_personnel'])){

@@ -35,10 +35,11 @@
       <ul id="other-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
             <!--<li> <a href="new_personnel.php"> <i class="bi bi-circle"></i><span> Active Personnel</span> </a></li>-->
            
-            <li> <a href="personnel.php"> <i class="bi bi-circle"></i><span>Active Personnel</span> </a></li>
-            <li> <a href="retired_personnel.php"> <i class="bi bi-circle"></i><span>Retired Personnel</span> </a></li>
+            <li> <a href="personnel.php"> <i class="bi bi-circle"></i><span>All Personnel</span> </a></li>
+            <li> <a href="view_personnel.php"> <i class="bi bi-circle"></i><span>View Personnel Training</span> </a></li>
+            <!--<li> <a href="retired_personnel.php"> <i class="bi bi-circle"></i><span>Retired Personnel</span> </a></li>
             <li> <a href="suspended_personnel.php"> <i class="bi bi-circle"></i><span>Suspended Personnel</span> </a></li>
-            <li> <a href="dismissed_personnel.php"> <i class="bi bi-circle"></i><span>Dismissed Personnel</span> </a></li>
+            <li> <a href="dismissed_personnel.php"> <i class="bi bi-circle"></i><span>Dismissed Personnel</span> </a></li>-->
       </ul>
     </li>
   </ul>

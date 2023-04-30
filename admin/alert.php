@@ -1,13 +1,13 @@
 <?php 
 
 //front end
-define('SITE_URL','http://127.0.0.1/pinfo/');
+define('SITE_URL','http://127.0.0.1/ptims/');
 define('CERTIFICATE_IMG_PATH',SITE_URL.'img/certificates/');
 
 
 
 //back end
-define('UPLOAD_IMAGE_PATH',$_SERVER['DOCUMENT_ROOT'].'/pinfo/img/');
+define('UPLOAD_IMAGE_PATH',$_SERVER['DOCUMENT_ROOT'].'/ptims/img/');
 // define('PORTFOLIO_FOLDER','project/');
 // define('MAIN_FOLDER','main/');
 define('CERTIFICATE_FOLDER','certificates/');

@@ -10,12 +10,13 @@ if(isset($_POST['add_personnel'])){
   $frm_data = filteration($_POST);
   
   // Retrieve the class number and course ID from the form data
-  $class_personnel = $frm_data['class_personnel'];
   $course_class_id = $frm_data['class_number_id'];
   $code_class_id = $frm_data['class_code'];
 
-  // Check if personnel already exists in the database for this class number
-  $existing_personnel = select("SELECT * FROM `course_personnel` WHERE `class_number_id`=? AND `personnel_name`=?", [$course_class_id, $class_personnel], 'is');
+  // Query the database to check if personnel already exists for this class number
+  $existing_personnel = select("SELECT * FROM `course_personnel` WHERE `code_id`=? AND `class_number_id`=?", [$code_class_id, $course_class_id], 'ii');
+
+  // Check if personnel already exists for this class number
   if(mysqli_num_rows($existing_personnel) > 0){
     // Personnel already exists for this class number, display an error message or redirect to a different page
     echo "This personnel is already added to the selected class number.";
@@ -23,12 +24,11 @@ if(isset($_POST['add_personnel'])){
   }
 
   // Personnel doesn't exist for this class number, proceed with insertion
-  $q = "INSERT INTO `course_personnel` (`class_number_id`,`code_id`,`personnel_name`) VALUES (?,?,?)";
-  $values = [$course_class_id,$code_class_id,$class_personnel ];
-  $res = insert($q,$values,'iis');
+  $q = "INSERT INTO `course_personnel` (`class_number_id`,`code_id`) VALUES (?,?)";
+  $values = [$course_class_id,$code_class_id ];
+  $res = insert($q,$values,'ii');
   echo $res;
 }
-
 
 if(isset($_POST['get_personnel'])){
   $frm_data = filteration($_POST);
@@ -36,31 +36,43 @@ if(isset($_POST['get_personnel'])){
 
   $i = 1;
 
-  $res = select("SELECT * FROM `course_personnel` WHERE `class_number_id`=?", [$personnel_id], 'i');
+  $res = select("SELECT t.*, Concat(p.rank, ' ', p.last, ' ', p.first, ' ', p.middle, ' ', p.suffix) as pname, c.cert_status 
+                 FROM course_personnel t 
+                 INNER JOIN personnel p ON p.id = t.code_id 
+                 LEFT JOIN certificates c ON c.class_course_id = t.id 
+                 WHERE t.class_number_id = ?", [$personnel_id], 'i');
 
   while($row = mysqli_fetch_assoc($res)){
-    if ($row['training_status'] == 1) {
-      $status = "<button onclick='toggleStatus($row[id],0)' class='btn btn-warning btn-sm shadow-none'>On Going</button>";
-  } else {
-      $status = "<button type='button' onclick='personnel_certificate($row[id],  \"$row[personnel_name]\")' class='btn btn-success btn-sm shadow-none' data-bs-toggle='modal' data-bs-target='#add_certificates'>Complete</button>";
-  }
-  
-      echo<<<data
+    // if ($row['training_status'] == 1) {
+    //   $status = "<button onclick='toggleStatus($row[id], 0)' class='btn btn-warning btn-sm shadow-none'>Completed</button>";
+    // } else if ($row['training_status'] == 2) {
+    //   $status = "<button onclick='toggleStatus($row[id], 1)' class='btn btn-warning btn-sm shadow-none'>On Going</button>";
+    // } else if ($row['training_status'] == 3) {
+    //   $status = "<button onclick='toggleStatus($row[id], 2)' class='btn btn-warning btn-sm shadow-none'>Test</button>";
+    // }else{
+    //   $status = "<button onclick='toggleStatus($row[id], 3)' class='btn btn-warning btn-sm shadow-none'>Drop</button>";
+    // }
+
+    // retrieve cert_status value from the row
+    $cert_status = $row['cert_status'] ?? ''; // Use the null coalescing operator to handle cases where cert_status is null
+
+    echo<<<data
       <tr class='align-middle'>
           <td>$i</td>
-          <td width="50%">$row[personnel_name]</td>
-
-          <td>$status</td>
-          
+          <td width="50%">$row[pname]</td>
+          <td><span class='rounded-pill bg-light text-primary mb-3 text-wrap lh-bas fw-bold'>$cert_status</span></td> <!-- Display cert_status value in the table -->
+          <td> <button type="button" onclick="personnel_certificate($row[id], '$row[code_id]')" class="btn btn-success btn-sm shadow-none"  data-bs-toggle='modal' data-bs-target='#add_certificates'>
+          <i class="bi bi-image"></i>
+          </button></td>
       </tr>
-      data;
-      $i++;
+    data;
+    $i++;
   }
 }
 
-// <td> <button type="button" onclick="personnel_certificate($row[id], '$row[personnel_name]')" class="btn btn-success btn-sm shadow-none"  data-bs-toggle='modal' data-bs-target='#add_certificates'>
-// <i class="bi bi-image"></i>
-// </button></td>
+
+
+// $status = "<button type='button' onclick='personnel_certificate($row[id],$row[code_id], 1)' class='btn btn-success btn-sm shadow-none' data-bs-toggle='modal' data-bs-target='#add_certificates'>Status</button>";
 
 
 
@@ -119,17 +131,23 @@ if(isset($_POST['get_certificate'])){
 
   while($row = mysqli_fetch_assoc($res)){
     echo<<<data
-    <th scope="col" width="60%" class="text-white"style="background-color:#1d3557;">$row[cert_status]</th>
-    <th scope="col" class="text-white" style="background-color:#1d3557;">End of Class</th>
+
     
       <tr class='align-middle'>
       
-      <td><img src='$path$row[cert_image]' class='img-fluid w-100'></td>
+      <td> <span class='rounded-pill bg-light text-success mb-3 text-wrap lh-bas fw-bold'>
+      <a href='$path$row[cert_image]'>{$row['cert_status']}</a>
+      </span></td>
+    
+
       <td>$row[end_class]</td>
 
       </tr>
     data;
   }
+
+
+
 
 
   

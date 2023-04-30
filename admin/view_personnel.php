@@ -10,19 +10,22 @@ adminLogin();
    <head>
       <meta charset="utf-8">
       <meta content="width=device-width, initial-scale=1.0" name="viewport">
-      <title>Retired Personnel - Personnel Training Information Managment System</title>
-      
-      
+      <title>View Personnel Training - Personnel Training Information Managment System</title>
+      <meta name="robots" content="noindex, nofollow">
+      <meta content="" name="description">
+      <meta content="" name="keywords">
       <?php 
       
         require('./includes/nav_link.php');
       
       ?>
-     
+
+
+      
    </head>
    <body>
-
-     
+   
+          
    <?php 
       
       require('./includes/header.php');
@@ -33,14 +36,13 @@ adminLogin();
 
       <main id="main" class="main">
          <div class="pagetitle">
-            <h1>Personnel</h1>
+            <h1>View Personnel Training</h1>
             <nav>
                <ol class="breadcrumb">
                   <li class="breadcrumb-item"><a href="index.php">Home</a></li>
-                  <li class="breadcrumb-item active">Retired Personnel</li>
+                  <li class="breadcrumb-item active">View Personnel Training</li>
                </ol>
 
-               <h1>Retired Personnel Records</h1>
          </div>
 
                         <div class="card border-0 shadow-sm mb-4">
@@ -49,34 +51,31 @@ adminLogin();
                           
                     
                         <div class="text-end mb-4">
-                         
+                      
                         </div>
 
                         <div class="d-flex align-items-center">
-                          
-                            <input type="text" oninput="search_retired_personnel(this.value)" class="form-control shadow-none w-25 ms-auto mb-2" placeholder="Type to search..">
+                       
+
+                            <input type="text" oninput="search_view_personnel(this.value)" class="form-control shadow-none w-25 ms-auto mb-2" placeholder="Type to search..">
                         </div>
 
 
                      
 
-
-
-                           <div class="table-responsive-lg" style="height:450px; overflow-y:scroll;">
+                        <div class="table-responsive-lg" style="height:450px; overflow-y:scroll;">
                            <table class="table table-hover border text-center">
                             <thead>
                                 <tr class="text-white" style="background-color:#1d3557;">
                                 <th scope="col">No.</th>
                                 <th scope="col">Rank</th> 
                                 <th scope="col">Name</th>
-                                <th scope="col">Gender</th>
-                                <th scope="col">Address</th>
                                 <th scope="col">Unit</th> 
                                 <th scope="col">batch</th> 
                                 <th scope="col">Training Course</th>  
                                 </tr>
                             </thead>
-                            <tbody id="retired_personnel_data">
+                            <tbody id="view_personnel_data">
                           
                              
                            
@@ -89,8 +88,8 @@ adminLogin();
 
 
 
-                    <div class="modal fade" id="edit_course" data-bs-backdrop="static" data-bs-keyboard= "true" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog modal-md" role="document">
+   <div class="modal fade" id="edit_course" data-bs-backdrop="static" data-bs-keyboard= "true" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title"><i class="bi bi-book"></i> Course Training</h5>
@@ -109,10 +108,13 @@ adminLogin();
                            <table class="table table-hover border text-center">
                             <thead>
                                 <tr class="text-white sticky-top" style="background-color:#1d3557;">
-                                <th scope="col">Batch</th>
                                 <th scope="col">Course</th>
-                                <th scope="col">Date</th>
+                                <th scope="col">Class Number</th>
+                                <th scope="col">start Date</th>
+                                <th scope="col">End Date</th>
                                 <th scope="col">Status</th>
+               
+            
                                 </tr>
                             </thead>
                             <tbody id="course-data">
@@ -124,66 +126,13 @@ adminLogin();
     </div>
 </div>
 
+</main>
     
-    
- 
-  
-      </main>
+
 
       
-
-<div class="modal fade" id="edit_attachments" data-bs-backdrop="static" data-bs-keyboard="true" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" data-course-id="<?php echo $result['id']; ?>">
-  <div class="modal-dialog modal-md">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title"><i class="bi bi-image"></i> Attachments </h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-            
-        <div class="border-bottom border-3 pb-3">
-            <form action="" id="add_certificates_form">
-                <label for="" class="form-label fw-bold">Add Attachments</label>
-                <input type="file" name="image" accept=".jpg, .png, .webp, .jpeg" class="form-control shadow-none mb-3">
-
-                <button type="submit" class="btn btn-success text-white shadow-none text-end">ADD</button>
-                <input type="hidden" name="personnel_id">
-            </form>
-        </div>
-
-        <div class="table-responsive-md" style="height:450px;">
-                           <table class="table table-hover border">
-                           <thead>
-                           <tr class="text-white sticky-top" style="background-color:#1d3557;">
-                                <th scope="col" class="text-center">Attachments</th>
-                                </tr>
-                            </thead>
-                            <tbody id="personnel_retired_data">
-                          
-                             
-                           
-                            </tbody>
-                            </table>
-                            </div>
-                            
-
-
-        </div>
-      </div>
-  </div>
-</div>
-
-
-
-    
-
-
-
-      <footer id="footer" class="footer">
-         <div class="copyright"> &copy; Copyright <strong><span>reuel mendoza dev</span></strong>. All Rights Reserved</div>
-       
-      </footer>
       <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>  
+
         <script src="assets/js/apexcharts.min.js"></script>
         <script src="assets/js/bootstrap.bundle.min.js"></script>
         <script src="assets/js/chart.min.js"></script>
@@ -192,25 +141,39 @@ adminLogin();
         <script src="assets/js/simple-datatables.js"></script>
         <script src="assets/js/tinymce.min.js"></script>
         <script src="assets/js/validate.js"></script>
-        <script src="assets/js/main.js"></script> 
+        <script src="assets/js/main.js"></script>
         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-        
+       
+
+
+      
+
+
+
 
    
-        
-         
-                    
+
         
    <script>
 
+    
 
-          <?php 
-           require('./scripts/p_retired.js');
-          ?>
-   
+
+        <?php 
+           require('./scripts/p_view_training.js');
+        ?>
 
     </script>
+
+    
+
+
+       
+
+    
+    
              
 
    </body>
 </html>
+

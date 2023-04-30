@@ -70,12 +70,8 @@ adminLogin();
                         </div>
 
                         <div class="d-flex align-items-center">
-                        <form action="excel.php" method="post">
-                          <!--<button type="submit" name="export_excel" class="btn btn-success btn-sm shadow-none mt-2 mb-2 text-start me-2" data-bs-toggle="modal" data-bs-target="#add-room">
-                            <i class="bi bi-file-earmark-spreadsheet"></i> Export to excel
-                            </button>-->
-                        </form>
-
+                        
+                        <!--<input type="text" oninput="search_class_number(this.value)" class="form-control shadow-none w-25 ms-auto mb-2" placeholder="Type to search..">-->
                            
                         </div>
 
@@ -373,6 +369,18 @@ if(this.responseText==1){
 }
 xhr.send(data);
 }
+
+function search_class_number(coursename){
+    let xhr = new XMLHttpRequest();
+    xhr.open("POST", "./ajax/course.php", true);
+    xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+
+    xhr.onload = function(){
+        document.getElementById('classnumber_data').innerHTML = this.responseText;
+    }
+    xhr.send('search_class_number&name='+coursename);
+}
+
 
 
 

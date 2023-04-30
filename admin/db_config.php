@@ -2,7 +2,7 @@
  
   $hname='localhost';
   $uname='root';
-  $pass= '272727';
+  $pass= '';
   $db="ptims";
 
 

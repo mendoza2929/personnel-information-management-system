@@ -59,18 +59,6 @@ if(isset($_POST['get_personnel'])){
             $status = "<button onclick='toggleStatus($row[id],3)' class='btn btn-danger btn-sm shadow-none'>Retired</button>";;
         }
 
-//     if($row['training_status']==1){
-       
-//         $trainingstatus = "<span  onclick='toggleStatus($row[id],0)'class=' rounded-pill bg-light text-info mb-3 text-wrap lh-base'>On Going</span>";
-
-// }else{
-
-//     $trainingstatus = "<span onclick='toggleStatus($row[id],1)' class=' rounded-pill bg-light text-success mb-3 text-wrap lh-base'>Completed</span>";
-
-// }
-
- 
-   
        
     $data.= "
     <tr class='align-middle'>
@@ -89,16 +77,14 @@ if(isset($_POST['get_personnel'])){
         </button>
         </td>
 
-        <td> 
-        <button type='button'onclick='personnel_course($row[id])' class='btn btn-info btn-sm shadow-none me-3' data-bs-toggle='modal' data-bs-target='#edit_course'>
-        <i class='bi bi-eye'></i>
-        </button>
-        </td>
+
+ 
 
         
     </tr>
 ";
 $i++;
+
 
 
 
@@ -218,11 +204,7 @@ if(isset($_POST['submit_edit_personnel'])){
             <i class='i bi-pencil-square'></i>
             </button>
             </td>
-            <td> 
-        <button type='button'onclick='personnel_course($row[id])' class='btn btn-info btn-sm shadow-none me-3' data-bs-toggle='modal' data-bs-target='#edit_course'>
-        <i class='bi bi-eye'></i>
-        </button>
-        </td>
+          
 
            
         </tr>
@@ -259,30 +241,12 @@ if(isset($_POST['add_course'])){
     }
 }
 
-// if (isset($_POST['get_course'])) {
-//     $frm_data = filteration($_POST);
-//     $res = select("SELECT DISTINCT cp.personnel_name, c.name AS course_name, cc.class_number 
-//                    FROM course_personnel cp 
-//                    INNER JOIN course_class cc ON cp.class_number_id = cc.id 
-//                    INNER JOIN course c ON cc.course_id = c.id 
-//                    WHERE cp.code_id = ?", [$frm_data['get_course']], 'i');
 
-//     while ($row = mysqli_fetch_assoc($res)) {
-//         // Use the retrieved values as needed
-//         echo <<<data
-//             <tr class='align-middle'>
-           
-//             <td>{$row['course_name']}</td>
-//             <td>{$row['class_number']}</td>
-//             </tr>
-//         data;
-//     }
-// }
 
 
 if (isset($_POST['get_course'])) {
     $frm_data = filteration($_POST);
-    $res = select("SELECT DISTINCT personnel_name, name AS course_name, class_number, end_class, cert_status, cert_image
+    $res = select("SELECT DISTINCT code_id, name AS course_name, class_number, open_date,end_class, cert_status, cert_image
     FROM course_personnel
     INNER JOIN course_class ON course_personnel.class_number_id = course_class.id
     INNER JOIN course ON course_class.course_id = course.id
@@ -291,25 +255,25 @@ if (isset($_POST['get_course'])) {
 
     $path = CERTIFICATE_IMG_PATH;
 
-
-while ($row = mysqli_fetch_assoc($res)) {
-    // Use the retrieved values as needed
-    echo <<<data
+    while ($row = mysqli_fetch_assoc($res)) {
+        // Use the retrieved values as needed
+        echo <<<data
         <tr class='align-middle'>
-        <td class='fw-bold'>{$row['course_name']}</td>
-        <td>{$row['class_number']}</td>
-        <td>{$row['end_class']}</td>
-        <td><span class='rounded-pill bg-light text-success mb-3 text-wrap lh-bas fw-bold'>{$row['cert_status']}</span></td>
-        <td> <img src='{$path}{$row['cert_image']}'class='img-fluid w-50'></td>
-        <td>
-        <button onclick='window.print()' name="export_excel" class="btn btn-success btn-sm shadow-none" id="print-btn">
-        <i class="bi bi-printer"></i> Print
-            </button>
-       </td>
+            <td class='fw-bold'>{$row['course_name']}</td>
+            <td>{$row['class_number']}</td>
+            <td>{$row['open_date']}</td>
+            <td>{$row['end_class']}</td>
+            <td> 
+                <span class='rounded-pill bg-light text-success mb-3 text-wrap lh-bas fw-bold'>
+                    <a href='$path{$row['cert_image']}' target="_blank">{$row['cert_status']}</a>
+                </span>
+            </td>
         </tr>
+     
     data;
+    }
 }
-}
+
 
 
 

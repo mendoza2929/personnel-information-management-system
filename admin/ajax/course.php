@@ -131,7 +131,7 @@ if(isset($_POST['add_class'])){
     $open = $frm_data['open'];
   
     // Use the class number and course ID in your SQL query
-    $q = "INSERT INTO `course_class` (`class_number`,`course_id`,`proponent`,`open`) VALUES (?, ?, ?,?)";
+    $q = "INSERT INTO `course_class` (`class_number`,`course_id`,`proponent`,`open_date`) VALUES (?, ?, ?,?)";
     $values = [$class_number, $course_id,$proponent,$open];
     $res = insert($q,$values,'siss');
     echo $res;
@@ -160,7 +160,7 @@ if(isset($_POST['add_class'])){
             <td>$i</td>
             <td><a href='course_class.php?id=$row[id]'>$row[class_number]</a></td>
             <td>$row[proponent]</td>
-            <td>$row[open]</td>
+            <td>$row[open_date]</td>
             <td>$status</td>
             <td>
 
@@ -236,6 +236,85 @@ if(isset($_POST['edit_course_view'])){
         echo 0;
     }
 }
+
+
+  if(isset($_POST['search_class_number'])){
+    $frm_data = filteration($_POST);
+    $course_id = $frm_data['search_class_number'];
+
+    $query = "SELECT * FROM `course_class` WHERE `course_id`=? AND CONCAT(`class_number`, '') LIKE ?";
+    $res = select($query,[$course_id, "%$course_id%"],'is');
+    $i=1;
+    $data= "";
+    while($row = mysqli_fetch_array($res)){
+       
+        if ($row['status'] == 1) {
+            $status = "<button onclick='toggleStatus1($row[id],0)' class='btn btn-warning btn-sm shadow-none'>On Going</button>";
+        } else {
+            $status = "<button onclick='toggleStatus1($row[id],1)' class='btn btn-success btn-sm shadow-none disabled'>Complete</button>";
+        }
+
+    $data.= "
+<tr class='align-middle'>
+            <td>$i</td>
+            <td><a href='course_class.php?id=$row[id]'>$row[class_number]</a></td>
+            <td>$row[proponent]</td>
+            <td>$row[open]</td>
+            <td>$status</td>
+            <td>
+
+
+            <button type='button' onclick='course_view_details($row[id])'  class='btn btn-success btn-sm shadow-none'  data-bs-toggle='modal' data-bs-target='#edit_course_view'>
+            <i class='bi bi-pencil'></i>
+             </button>
+            
+            </td>
+
+        
+        </tr>
+
+    ";
+    $i++;
+
+
+    }
+    echo $data;
+}
+
+
+if(isset($_POST['search_course'])){
+    $frm_data = filteration($_POST);
+    $query = "SELECT * FROM `course` WHERE CONCAT(`name`, `description`) LIKE ?";
+    $res = select($query,["%$frm_data[name]%"],'s');
+    $i=1;
+    $data= "";
+    while($row = mysqli_fetch_assoc($res)){
+        echo <<<data
+
+        <tr class="align-middle">
+        <td>$i</td>
+        <td><a href='course_view.php?id=$row[id]'>$row[name]</a></td>
+        <td>$row[description]</td>
+        <td>
+
+        
+        <button type="button" onclick='course_details($row[id])'  class="btn btn-success btn-sm shadow-none"  data-bs-toggle='modal' data-bs-target='#edit_course'>
+        <i class="bi bi-pencil"></i>
+         </button>
+
+
+        
+        </td>
+        </tr>
+
+        data;
+        $i++;
+    }
+    echo $data;
+}
+
+
+
 
   
 
